@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/SimpleBus/SymfonyBridge.svg?branch=master)](https://travis-ci.org/SimpleBus/SymfonyBridge)
 
-By Matthias Noback
+By [Matthias Noback](http://php-and-symfony.matthiasnoback.nl/)
 
 ## Installation
 
