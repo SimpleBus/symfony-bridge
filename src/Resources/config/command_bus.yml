@@ -1,0 +1,28 @@
+services:
+    simple_bus.command_bus.delegating_command_bus:
+        class: SimpleBus\Command\Bus\DelegatesToCommandHandlers
+        public: false
+        arguments:
+            - @simple_bus.command_bus.command_handler_resolver
+        tags:
+            - { name: command_bus, priority: -1000 }
+
+    simple_bus.command_bus.command_handler_resolver:
+        class: SimpleBus\Command\Handler\LazyLoadingCommandHandlerResolver
+        public: false
+        arguments:
+            - @simple_bus.command_bus.invokable_service_locator
+            # collection of command handler services, will be populated using RegisterHandlerPass
+            - []
+
+    simple_bus.command_bus.invokable_service_locator:
+        class: SimpleBus\SymfonyBridge\DependencyInjection\InvokableServiceLocator
+        public: false
+        arguments:
+            - @service_container
+
+    simple_bus.command_bus.finishes_command_before_handling_next:
+        class: SimpleBus\Command\Bus\FinishesCommandBeforeHandlingNext
+        public: false
+        tags:
+            - { name: command_bus, priority: 1000 }

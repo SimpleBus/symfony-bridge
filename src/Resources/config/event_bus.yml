@@ -1,0 +1,40 @@
+services:
+    simple_bus.event_bus.events.finishes_event_before_handling_next:
+        class: SimpleBus\Event\Bus\FinishesEventBeforeHandlingNext
+        public: false
+
+    simple_bus.event_bus.aggregates_multiple_event_providers:
+        class: SimpleBus\Event\Provider\AggregatesMultipleEventProviders
+        arguments:
+            # collection of CollectsEventProviders, will be populated using RegisterEventProviderCollectors
+            - []
+
+    simple_bus.event_bus.delegates_to_event_handlers:
+        class: SimpleBus\Event\Handler\DelegatesToEventHandlers
+        arguments:
+            - @simple_bus.event_bus.event_handlers_resolver
+        tags:
+            - { name: event_bus }
+
+    simple_bus.event_bus.event_handlers_resolver:
+        class: SimpleBus\Event\Handler\LazyLoadingEventHandlersResolver
+        public: false
+        arguments:
+            - @simple_bus.event_bus.invokable_service_locator
+            # collection of event handler services ids, will be populated using RegisterHandlers
+            - []
+
+    simple_bus.event_bus.invokable_service_locator:
+        class: SimpleBus\SymfonyBridge\DependencyInjection\InvokableServiceLocator
+        public: false
+        arguments:
+            - @service_container
+
+    simple_bus.event_bus.event_dispatching_command_bus:
+        class: SimpleBus\CommandEventBridge\CommandBus\DispatchesEvents
+        public: false
+        arguments:
+            - @simple_bus.event_bus.aggregates_multiple_event_providers
+            - @simple_bus.event_bus.delegates_to_event_handlers
+        tags:
+            - { name: command_bus, priority: 200 }

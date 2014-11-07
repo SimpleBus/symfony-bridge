@@ -1,0 +1,48 @@
+services:
+    annotation_reader:
+        class: Doctrine\Common\Annotations\AnnotationReader
+
+    test_command_handler:
+        class: SimpleBus\SymfonyBridge\Tests\Functional\SmokeTest\TestCommandHandler
+        arguments:
+            - @doctrine.orm.default_entity_manager
+        tags:
+            - { name: command_handler, handles: test_command }
+
+    some_other_test_command_handler:
+        class: SimpleBus\SymfonyBridge\Tests\Functional\SmokeTest\SomeOtherTestCommandHandler
+        arguments:
+            - @event_bus
+        tags:
+            - { name: command_handler, handles: some_other_test_command }
+
+    test_event_handler:
+        class: SimpleBus\SymfonyBridge\Tests\Functional\SmokeTest\TestEntityCreatedEventHandler
+        tags:
+            - { name: event_handler, handles: test_entity_created }
+        arguments:
+            - @command_bus
+
+    some_other_event_handler:
+        class: SimpleBus\SymfonyBridge\Tests\Functional\SmokeTest\SomeOtherEventHandler
+        tags:
+            - { name: event_handler, handles: test_entity_created }
+        arguments:
+            - @command_bus
+
+doctrine:
+    dbal:
+        driver: pdo_sqlite
+        path: :memory:
+        memory: true
+    orm:
+        entity_managers:
+            default:
+                connection: default
+                mappings:
+                    test:
+                        type: annotation
+                        dir: "%kernel.root_dir%/Entity/"
+                        prefix: SimpleBus\SymfonyBridge\Tests\Functional\SmokeTest\Entity
+                        alias: Test
+                        is_bundle: false
