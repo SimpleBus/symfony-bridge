@@ -10,86 +10,54 @@ Using Composer:
 
     composer require simple-bus/symfony-bridge
 
-## Usage
-
-This library is created with Symfony and Doctrine ORM in mind, but you can use it in any kind of project. You just have
-to configure the services manually.
-
-In case you do use Symfony, just enable the Symfony bundles you need in your Symfony project:
+Just enable the Symfony bundles you need in your Symfony project:
 
 - `SimpleBusCommandBusBundle` to enable basic command bus functionality
 - `SimpleBusEventBusBundle` to enable basic event bus functionality (requires `SimpleBusCommandBusBundle` to be enabled too)
 - `SimpleBusDoctrineOrmBridgeBundle` to enable the Doctrine ORM bridge (requires `SimpleBusCommandBusBundle` and `SimpleBusEventBusBundle` to be enabled)
 
-### Using the command bus
+## Usage
 
-First create a command:
+Read more about using commands and command buses, events and event buses in the documentation of the dedicated
+libraries:
 
-```php
-<?php
+- [CommandBus](https://github.com/SimpleBus/CommandBus)
+- [EventBus](https://github.com/SimpleBus/EventBus)
+- [CommandEventBridge](https://github.com/SimpleBus/CommandEventBridge)
+- [DoctrineORMBridge](https://github.com/SimpleBus/DoctrineORMBridge)
 
-namespace Matthias\App;
+## Symfony-specific usage
 
-use SimpleBus\Command\Command;
-
-class TestCommand implements Command
-{
-    public function name()
-    {
-        return 'test_command';
-    }
-}
-```
-
-Then create a command handler:
+### Use the command bus in a controller
 
 ```php
 <?php
 
-namespace Matthias\App;
-
-use SimpleBus\Command\Command;
-use SimpleBus\Command\Handler\CommandHandler;
-
-class TestCommandHandler implements CommandHandler
+class UserController extends Controller
 {
-    public function handle(Command $comment)
+    public function registerAction()
     {
-        // do something here
+        $command = new RegisterUserCommand(...);
+
+        $this->get('command_bus')->handle($command);
+
+        ...
     }
 }
 ```
 
-Register the handler as a service:
+### Register command handlers using a service tag
 
 ```yaml
 services:
-    test_command_handler:
-        class: Matthias\App\TestCommandHandler
+    register_user_command_handler:
+        class: Matthias\App\RegisterUserCommandHandler
         tags:
-            - { name: command_handler, handles: test_command }
+            - { name: command_handler, handles: register_user }
 ```
 
-Make sure the value in the `handles` attribute of the `command_handler` tag matches the value returned by
-`Command::name()`.
-
-Now in your controller, the command handler will be called whenever you do something like this:
-
-```php
-<?php
-
-namespace Matthias\App;
-
-class SomeController extends Controller
-{
-    public function someAction()
-    {
-        $command = new TestCommand();
-
-        $this->get('command_bus')->handle($command);
-    }
-}
-```
+Make sure the value in the `handles` attribute of the `command_handler` tag matches the value returned by (in this case)
+`RegisterUserCommand::name()`.
 
 ### Doctrine ORM and domain events
 
@@ -99,8 +67,6 @@ Entities that were involved in the transaction will be asked to release their ev
 ```php
 <?php
 
-namespace Matthias\App\Entity;
-
 use Doctrine\ORM\Mapping as ORM;
 use SimpleBus\Event\Provider\ProvidesEvents;
 use SimpleBus\Event\Provider\EventProviderCapabilities;
@@ -109,52 +75,13 @@ use Matthias\App\Event\TestEntityCreated;
 /**
  * @ORM\Entity
  */
-class TestEntity implements ProvidesEvents
+class User implements ProvidesEvents
 {
     use EventProviderCapabilities;
 
-    /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    public $id;
-
     public function __construct()
     {
-        // this will store the event for now
-        $this->raise(new TestEntityCreated($this));
-    }
-}
-```
-
-The `TestEntityCreated` event looks like this:
-
-```php
-<?php
-
-namespace Matthias\App\Event;
-
-use SimpleBus\Event\Event;
-use Matthias\App\Entity\TestEntity;
-
-class TestEntityCreated implements Event
-{
-    private $testEntity;
-
-    public function __construct(TestEntity $testEntity)
-    {
-        $this->testEntity = $testEntity;
-    }
-
-    public function getTestEntity()
-    {
-        return $this->testEntity;
-    }
-
-    public function name()
-    {
-        return 'test_entity_created';
+        $this->raise(new UserRegisteredEvent($this));
     }
 }
 ```
@@ -162,35 +89,17 @@ class TestEntityCreated implements Event
 When the `flush` operation was successful, the events stored by the entity will be released. Each of the events will
 be handled by event handlers.
 
-To create an event handler, first create the class:
-
-```php
-<?php
-
-use SimpleBus\Event\Event;
-use SimpleBus\Event\Handler\EventHandler;
-
-class TestEntityCreatedEventHandler implements EventHandler
-{
-    public function handle(Event $event)
-    {
-        // do anything you like
-    }
-}
-```
-
-Register the event handler using a service tag:
+### Register event handlers using a service tag:
 
 ```yaml
-    test_event_handler:
-        class: Matthias\App\TestEntityCreatedEventHandler
+    notification_mail_event_handler:
+        class: Matthias\App\SendNotificationMailWhenUserRegistered
         tags:
-            - { name: event_handler, handles: test_entity_created }
+            - { name: event_handler, handles: user_registered }
 ```
 
-Make sure the value of the `handles`  attribute is the same as the value returned by `Event::name()`.
-
-You can also use t
+Make sure the value of the `handles`  attribute is the same as the value returned by (in this case)
+`UserRegisteredEvent::name()`.
 
 ## Extension points
 
