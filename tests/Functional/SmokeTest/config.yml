@@ -7,26 +7,26 @@ services:
         arguments:
             - @doctrine.orm.default_entity_manager
         tags:
-            - { name: command_handler, handles: test_command }
+            - { name: command_handler, handles: SimpleBus\SymfonyBridge\Tests\Functional\SmokeTest\TestCommand }
 
     some_other_test_command_handler:
         class: SimpleBus\SymfonyBridge\Tests\Functional\SmokeTest\SomeOtherTestCommandHandler
         arguments:
             - @event_bus
         tags:
-            - { name: command_handler, handles: some_other_test_command }
+            - { name: command_handler, handles: SimpleBus\SymfonyBridge\Tests\Functional\SmokeTest\SomeOtherTestCommand }
 
     test_event_handler:
-        class: SimpleBus\SymfonyBridge\Tests\Functional\SmokeTest\TestEntityCreatedEventHandler
+        class: SimpleBus\SymfonyBridge\Tests\Functional\SmokeTest\TestEntityCreatedEventSubscriber
         tags:
-            - { name: event_handler, handles: test_entity_created }
+            - { name: event_subscriber, handles: SimpleBus\SymfonyBridge\Tests\Functional\SmokeTest\TestEntityCreated }
         arguments:
             - @command_bus
 
     some_other_event_handler:
-        class: SimpleBus\SymfonyBridge\Tests\Functional\SmokeTest\SomeOtherEventHandler
+        class: SimpleBus\SymfonyBridge\Tests\Functional\SmokeTest\SomeOtherEventSubscriber
         tags:
-            - { name: event_handler, handles: test_entity_created }
+            - { name: event_subscriber, handles: SimpleBus\SymfonyBridge\Tests\Functional\SmokeTest\TestEntityCreated }
         arguments:
             - @command_bus
 

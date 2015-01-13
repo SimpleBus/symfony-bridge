@@ -1,28 +1,54 @@
 services:
-    simple_bus.event_bus.events.finishes_event_before_handling_next:
-        class: SimpleBus\Event\Bus\FinishesEventBeforeHandlingNext
+    event_bus:
+        alias: simple_bus.event_bus
+
+    simple_bus.event_bus:
+        class: SimpleBus\Message\Bus\Middleware\MessageBusSupportingMiddleware
         public: false
+
+    simple_bus.event_bus.events.finishes_message_before_handling_next_middleware:
+        class: SimpleBus\Message\Bus\Middleware\FinishesHandlingMessageBeforeHandlingNext
+        public: false
+        tags:
+            - { name: event_bus_middleware, priority: 1000 }
 
     simple_bus.event_bus.aggregates_multiple_event_providers:
         class: SimpleBus\Event\Provider\AggregatesMultipleEventProviders
-        arguments:
-            # collection of CollectsEventProviders, will be populated using RegisterEventProviderCollectors
-            - []
-
-    simple_bus.event_bus.delegates_to_event_handlers:
-        class: SimpleBus\Event\Handler\DelegatesToEventHandlers
-        arguments:
-            - @simple_bus.event_bus.event_handlers_resolver
-        tags:
-            - { name: event_bus }
-
-    simple_bus.event_bus.event_handlers_resolver:
-        class: SimpleBus\Event\Handler\LazyLoadingEventHandlersResolver
         public: false
         arguments:
-            - @simple_bus.event_bus.invokable_service_locator
-            # collection of event handler services ids, will be populated using RegisterHandlers
+            # collection of ProvidesEvents, will be populated using RegisterEventProviders
             - []
+
+    simple_bus.event_bus.notifies_message_subscribers_middleware:
+        class: SimpleBus\Message\Subscriber\NotifiesMessageSubscribersMiddleware
+        public: false
+        arguments:
+            - @simple_bus.event_bus.event_subscribers_resolver
+        tags:
+            - { name: event_bus_middleware, priority: -1000 }
+
+    simple_bus.event_bus.event_name_resolver:
+        alias: simple_bus.event_bus.class_based_event_name_resolver
+        public: false
+
+    simple_bus.event_bus.class_based_event_name_resolver:
+        class: SimpleBus\Message\Name\ClassBasedNameResolver
+        public: false
+
+    simple_bus.event_bus.event_subscribers_collection:
+        class: SimpleBus\Message\Subscriber\Collection\LazyLoadingMessageSubscriberCollection
+        public: false
+        arguments:
+            # collection of event subscriber services ids, will be populated using RegisterHandlers
+            - []
+            - @simple_bus.event_bus.invokable_service_locator
+
+    simple_bus.event_bus.event_subscribers_resolver:
+        class: SimpleBus\Message\Subscriber\Resolver\NameBasedMessageSubscriberResolver
+        public: false
+        arguments:
+            - @simple_bus.event_bus.event_name_resolver
+            - @simple_bus.event_bus.event_subscribers_collection
 
     simple_bus.event_bus.invokable_service_locator:
         class: SimpleBus\SymfonyBridge\DependencyInjection\InvokableServiceLocator
@@ -31,10 +57,10 @@ services:
             - @service_container
 
     simple_bus.event_bus.event_dispatching_command_bus:
-        class: SimpleBus\CommandEventBridge\CommandBus\DispatchesEvents
+        class: SimpleBus\Event\MessageBus\DispatchesEventsMiddleware
         public: false
         arguments:
             - @simple_bus.event_bus.aggregates_multiple_event_providers
-            - @simple_bus.event_bus.delegates_to_event_handlers
+            - @simple_bus.event_bus
         tags:
-            - { name: command_bus, priority: 200 }
+            - { name: command_bus_middleware, priority: 200 }

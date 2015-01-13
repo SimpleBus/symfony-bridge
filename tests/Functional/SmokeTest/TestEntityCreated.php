@@ -18,9 +18,4 @@ class TestEntityCreated implements Event
     {
         return $this->testEntity;
     }
-
-    public function name()
-    {
-        return 'test_entity_created';
-    }
 }

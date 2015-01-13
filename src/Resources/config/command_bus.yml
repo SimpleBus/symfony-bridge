@@ -1,19 +1,40 @@
 services:
-    simple_bus.command_bus.delegating_command_bus:
-        class: SimpleBus\Command\Bus\DelegatesToCommandHandlers
+    command_bus:
+        alias: simple_bus.command_bus
+
+    simple_bus.command_bus:
+        class: SimpleBus\Message\Bus\Middleware\MessageBusSupportingMiddleware
+        public: false
+
+    simple_bus.command_bus.delegates_to_message_handler_middleware:
+        class: SimpleBus\Message\Handler\DelegatesToMessageHandlerMiddleware
         public: false
         arguments:
             - @simple_bus.command_bus.command_handler_resolver
         tags:
-            - { name: command_bus, priority: -1000 }
+            - { name: command_bus_middleware, priority: -1000 }
+
+    simple_bus.command_bus.command_name_resolver:
+        alias: simple_bus.command_bus.class_based_command_name_resolver
+        public: false
+
+    simple_bus.command_bus.class_based_command_name_resolver:
+        class: SimpleBus\Message\Name\ClassBasedNameResolver
+        public: false
+
+    simple_bus.command_bus.command_handler_map:
+        class: SimpleBus\Message\Handler\Map\LazyLoadingMessageHandlerMap
+        arguments:
+            # collection of command handler service ids, will be populated using RegisterHandlerPass
+            - []
+            - @simple_bus.command_bus.invokable_service_locator
 
     simple_bus.command_bus.command_handler_resolver:
-        class: SimpleBus\Command\Handler\LazyLoadingCommandHandlerResolver
+        class: SimpleBus\Message\Handler\Resolver\NameBasedMessageHandlerResolver
         public: false
         arguments:
-            - @simple_bus.command_bus.invokable_service_locator
-            # collection of command handler services, will be populated using RegisterHandlerPass
-            - []
+            - @simple_bus.command_bus.command_name_resolver
+            - @simple_bus.command_bus.command_handler_map
 
     simple_bus.command_bus.invokable_service_locator:
         class: SimpleBus\SymfonyBridge\DependencyInjection\InvokableServiceLocator
@@ -21,8 +42,8 @@ services:
         arguments:
             - @service_container
 
-    simple_bus.command_bus.finishes_command_before_handling_next:
-        class: SimpleBus\Command\Bus\FinishesCommandBeforeHandlingNext
+    simple_bus.command_bus.finishes_command_before_handling_next_middleware:
+        class: SimpleBus\Message\Bus\Middleware\FinishesHandlingMessageBeforeHandlingNext
         public: false
         tags:
-            - { name: command_bus, priority: 1000 }
+            - { name: command_bus_middleware, priority: 1000 }

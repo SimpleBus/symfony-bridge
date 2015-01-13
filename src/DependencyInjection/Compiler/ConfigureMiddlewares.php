@@ -6,7 +6,7 @@ use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
 
-class ConfigureBuses implements CompilerPassInterface
+class ConfigureMiddlewares implements CompilerPassInterface
 {
     private $mainBusId;
     private $busTag;
@@ -19,29 +19,20 @@ class ConfigureBuses implements CompilerPassInterface
 
     public function process(ContainerBuilder $container)
     {
-        $busIds = new \SplPriorityQueue();
+        $middlewareIds = new \SplPriorityQueue();
 
         foreach ($container->findTaggedServiceIds($this->busTag) as $specializedBusId => $tags) {
             foreach ($tags as $tagAttributes) {
                 $priority = isset($tagAttributes['priority']) ? $tagAttributes['priority'] : 0;
-                $busIds->insert($specializedBusId, $priority);
+                $middlewareIds->insert($specializedBusId, $priority);
             }
         }
 
-        $orderedBusIds = iterator_to_array($busIds, false);
-        $numberOfBuses = count($orderedBusIds);
+        $orderedMiddlewareIds = iterator_to_array($middlewareIds, false);
 
-        if ($numberOfBuses === 0) {
-            return;
+        $mainBusDefinition = $container->findDefinition($this->mainBusId);
+        foreach ($orderedMiddlewareIds as $middlewareId) {
+            $mainBusDefinition->addMethodCall('addMiddleware', array(new Reference($middlewareId)));
         }
-
-        for ($i = 0; $i < $numberOfBuses - 1; $i++) {
-            $busId = $orderedBusIds[$i];
-            $nextBusId = $orderedBusIds[$i + 1];
-            $definition = $container->findDefinition($busId);
-            $definition->addMethodCall('setNext', array(new Reference($nextBusId)));
-        }
-
-        $container->setAlias($this->mainBusId, reset($orderedBusIds));
     }
 }

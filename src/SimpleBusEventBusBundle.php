@@ -2,7 +2,7 @@
 
 namespace SimpleBus\SymfonyBridge;
 
-use SimpleBus\SymfonyBridge\DependencyInjection\Compiler\ConfigureBuses;
+use SimpleBus\SymfonyBridge\DependencyInjection\Compiler\ConfigureMiddlewares;
 use SimpleBus\SymfonyBridge\DependencyInjection\Compiler\RegisterEventProviders;
 use SimpleBus\SymfonyBridge\DependencyInjection\Compiler\RegisterHandlers;
 use SimpleBus\SymfonyBridge\DependencyInjection\EventBusExtension;
@@ -23,9 +23,9 @@ class SimpleBusEventBusBundle extends Bundle
         $this->checkRequirements(array('SimpleBusCommandBusBundle'), $container);
 
         $container->addCompilerPass(
-            new ConfigureBuses(
+            new ConfigureMiddlewares(
                 'event_bus',
-                'event_bus'
+                'event_bus_middleware'
             )
         );
 
@@ -38,8 +38,8 @@ class SimpleBusEventBusBundle extends Bundle
 
         $container->addCompilerPass(
             new RegisterHandlers(
-                'simple_bus.event_bus.event_handlers_resolver',
-                'event_handler',
+                'simple_bus.event_bus.event_subscribers_collection',
+                'event_subscriber',
                 'handles',
                 true
             )

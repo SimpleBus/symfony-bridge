@@ -2,21 +2,21 @@
 
 namespace SimpleBus\SymfonyBridge\Tests\Functional\SmokeTest;
 
-use SimpleBus\Command\Bus\CommandBus;
-use SimpleBus\Event\Event;
-use SimpleBus\Event\Handler\EventHandler;
+use SimpleBus\Message\Bus\MessageBus;
+use SimpleBus\Message\Message;
+use SimpleBus\Message\Subscriber\MessageSubscriber;
 
-class TestEntityCreatedEventHandler implements EventHandler
+class TestEntityCreatedEventSubscriber implements MessageSubscriber
 {
     private $commandBus;
     public $eventHandled = false;
 
-    public function __construct(CommandBus $commandBus)
+    public function __construct(MessageBus $commandBus)
     {
         $this->commandBus = $commandBus;
     }
 
-    public function handle(Event $event)
+    public function notify(Message $message)
     {
         $this->eventHandled = true;
 

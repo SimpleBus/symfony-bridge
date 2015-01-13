@@ -23,7 +23,6 @@ libraries:
 
 - [CommandBus](https://github.com/SimpleBus/CommandBus)
 - [EventBus](https://github.com/SimpleBus/EventBus)
-- [CommandEventBridge](https://github.com/SimpleBus/CommandEventBridge)
 - [DoctrineORMBridge](https://github.com/SimpleBus/DoctrineORMBridge)
 
 ## Symfony-specific usage
@@ -95,7 +94,7 @@ be handled by event handlers.
     notification_mail_event_handler:
         class: Matthias\App\SendNotificationMailWhenUserRegistered
         tags:
-            - { name: event_handler, handles: user_registered }
+            - { name: event_subscriber, handles: user_registered }
 ```
 
 Make sure the value of the `handles`  attribute is the same as the value returned by (in this case)
@@ -105,18 +104,45 @@ Make sure the value of the `handles`  attribute is the same as the value returne
 
 ### Custom command buses
 
-It's possible to wrap command buses and add functionality before or after calling the "next" command bus to handle a command. Use the service tag `command_bus` and optionally extend the `RemembersNext` command bus.
+It's possible to influence the behavior of the command bus or the event bus by registering services which are
+ instances of `MessageBusMiddleware`:
 
-- Handle commands asynchronously (for better performance)
-- Log commands (for debugging)
-- Dispatch Symfony events before and after handling a command
+```php
+use SimpleBus\Message\Bus\Middleware\MessageBusMiddleware;
+use SimpleBus\Message\Message;
 
-### Custom event buses
+class SpecializedMiddleware implements MessageBusMiddleware
+{
+    public function handle(Message $message, callable $next)
+    {
+        // do anything you like
 
-It's possible to wrap event buses and add functionality before or after calling the "next" event bus to handle an event. Use the service tag `event_bus` and optionally extend the `RemembersNext` event bus.
+        // then let the next middleware do its job
+        $next($message);
 
-Just some ideas for custom event buses:
+        // finally, you are allowed to do some other things
+    }
+}
+```
 
+Register the service using the service tag `command_bus_middleware` or `event_bus_middleware`, to add it as
+middleware to the `command_bus` and the `event_bus` service respectively:
+
+```yaml
+services:
+    specialized_middleware:
+        class: SpecializedMiddleware
+        tags:
+            - { name: command_bus_middleware, priority: 100 }
+```
+
+By providing a value for the `priority` tag attribute you can influence the order in which middlewares like this are
+added to the command or event bus.
+
+Some interesting features you can implement using specialized middlewares:
+
+- Handle commands/events asynchronously (for better performance)
+- Log commands/events (for debugging)
 - Store events (which will be DDD-CQRS-cool!)
-- Handle events asynchronously (for better performance)
-- Log events (for debugging)
+- Dispatch Symfony events before and after handling a command
+- ...
