@@ -40,7 +40,7 @@ class SimpleBusEventBusBundle extends Bundle
             new RegisterHandlers(
                 'simple_bus.event_bus.event_subscribers_collection',
                 'event_subscriber',
-                'handles',
+                'subscribes_to',
                 true
             )
         );

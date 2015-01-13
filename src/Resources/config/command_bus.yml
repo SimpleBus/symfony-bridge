@@ -14,12 +14,12 @@ services:
         tags:
             - { name: command_bus_middleware, priority: -1000 }
 
-    simple_bus.command_bus.command_name_resolver:
-        alias: simple_bus.command_bus.class_based_command_name_resolver
-        public: false
-
     simple_bus.command_bus.class_based_command_name_resolver:
         class: SimpleBus\Message\Name\ClassBasedNameResolver
+        public: false
+
+    simple_bus.command_bus.named_message_name_resolver:
+        class: SimpleBus\Message\Name\NamedMessageNameResolver
         public: false
 
     simple_bus.command_bus.command_handler_map:

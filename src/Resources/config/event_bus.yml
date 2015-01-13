@@ -27,12 +27,12 @@ services:
         tags:
             - { name: event_bus_middleware, priority: -1000 }
 
-    simple_bus.event_bus.event_name_resolver:
-        alias: simple_bus.event_bus.class_based_event_name_resolver
-        public: false
-
     simple_bus.event_bus.class_based_event_name_resolver:
         class: SimpleBus\Message\Name\ClassBasedNameResolver
+        public: false
+
+    simple_bus.event_bus.named_message_name_resolver:
+        class: SimpleBus\Message\Name\NamedMessageNameResolver
         public: false
 
     simple_bus.event_bus.event_subscribers_collection:

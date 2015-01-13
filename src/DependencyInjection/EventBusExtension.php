@@ -2,22 +2,32 @@
 
 namespace SimpleBus\SymfonyBridge\DependencyInjection;
 
-use Symfony\Component\HttpKernel\DependencyInjection\Extension;
+use Symfony\Component\HttpKernel\DependencyInjection\ConfigurableExtension;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
 
-class EventBusExtension extends Extension
+class EventBusExtension extends ConfigurableExtension
 {
     public function getAlias()
     {
         return 'event_bus';
     }
 
-    public function load(array $config, ContainerBuilder $container)
+    public function getConfiguration(array $config, ContainerBuilder $container)
+    {
+        return new EventBusConfiguration($this->getAlias());
+    }
+
+    protected function loadInternal(array $mergedConfig, ContainerBuilder $container)
     {
         $loader = new YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
 
         $loader->load('event_bus.yml');
+
+        $container->setAlias(
+            'simple_bus.event_bus.event_name_resolver',
+            'simple_bus.event_bus.' . $mergedConfig['event_name_resolver_strategy'] . '_event_name_resolver'
+        );
     }
 }

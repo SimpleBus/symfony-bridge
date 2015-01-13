@@ -88,13 +88,13 @@ class User implements ProvidesEvents
 When the `flush` operation was successful, the events stored by the entity will be released. Each of the events will
 be handled by event handlers.
 
-### Register event handlers using a service tag:
+### Register event subscribers using a service tag:
 
 ```yaml
     notification_mail_event_handler:
         class: Matthias\App\SendNotificationMailWhenUserRegistered
         tags:
-            - { name: event_subscriber, handles: user_registered }
+            - { name: event_subscriber, subscribes_to: user_registered }
 ```
 
 Make sure the value of the `handles`  attribute is the same as the value returned by (in this case)
