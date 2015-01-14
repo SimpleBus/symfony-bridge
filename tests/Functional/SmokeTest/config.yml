@@ -19,14 +19,14 @@ services:
     test_event_handler:
         class: SimpleBus\SymfonyBridge\Tests\Functional\SmokeTest\TestEntityCreatedEventSubscriber
         tags:
-            - { name: event_subscriber, subscribes_to: SimpleBus\SymfonyBridge\Tests\Functional\SmokeTest\TestEntityCreated }
+            - { name: event_subscriber, subscribes_to: test_entity_created }
         arguments:
             - @command_bus
 
     some_other_event_handler:
         class: SimpleBus\SymfonyBridge\Tests\Functional\SmokeTest\SomeOtherEventSubscriber
         tags:
-            - { name: event_subscriber, subscribes_to: SimpleBus\SymfonyBridge\Tests\Functional\SmokeTest\TestEntityCreated }
+            - { name: event_subscriber, subscribes_to: some_other_event }
         arguments:
             - @command_bus
 
@@ -46,3 +46,9 @@ doctrine:
                         prefix: SimpleBus\SymfonyBridge\Tests\Functional\SmokeTest\Entity
                         alias: Test
                         is_bundle: false
+
+command_bus:
+    command_name_resolver_strategy: class_based
+
+event_bus:
+    event_name_resolver_strategy: named_message
