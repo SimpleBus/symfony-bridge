@@ -17,4 +17,4 @@ services:
         public: false
         tags:
             - { name: doctrine.event_subscriber }
-            - { name: event_provider }
+            - { name: message_recorder }

@@ -12,11 +12,11 @@ services:
         tags:
             - { name: event_bus_middleware, priority: 1000 }
 
-    simple_bus.event_bus.aggregates_multiple_event_providers:
-        class: SimpleBus\Event\Provider\AggregatesMultipleEventProviders
+    simple_bus.event_bus.aggregates_recorded_messages:
+        class: SimpleBus\Message\Recorder\AggregatesRecordedMessages
         public: false
         arguments:
-            # collection of ProvidesEvents, will be populated using RegisterEventProviders
+            # collection of RecordsMessages instances, will be provided by RegisterMessageRecorders
             - []
 
     simple_bus.event_bus.notifies_message_subscribers_middleware:
@@ -56,11 +56,11 @@ services:
         arguments:
             - @service_container
 
-    simple_bus.event_bus.event_dispatching_command_bus:
-        class: SimpleBus\Event\MessageBus\DispatchesEventsMiddleware
+    simple_bus.event_bus.handles_recorded_mesages_middleware:
+        class: SimpleBus\Message\Recorder\HandlesRecordedMessagesMiddleware
         public: false
         arguments:
-            - @simple_bus.event_bus.aggregates_multiple_event_providers
+            - @simple_bus.event_bus.aggregates_recorded_messages
             - @simple_bus.event_bus
         tags:
             - { name: command_bus_middleware, priority: 200 }

@@ -2,8 +2,8 @@
 
 namespace SimpleBus\SymfonyBridge\Tests\Functional\SmokeTest;
 
-use SimpleBus\Event\Event;
 use SimpleBus\Message\NamedMessage;
+use SimpleBus\Message\Type\Event;
 
 class SomeOtherEvent implements Event, NamedMessage
 {

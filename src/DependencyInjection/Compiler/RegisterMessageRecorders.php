@@ -6,26 +6,26 @@ use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
 
-class RegisterEventProviders implements CompilerPassInterface
+class RegisterMessageRecorders implements CompilerPassInterface
 {
     private $aggregatorId;
-    private $collectorTag;
+    private $recorderTag;
 
-    public function __construct($aggregatorId, $collectorTag)
+    public function __construct($aggregatorId, $recorderTag)
     {
         $this->aggregatorId = $aggregatorId;
-        $this->collectorTag = $collectorTag;
+        $this->recorderTag = $recorderTag;
     }
 
     public function process(ContainerBuilder $container)
     {
         $aggregator = $container->findDefinition($this->aggregatorId);
 
-        $collectors = array();
-        foreach (array_keys($container->findTaggedServiceIds($this->collectorTag)) as $collectorId) {
-            $collectors[] = new Reference($collectorId);
+        $recorders = array();
+        foreach (array_keys($container->findTaggedServiceIds($this->recorderTag)) as $recorderId) {
+            $recorders[] = new Reference($recorderId);
         }
 
-        $aggregator->replaceArgument(0, $collectors);
+        $aggregator->replaceArgument(0, $recorders);
     }
 }

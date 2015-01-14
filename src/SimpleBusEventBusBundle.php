@@ -3,7 +3,7 @@
 namespace SimpleBus\SymfonyBridge;
 
 use SimpleBus\SymfonyBridge\DependencyInjection\Compiler\ConfigureMiddlewares;
-use SimpleBus\SymfonyBridge\DependencyInjection\Compiler\RegisterEventProviders;
+use SimpleBus\SymfonyBridge\DependencyInjection\Compiler\RegisterMessageRecorders;
 use SimpleBus\SymfonyBridge\DependencyInjection\Compiler\RegisterHandlers;
 use SimpleBus\SymfonyBridge\DependencyInjection\EventBusExtension;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -30,9 +30,9 @@ class SimpleBusEventBusBundle extends Bundle
         );
 
         $container->addCompilerPass(
-            new RegisterEventProviders(
-                'simple_bus.event_bus.aggregates_multiple_event_providers',
-                'event_provider'
+            new RegisterMessageRecorders(
+                'simple_bus.event_bus.aggregates_recorded_messages',
+                'message_recorder'
             )
         );
 

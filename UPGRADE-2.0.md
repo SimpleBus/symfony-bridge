@@ -6,7 +6,7 @@ In 1.0 commands and events had a `name()` method which returned their names. Thi
 tags for command and event handlers. The new default is that commands and events don't have a `name()` method anymore
 and their name is just their fullly-qualified class name (FQCN):
 
-### Commands and command handlers
+### Commands and command handlers, events and event handlers
 
 Given this command:
 
@@ -118,7 +118,7 @@ class SomeEvent implements Event, NamedMessage
 }
 ```
 
-## Command and event bus middlewares
+## Command and event buses have become message bus middlewares
 
 Previously you could define your own command bus and event bus behaviors by implementing `CommandBus` or `EventBus`.
 As of version 2.0 you should implement `MessageBusMiddleware` instead:
@@ -154,3 +154,30 @@ services:
 
 The same for event bus middleware, but then you should use the tag `event_bus_middleware`. The priority value for
 middlewares works just like it did before.
+
+## Event providers have become message recorders
+
+If you have entities that collect domain events, you should implement `RecordsMessages` instead of `ProvidesEvents` and
+use the trait `MessageRecorderCapabilities` instead of `EventProviderCapabilities`. The `raise()` method has been
+renamed to `record()`.
+
+```php
+use SimpleBus\Message\Recorder\MessageRecorderCapabilities;
+use SimpleBus\Message\Recorder\RecordsMessages;
+
+class Entity implements RecordsMessages
+{
+    use MessageRecorderCapabilities;
+
+    public function someFunction()
+    {
+        // $event is an instance of Message
+        $event = ...;
+
+        $this->record($event);
+    }
+}
+```
+
+If you had registered event providers using the service tag `event_provider`, you should change that to
+`message_recorder`.

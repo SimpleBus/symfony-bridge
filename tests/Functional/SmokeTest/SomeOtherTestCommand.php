@@ -2,7 +2,7 @@
 
 namespace SimpleBus\SymfonyBridge\Tests\Functional\SmokeTest;
 
-use SimpleBus\Command\Command;
+use SimpleBus\Message\Type\Command;
 
 class SomeOtherTestCommand implements Command
 {

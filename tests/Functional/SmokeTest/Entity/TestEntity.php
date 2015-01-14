@@ -3,16 +3,16 @@
 namespace SimpleBus\SymfonyBridge\Tests\Functional\SmokeTest\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use SimpleBus\Event\Provider\EventProviderCapabilities;
-use SimpleBus\Event\Provider\ProvidesEvents;
+use SimpleBus\Message\Recorder\MessageRecorderCapabilities;
+use SimpleBus\Message\Recorder\RecordsMessages;
 use SimpleBus\SymfonyBridge\Tests\Functional\SmokeTest\TestEntityCreated;
 
 /**
  * @ORM\Entity
  */
-class TestEntity implements ProvidesEvents
+class TestEntity implements RecordsMessages
 {
-    use EventProviderCapabilities;
+    use MessageRecorderCapabilities;
 
     /**
      * @ORM\Id
@@ -23,6 +23,6 @@ class TestEntity implements ProvidesEvents
 
     public function __construct()
     {
-        $this->raise(new TestEntityCreated($this));
+        $this->record(new TestEntityCreated($this));
     }
 }
