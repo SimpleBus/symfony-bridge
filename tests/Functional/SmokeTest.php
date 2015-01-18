@@ -26,11 +26,11 @@ class SmokeTest extends \PHPUnit_Framework_TestCase
         $commandBus->handle($command);
 
         $this->assertTrue($container->get('test_command_handler')->commandHandled);
-        $this->assertTrue($container->get('test_event_handler')->eventHandled);
+        $this->assertTrue($container->get('test_event_subscriber')->eventHandled);
 
         // some_other_test_command is triggered by test_event_handler
         $this->assertTrue($container->get('some_other_test_command_handler')->commandHandled);
-        $this->assertTrue($container->get('some_other_event_handler')->eventHandled);
+        $this->assertTrue($container->get('some_other_event_subscriber')->eventHandled);
     }
 
     private function createSchema(ContainerInterface $container)
