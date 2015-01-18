@@ -11,6 +11,10 @@ class RegisterMessageRecorders implements CompilerPassInterface
     private $aggregatorId;
     private $recorderTag;
 
+    /**
+     * @param string  $aggregatorId         The id of the service with class AggregatesRecordedMessages
+     * @param string  $recorderTag          The tag name of message recorder services
+     */
     public function __construct($aggregatorId, $recorderTag)
     {
         $this->aggregatorId = $aggregatorId;

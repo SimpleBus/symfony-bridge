@@ -5,7 +5,7 @@ namespace SimpleBus\SymfonyBridge\DependencyInjection\Compiler;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
-class RegisterHandlers implements CompilerPassInterface
+class RegisterSubscribers implements CompilerPassInterface
 {
     use CollectServices;
 
@@ -14,9 +14,9 @@ class RegisterHandlers implements CompilerPassInterface
     private $keyAttribute;
 
     /**
-     * @param string  $serviceId            The service id of the MessageHandlerMap
-     * @param string  $tag                  The tag name of message handler services
-     * @param string  $keyAttribute         The name of the tag attribute that contains the name of the handler
+     * @param string  $serviceId            The service id of the MessageSubscriberCollection
+     * @param string  $tag                  The tag name of message subscriber services
+     * @param string  $keyAttribute         The name of the tag attribute that contains the name of the subscriber
      */
     public function __construct($serviceId, $tag, $keyAttribute)
     {
@@ -26,8 +26,8 @@ class RegisterHandlers implements CompilerPassInterface
     }
 
     /**
-     * Search for message handler services and provide them as a constructor argument to the message handler map
-     * service.
+     * Search for message subscriber services and provide them as a constructor argument to the message subscriber
+     * collection service.
      *
      * @param ContainerBuilder $container
      */
@@ -42,7 +42,7 @@ class RegisterHandlers implements CompilerPassInterface
             $this->tag,
             $this->keyAttribute,
             function ($key, $serviceId) use (&$handlers) {
-                $handlers[$key] = $serviceId;
+                $handlers[$key][] = $serviceId;
             }
         );
 

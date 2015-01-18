@@ -9,9 +9,16 @@ use Symfony\Component\Config\FileLocator;
 
 class CommandBusExtension extends ConfigurableExtension
 {
+    private $alias;
+
+    public function __construct($alias)
+    {
+        $this->alias = $alias;
+    }
+
     public function getAlias()
     {
-        return 'command_bus';
+        return $this->alias;
     }
 
     public function getConfiguration(array $config, ContainerBuilder $container)

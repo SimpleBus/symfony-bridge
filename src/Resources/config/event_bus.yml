@@ -16,7 +16,7 @@ services:
         class: SimpleBus\Message\Recorder\AggregatesRecordedMessages
         public: false
         arguments:
-            # collection of RecordsMessages instances, will be provided by RegisterMessageRecorders
+            # collection of RecordsMessages instances, will be provided by the RegisterMessageRecorders compiler pass
             - []
 
     simple_bus.event_bus.notifies_message_subscribers_middleware:
@@ -39,7 +39,7 @@ services:
         class: SimpleBus\Message\Subscriber\Collection\LazyLoadingMessageSubscriberCollection
         public: false
         arguments:
-            # collection of event subscriber services ids, will be populated using RegisterHandlers
+            # collection of event subscriber services ids, will be provided by the RegisterSubscribers compiler pas
             - []
             - @simple_bus.event_bus.invokable_service_locator
 

@@ -24,8 +24,9 @@ services:
 
     simple_bus.command_bus.command_handler_map:
         class: SimpleBus\Message\Handler\Map\LazyLoadingMessageHandlerMap
+        public: false
         arguments:
-            # collection of command handler service ids, will be populated using RegisterHandlerPass
+            # collection of command handler service ids, will be provided by the RegisterHandlers compiler pass
             - []
             - @simple_bus.command_bus.invokable_service_locator
 

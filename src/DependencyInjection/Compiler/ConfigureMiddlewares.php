@@ -17,6 +17,9 @@ class ConfigureMiddlewares implements CompilerPassInterface
         $this->busTag = $busTag;
     }
 
+    /**
+     * @param ContainerBuilder $container
+     */
     public function process(ContainerBuilder $container)
     {
         $middlewareIds = new \SplPriorityQueue();
