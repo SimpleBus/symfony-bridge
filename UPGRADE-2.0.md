@@ -157,17 +157,17 @@ middlewares works just like it did before.
 
 ## Event providers have become message recorders
 
-If you have entities that collect domain events, you should implement `RecordsMessages` instead of `ProvidesEvents` and
-use the trait `MessageRecorderCapabilities` instead of `EventProviderCapabilities`. The `raise()` method has been
-renamed to `record()`.
+If you have entities that collect domain events, you should implement `ContainsRecordedMessages` instead of
+`ProvidesEvents` and use the trait `PrivateMessageRecorderCapabilities` instead of `EventProviderCapabilities`. The
+`raise()` method has been renamed to `record()`.
 
 ```php
-use SimpleBus\Message\Recorder\MessageRecorderCapabilities;
-use SimpleBus\Message\Recorder\RecordsMessages;
+use SimpleBus\Message\Recorder\ContainsRecordedMessages;
+use SimpleBus\Message\Recorder\PrivateMessageRecorderCapabilities;
 
-class Entity implements RecordsMessages
+class Entity implements ContainsRecordedMessages
 {
-    use MessageRecorderCapabilities;
+    use PrivateMessageRecorderCapabilities;
 
     public function someFunction()
     {
