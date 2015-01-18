@@ -4,7 +4,7 @@
 
 In 1.0 commands and events had a `name()` method which returned their names. This name was also used in the service
 tags for command and event handlers. The new default is that commands and events don't have a `name()` method anymore
-and their name is just their fullly-qualified class name (FQCN):
+and their name is just their fully-qualified class name (FQCN):
 
 ### Commands and command handlers, events and event handlers
 
@@ -90,7 +90,7 @@ services:
 
 ### Named messages
 
-If instead of the FQCN you want to keep using the command/event name as returned by its `name()` method, you should
+If instead of the FQCN you want to keep using the command/event name as returned by its `messageName()` method, you should
 configure this in `config.yml`:
 
 ```yaml
@@ -99,7 +99,7 @@ command_bus:
     command_name_resolver_strategy: class_based
 
 event_bus:
-    # the name of an event should be returned by its name() method
+    # the name of an event should be returned by its messageName() method
     event_name_resolver_strategy: named_message
 ```
 
@@ -107,11 +107,11 @@ When you choose for the `named_message` strategy, you have to make your commands
 interface:
 
 ```php
-use SimpleBus\Message\NamedMessage;
+use SimpleBus\Message\Name\NamedMessage;
 
 class SomeEvent implements Event, NamedMessage
 {
-    public function name()
+    public static function messageName()
     {
         return 'name_of_the_event';
     }

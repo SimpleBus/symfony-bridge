@@ -2,7 +2,7 @@
 
 namespace SimpleBus\SymfonyBridge\Tests\Functional\SmokeTest;
 
-use SimpleBus\Message\NamedMessage;
+use SimpleBus\Message\Name\NamedMessage;
 use SimpleBus\Message\Type\Event;
 use SimpleBus\SymfonyBridge\Tests\Functional\SmokeTest\Entity\TestEntity;
 
@@ -20,7 +20,7 @@ class TestEntityCreated implements Event, NamedMessage
         return $this->testEntity;
     }
 
-    public function name()
+    public static function messageName()
     {
         return 'test_entity_created';
     }
