@@ -12,7 +12,7 @@ services:
     some_other_test_command_handler:
         class: SimpleBus\SymfonyBridge\Tests\Functional\SmokeTest\SomeOtherTestCommandHandler
         arguments:
-            - @message_recorder
+            - @event_recorder
         tags:
             - { name: command_handler, handles: SimpleBus\SymfonyBridge\Tests\Functional\SmokeTest\SomeOtherTestCommand }
 

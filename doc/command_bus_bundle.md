@@ -69,6 +69,32 @@ services:
 > Since only one of the command handlers is going to handle any particular command, command handlers are lazy-loaded.
 > This means that their services should be defined as public services (i.e. you can't use `public: false` for them).
 
+## Setting the command name resolving strategy
+
+To find the correct command handler for a given command, the name of the command is used. This can be either 1) its
+fully-qualified class name (FQCN) or, 2) if the command implements the `SimpleBus\Message\Name\NamedMessage` interface,
+the value returned by its static `messageName()` method. By default, the first strategy is used, but you can configure
+it in your application configuration:
+
+```yaml
+command_bus:
+    # default value for this key is "class_based"
+    command_name_resolver_strategy: named_message
+```
+
+When you change the strategy, you also have to change the value of the `subscribes_to` attribute of your command handler
+service definitions:
+
+```yaml
+services:
+    register_user_command_handler:
+        class: Fully\Qualified\Class\Name\Of\RegisterUserCommandHandler
+        tags:
+            - { name: command_handler, handles: register_user }
+```
+
+Make sure that the value of `subscribes_to` matches the return value of `RegisterUser::messageName()`.
+
 ## Adding command bus middleware
 
 As described in the [MessageBus documentation](http://simplebus.github.io/MessageBus/doc/command_bus.html) you can

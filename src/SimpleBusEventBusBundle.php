@@ -20,11 +20,6 @@ class SimpleBusEventBusBundle extends Bundle
         $this->configurationAlias = $alias;
     }
 
-    protected function requires()
-    {
-        return array('SimpleBusCommandBusBundle');
-    }
-
     public function build(ContainerBuilder $container)
     {
         $this->checkRequirements(array('SimpleBusCommandBusBundle'), $container);
@@ -39,7 +34,7 @@ class SimpleBusEventBusBundle extends Bundle
         $container->addCompilerPass(
             new RegisterMessageRecorders(
                 'simple_bus.event_bus.aggregates_recorded_messages',
-                'message_recorder'
+                'event_recorder'
             )
         );
 

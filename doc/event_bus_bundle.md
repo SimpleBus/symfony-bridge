@@ -62,13 +62,39 @@ services:
     user_registered_event_subscriber:
         class: Fully\Qualified\Class\Name\Of\UserRegisteredEventSubscriber
         tags:
-            - { name: event_subscriber, handles: Fully\Qualified\Class\Name\Of\UserRegistered }
+            - { name: event_subscriber, subscribes_to: Fully\Qualified\Class\Name\Of\UserRegistered }
 ```
 
 > #### Event subscribers are lazy-loaded
 >
 > Since only some of the event subscribers are going to handle any particular event, event subscribers are lazy-loaded.
 > This means that their services should be defined as public services (i.e. you can't use `public: false` for them).
+
+## Setting the event name resolving strategy
+
+To find the correct event subscribers for a given event, the name of the event is used. This can be either 1) its fully-
+qualified class name (FQCN) or, 2) if the event implements the `SimpleBus\Message\Name\NamedMessage` interface, the
+value returned by its static `messageName()` method. By default, the first strategy is used, but you can configure it
+in your application configuration:
+
+```yaml
+event_bus:
+    # default value for this key is "class_based"
+    event_name_resolver_strategy: named_message
+```
+
+When you change the strategy, you also have to change the value of the `subscribes_to` attribute of your event
+subscriber service definitions:
+
+```yaml
+services:
+    user_registered_event_subscriber:
+        class: Fully\Qualified\Class\Name\Of\UserRegisteredEventSubscriber
+        tags:
+            - { name: event_subscriber, subscribes_to: user_registered }
+```
+
+Make sure that the value of `subscribes_to` matches the return value of `UserRegistered::messageName()`.
 
 ## Adding event bus middlewares
 
@@ -94,3 +120,85 @@ event bus.
 > This means that their services should be defined as private services (i.e. you should use `public: false`). See also:
 > [Marking Services as public /
 > private](http://symfony.com/doc/current/components/dependency_injection/advanced.html#marking-services-as-public-private)
+
+## Event recorders
+
+### Recording events
+
+As explained [in the documentation of MessageBus](http://simplebus.github.io/MessageBus/doc/message_recorder.html) you
+can collect events while a command is being handled. If you want to record new events you can inject the
+`event_recorder` service as a constructor argument of a command handler:
+
+```php
+use SimpleBus\Message\Handler\MessageHandler;
+use SimpleBus\Message\Message;
+use SimpleBus\Message\Recorder\RecordsMessages;
+
+class SomeInterestingCommandHandler implements MessageHandler
+{
+    private $eventRecorder;
+
+    public function __construct(RecordsMessages $eventRecorder)
+    {
+        $this->eventRecorder = $eventRecorder;
+    }
+
+    public function handle(Message $message)
+    {
+        ...
+
+        // create an event (which is itself an instance of Message)
+        $event = new SomethingInterestingHappened();
+
+        // record the event
+        $this->eventRecorder->record($event);
+    }
+}
+```
+
+The corresponding service definition looks like this:
+
+```yaml
+services:
+    some_interesting_command_handler:
+    arguments:
+        - @event_recorder
+    tags:
+        - { name: command_handler, handles: Fully\Qualified\Name\Of\SomeInterestingCommand
+```
+
+Recorded events will be handled after the command has been completely handled.
+
+### Registering your own message recorders
+
+In case you have another source for recorded message (for instance a class that collects domain events like the
+[DoctrineORMBridge](https://github.com/SimpleBus/DoctrineORMBridge) does), you can register it as a message recorder:
+
+```php
+use SimpleBus\Message\Recorder\ContainsRecordedMessages;
+use SimpleBus\Message\Message;
+
+class PropelDomainEvents implements ContainsRecordedMessages
+{
+    public function recordedMessages()
+    {
+        // return an array of Message instances
+    }
+
+    public function eraseRecordedMessages()
+    {
+        // clear the internal array containing the recorded messages
+    }
+}
+```
+
+The corresponding service definition looks like this:
+
+```yaml
+services:
+    propel_domain_events:
+        class: Fully\Qualified\Class\Name\Of\PropelDomainEvents
+        public: false
+        tags:
+            - { name: event_recorder }
+```

@@ -19,15 +19,15 @@ services:
             # collection of RecordsMessages instances, will be provided by the RegisterMessageRecorders compiler pass
             - []
 
-    message_recorder:
-        alias: simple_bus.event_bus.public_message_recorder
+    event_recorder:
+        alias: simple_bus.event_bus.public_event_recorder
         public: false
 
-    simple_bus.event_bus.public_message_recorder:
+    simple_bus.event_bus.public_event_recorder:
         class: SimpleBus\Message\Recorder\PublicMessageRecorder
         public: false
         tags:
-            - { name: message_recorder }
+            - { name: event_recorder }
 
     simple_bus.event_bus.notifies_message_subscribers_middleware:
         class: SimpleBus\Message\Subscriber\NotifiesMessageSubscribersMiddleware

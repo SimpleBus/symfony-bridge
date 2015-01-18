@@ -180,4 +180,4 @@ class Entity implements ContainsRecordedMessages
 ```
 
 If you had registered event providers using the service tag `event_provider`, you should change that to
-`message_recorder`.
+`event_recorder`.
