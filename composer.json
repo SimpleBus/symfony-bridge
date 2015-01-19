@@ -1,7 +1,7 @@
 {
     "name": "simple-bus/symfony-bridge",
     "type": "library",
-    "description": " Bridge for using command buses and event buses in Symfony projects ",
+    "description": "Bridge for using command buses and event buses in Symfony projects",
     "keywords": ["Symfony", "Doctrine", "event bus", "command bus"],
     "homepage": "http://github.com/SimpleBus/SymfonyBridge",
     "license": "MIT",
@@ -14,33 +14,26 @@
     ],
     "require": {
         "php": ">=5.4",
-        "simple-bus/message-bus": "~1.0@dev",
+        "simple-bus/message-bus": "~1.0",
         "symfony/http-kernel": "~2.3",
         "symfony/dependency-injection": "~2.3",
         "symfony/yaml": "~2.3"
     },
     "suggest": {
-        "simple-bus/doctrine-orm-bridge": "~2.0@dev",
+        "simple-bus/doctrine-orm-bridge": "~2.0",
         "doctrine/orm": "~2.3",
         "doctrine/doctrine-bundle": "~1.0"
     },
     "require-dev": {
         "phpunit/phpunit": "~3.7",
-        "simple-bus/doctrine-orm-bridge": "~2.0@dev",
+        "simple-bus/doctrine-orm-bridge": "~2.0",
         "doctrine/orm": "~2.3",
         "doctrine/doctrine-bundle": "~1.0"
     },
-    "minimum-stability": "dev",
-    "prefer-stable": true,
     "autoload": {
         "psr-4" : { "SimpleBus\\SymfonyBridge\\" : "src" }
     },
     "autoload-dev": {
         "psr-4" : { "SimpleBus\\SymfonyBridge\\Tests\\" : "tests" }
-    },
-    "extra": {
-        "branch-alias": {
-            "dev-master": "2.0-dev"
-        }
     }
 }
