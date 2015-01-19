@@ -60,7 +60,7 @@ class ConfigureMiddlewaresTest extends \PHPUnit_Framework_TestCase
 
         foreach ($this->mainBusDefinition->getMethodCalls() as $methodCall) {
             list($method, $arguments) = $methodCall;
-            $this->assertSame('addMiddleware', $method);
+            $this->assertSame('appendMiddleware', $method);
             $this->assertCount(1, $arguments);
             $referencedService = $arguments[0];
             $this->assertInstanceOf(
