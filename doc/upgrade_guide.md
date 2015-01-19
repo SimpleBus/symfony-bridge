@@ -185,7 +185,7 @@ services:
     bar_event_subscriber:
         class: Fully\Qualified\Class\Name\Of\BarEventSubscriber
         tags:
-            - { name: event_subscriber, handles: Fully\Qualified\Class\Name\Of\BarEvent }
+            - { name: event_subscriber, subscribes_to: Fully\Qualified\Class\Name\Of\BarEvent }
 ```
 
 Or, if you let events implement `NamedMessage`:
@@ -195,7 +195,7 @@ services:
     bar_event_subscriber:
         class: Fully\Qualified\Class\Name\Of\BarEventSubscriber
         tags:
-            - { name: event_subscriber, handles: bar }
+            - { name: event_subscriber, subscribes_to: bar }
 ```
 
 ### Named messages
