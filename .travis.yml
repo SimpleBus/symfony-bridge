@@ -10,14 +10,13 @@ env:
   - SYMFONY_VERSION: 2.5.*
   - SYMFONY_VERSION: 2.6.*
   - SYMFONY_VERSION: 2.7.*@dev
-  - SYMFONY_VERSION: 3.0.*@dev
 
 before_install:
   - composer selfupdate
   - composer require --no-update symfony/http-kernel:${SYMFONY_VERSION} symfony/dependency-injection:${SYMFONY_VERSION} symfony/yaml:${SYMFONY_VERSION}
 
 install:
-  - composer update --prefer-source
+  - composer update --prefer-dist
 
 script:
   - vendor/bin/phpunit
