@@ -16,7 +16,26 @@ When you enable the `DoctrineORMBridgeBundle` in your project, both features wil
 command bus middlewares:
 
 ```php
-
+class AppKernel extends Kernel
+{
+    public function registerBundles()
+    {
+        $bundles = array(
+            ...
+            new SimpleBus\SymfonyBridge\DoctrineOrmBridgeBundle()
+        )
+        ...
+    }
+    ...
+}
 ```
 
-Both middlewares use the `default` entity manager.
+You can optionally configure which entity manager and connection should be used:
+
+```yaml
+# in config.yml
+
+doctrine_orm_bridge:
+    entity_manager: default
+    connection: default
+```

@@ -1,20 +1,21 @@
 services:
-    # override this alias to use a different entity manager
-    simple_bus.doctrine_orm_bridge.entity_manager:
-        alias: doctrine.orm.entity_manager
-        public: false
-
     simple_bus.doctrine_orm_bridge.wraps_next_command_in_transaction:
         class: SimpleBus\DoctrineORMBridge\MessageBus\WrapsMessageHandlingInTransaction
         public: false
         arguments:
-            - @simple_bus.doctrine_orm_bridge.entity_manager
+            - @doctrine
+            - %simple_bus.doctrine_orm_bridge.entity_manager%
         tags:
             - { name: command_bus_middleware, priority: 100 }
 
+    # for BC
     simple_bus.doctrine_orm_bridge.aggregates_multiple_event_providers:
+        alias: simple_bus.doctrine_orm_bridge.collects_events_from_entities
+        public: false
+
+    simple_bus.doctrine_orm_bridge.collects_events_from_entities:
         class: SimpleBus\DoctrineORMBridge\EventListener\CollectsEventsFromEntities
         public: false
         tags:
-            - { name: doctrine.event_subscriber }
+            # doctrine.event_subscriber tag will be added by DoctrineOrmBridgeExtension
             - { name: event_recorder }

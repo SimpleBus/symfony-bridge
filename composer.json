@@ -26,7 +26,7 @@
     },
     "require-dev": {
         "phpunit/phpunit": "~4.0",
-        "simple-bus/doctrine-orm-bridge": "~2.0",
+        "simple-bus/doctrine-orm-bridge": "~3.0",
         "doctrine/orm": "~2.3",
         "doctrine/doctrine-bundle": "~1.0"
     },

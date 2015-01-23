@@ -10,9 +10,16 @@ class DoctrineOrmBridgeBundle extends Bundle
 {
     use RequiresOtherBundles;
 
+    private $configurationAlias;
+
+    public function __construct($configurationAlias = 'doctrine_orm_bridge')
+    {
+        $this->configurationAlias = $configurationAlias;
+    }
+
     public function getContainerExtension()
     {
-        return new DoctrineOrmBridgeExtension();
+        return new DoctrineOrmBridgeExtension($this->configurationAlias);
     }
 
     public function build(ContainerBuilder $container)
