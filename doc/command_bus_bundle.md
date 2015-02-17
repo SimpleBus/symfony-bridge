@@ -90,7 +90,7 @@ services:
     register_user_command_handler:
         class: Fully\Qualified\Class\Name\Of\RegisterUserCommandHandler
         tags:
-            - { name: command_handler, handles: register_user }
+            - { name: command_handler, subscribes_to: register_user }
 ```
 
 Make sure that the value of `subscribes_to` matches the return value of `RegisterUser::messageName()`.
