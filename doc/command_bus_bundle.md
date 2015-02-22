@@ -82,7 +82,7 @@ command_bus:
     command_name_resolver_strategy: named_message
 ```
 
-When you change the strategy, you also have to change the value of the `subscribes_to` attribute of your command handler
+When you change the strategy, you also have to change the value of the `handles` attribute of your command handler
 service definitions:
 
 ```yaml
@@ -93,7 +93,7 @@ services:
             - { name: command_handler, handles: register_user }
 ```
 
-Make sure that the value of `subscribes_to` matches the return value of `RegisterUser::messageName()`.
+Make sure that the value of `handles` matches the return value of `RegisterUser::messageName()`.
 
 ## Adding command bus middleware
 
