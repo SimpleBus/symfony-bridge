@@ -23,6 +23,10 @@ class RegisterMessageRecorders implements CompilerPassInterface
 
     public function process(ContainerBuilder $container)
     {
+        if (!$container->has($this->aggregatorId)) {
+            return;
+        }
+
         $aggregator = $container->findDefinition($this->aggregatorId);
 
         $recorders = array();

@@ -22,6 +22,10 @@ class ConfigureMiddlewares implements CompilerPassInterface
      */
     public function process(ContainerBuilder $container)
     {
+        if (!$container->has($this->mainBusId)) {
+            return;
+        }
+
         $middlewareIds = new \SplPriorityQueue();
 
         foreach ($container->findTaggedServiceIds($this->busTag) as $specializedBusId => $tags) {

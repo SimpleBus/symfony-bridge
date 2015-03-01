@@ -33,6 +33,10 @@ class RegisterHandlers implements CompilerPassInterface
      */
     public function process(ContainerBuilder $container)
     {
+        if (!$container->has($this->serviceId)) {
+            return;
+        }
+
         $definition = $container->findDefinition($this->serviceId);
 
         $handlers = array();
