@@ -82,7 +82,7 @@ command_bus:
     command_name_resolver_strategy: named_message
 ```
 
-When you change the strategy, you also have to change the value of the `subscribes_to` attribute of your command handler
+When you change the strategy, you also have to change the value of the `handles` attribute of your command handler
 service definitions:
 
 ```yaml
