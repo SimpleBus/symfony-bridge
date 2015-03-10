@@ -5,8 +5,6 @@ services:
         arguments:
             - @doctrine
             - %simple_bus.doctrine_orm_bridge.entity_manager%
-        tags:
-            - { name: command_bus_middleware, priority: 100 }
 
     # for BC
     simple_bus.doctrine_orm_bridge.aggregates_multiple_event_providers:

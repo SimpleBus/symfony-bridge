@@ -5,6 +5,8 @@ services:
     simple_bus.event_bus:
         class: SimpleBus\Message\Bus\Middleware\MessageBusSupportingMiddleware
         public: false
+        tags:
+            - { name: message_bus, type: event, middleware_tag: event_bus_middleware }
 
     simple_bus.event_bus.events.finishes_message_before_handling_next_middleware:
         class: SimpleBus\Message\Bus\Middleware\FinishesHandlingMessageBeforeHandlingNext
