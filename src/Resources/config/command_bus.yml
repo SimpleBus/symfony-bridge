@@ -1,3 +1,6 @@
+parameters:
+    simple_bus.command_bus.logging.level: debug
+
 services:
     command_bus:
         alias: simple_bus.command_bus
@@ -50,3 +53,10 @@ services:
         public: false
         tags:
             - { name: command_bus_middleware, priority: 1000 }
+
+    simple_bus.command_bus.logging_middleware:
+        class: SimpleBus\Message\Logging\LoggingMiddleware
+        public: false
+        arguments:
+            - @logger
+            - %simple_bus.command_bus.logging.level%

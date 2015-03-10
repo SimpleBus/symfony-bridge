@@ -202,3 +202,20 @@ services:
         tags:
             - { name: event_recorder }
 ```
+
+> ## Logging
+>
+> If you want to log every event that is being handled, enable logging in `config.yml`:
+>
+> ```yaml
+> event_bus:
+>     logging: ~
+> ```
+>
+> Optionally mention the channel that should be used for logging:
+> ```yaml
+> event_bus:
+>     logging:
+>         # default channel: event_bus
+>         channel: my_preferred_channel
+> ```

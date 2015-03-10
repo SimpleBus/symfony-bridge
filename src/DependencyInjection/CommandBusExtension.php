@@ -36,5 +36,8 @@ class CommandBusExtension extends ConfigurableExtension
             'simple_bus.command_bus.command_name_resolver',
             'simple_bus.command_bus.' . $mergedConfig['command_name_resolver_strategy'] . '_command_name_resolver'
         );
+
+        $container->setParameter('simple_bus.command_bus.logging.enabled', $mergedConfig['logging']['enabled']);
+        $container->setParameter('simple_bus.command_bus.logging.channel', $mergedConfig['logging']['channel']);
     }
 }

@@ -6,6 +6,7 @@ use Doctrine\Bundle\DoctrineBundle\DoctrineBundle;
 use SimpleBus\SymfonyBridge\SimpleBusCommandBusBundle;
 use SimpleBus\SymfonyBridge\DoctrineOrmBridgeBundle;
 use SimpleBus\SymfonyBridge\SimpleBusEventBusBundle;
+use Symfony\Bundle\MonologBundle\MonologBundle;
 use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\HttpKernel\Kernel;
 
@@ -27,7 +28,8 @@ class TestKernel extends Kernel
             new DoctrineBundle(),
             new SimpleBusCommandBusBundle(),
             new SimpleBusEventBusBundle(),
-            new DoctrineOrmBridgeBundle()
+            new DoctrineOrmBridgeBundle(),
+            new MonologBundle()
         );
     }
 

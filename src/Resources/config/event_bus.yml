@@ -1,3 +1,6 @@
+parameters:
+    simple_bus.event_bus.logging.level: debug
+
 services:
     event_bus:
         alias: simple_bus.event_bus
@@ -76,3 +79,10 @@ services:
             - @simple_bus.event_bus
         tags:
             - { name: command_bus_middleware, priority: 200 }
+
+    simple_bus.event_bus.logging_middleware:
+        class: SimpleBus\Message\Logging\LoggingMiddleware
+        public: false
+        arguments:
+            - @logger
+            - %simple_bus.event_bus.logging.level%

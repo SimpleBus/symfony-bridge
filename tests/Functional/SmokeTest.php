@@ -31,6 +31,13 @@ class SmokeTest extends \PHPUnit_Framework_TestCase
         // some_other_test_command is triggered by test_event_handler
         $this->assertTrue($container->get('some_other_test_command_handler')->commandHandled);
         $this->assertTrue($container->get('some_other_event_subscriber')->eventHandled);
+
+        // it has logged some things
+        $loggedMessages = file_get_contents($container->getParameter('log_file'));
+        $this->assertContains('command_bus.DEBUG: Started handling a message', $loggedMessages);
+        $this->assertContains('command_bus.DEBUG: Finished handling a message', $loggedMessages);
+        $this->assertContains('event_bus.DEBUG: Started handling a message', $loggedMessages);
+        $this->assertContains('event_bus.DEBUG: Finished handling a message', $loggedMessages);
     }
 
     private function createSchema(ContainerInterface $container)

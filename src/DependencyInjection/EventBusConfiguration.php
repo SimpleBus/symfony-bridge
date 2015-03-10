@@ -26,6 +26,15 @@ class EventBusConfiguration implements ConfigurationInterface
                     ->values(['class_based', 'named_message'])
                     ->defaultValue('class_based')
                 ->end()
+                ->arrayNode('logging')
+                    ->addDefaultsIfNotSet()
+                    ->canBeEnabled()
+                    ->children()
+                        ->scalarNode('channel')
+                            ->defaultValue('event_bus')
+                        ->end()
+                    ->end()
+                ->end()
             ->end();
 
         return $treeBuilder;
