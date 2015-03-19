@@ -129,10 +129,4 @@ command bus.
 >     logging: ~
 > ```
 >
-> Optionally mention the channel that should be used for logging:
-> ```yaml
-> command_bus:
->     logging:
->         # default channel: command_bus
->         channel: my_preferred_channel
-> ```
+> Messages will be logged to the `command_bus` channel.

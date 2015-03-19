@@ -212,10 +212,4 @@ services:
 >     logging: ~
 > ```
 >
-> Optionally mention the channel that should be used for logging:
-> ```yaml
-> event_bus:
->     logging:
->         # default channel: event_bus
->         channel: my_preferred_channel
-> ```
+> Messages will be logged to the `event_bus` channel.

@@ -35,7 +35,8 @@ class EventBusExtension extends ConfigurableExtension
             'simple_bus.event_bus.' . $mergedConfig['event_name_resolver_strategy'] . '_event_name_resolver'
         );
 
-        $container->setParameter('simple_bus.event_bus.logging.enabled', $mergedConfig['logging']['enabled']);
-        $container->setParameter('simple_bus.event_bus.logging.channel', $mergedConfig['logging']['channel']);
+        if ($mergedConfig['logging']['enabled']) {
+            $loader->load('event_bus_logging.yml');
+        }
     }
 }

@@ -27,13 +27,7 @@ class CommandBusConfiguration implements ConfigurationInterface
                     ->defaultValue('class_based')
                 ->end()
                 ->arrayNode('logging')
-                    ->addDefaultsIfNotSet()
                     ->canBeEnabled()
-                    ->children()
-                        ->scalarNode('channel')
-                            ->defaultValue('command_bus')
-                        ->end()
-                    ->end()
                 ->end()
             ->end();
 
