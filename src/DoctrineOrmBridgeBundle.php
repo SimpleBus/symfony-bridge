@@ -2,7 +2,8 @@
 
 namespace SimpleBus\SymfonyBridge;
 
-use SimpleBus\SymfonyBridge\DependencyInjection\Compiler\RegisterTransactionalMiddleware;
+use SimpleBus\SymfonyBridge\DependencyInjection\Compiler\AddMiddlewareTags;
+use SimpleBus\SymfonyBridge\DependencyInjection\Compiler\CompilerPassUtil;
 use SimpleBus\SymfonyBridge\DependencyInjection\DoctrineOrmBridgeExtension;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
@@ -27,10 +28,11 @@ class DoctrineOrmBridgeBundle extends Bundle
     {
         $this->checkRequirements(array('SimpleBusCommandBusBundle', 'SimpleBusEventBusBundle'), $container);
 
-        // hack, needed to prepend our compiler pass instead of appending it
-        $compilerPassConfig = $container->getCompilerPassConfig();
-        $beforeOptimizationPasses = $compilerPassConfig->getBeforeOptimizationPasses();
-        array_unshift($beforeOptimizationPasses, new RegisterTransactionalMiddleware());
-        $compilerPassConfig->setBeforeOptimizationPasses($beforeOptimizationPasses);
+        $compilerPass = new AddMiddlewareTags(
+            'simple_bus.doctrine_orm_bridge.wraps_next_command_in_transaction',
+            ['command'],
+            100
+        );
+        CompilerPassUtil::prependBeforeOptimizationPass($container, $compilerPass);
     }
 }

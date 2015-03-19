@@ -74,5 +74,3 @@ services:
         arguments:
             - @simple_bus.event_bus.aggregates_recorded_messages
             - @simple_bus.event_bus
-        tags:
-            - { name: command_bus_middleware, priority: 200 }
