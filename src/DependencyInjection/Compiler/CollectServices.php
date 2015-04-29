@@ -27,7 +27,7 @@ trait CollectServices
 
                 $key = $tagAttributes[$keyAttribute];
 
-                call_user_func($callback, $key, $serviceId);
+                call_user_func($callback, $key, $serviceId, $tagAttributes);
             }
         }
     }

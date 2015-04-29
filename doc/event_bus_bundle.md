@@ -70,6 +70,21 @@ services:
 > Since only some of the event subscribers are going to handle any particular event, event subscribers are lazy-loaded.
 > This means that their services should be defined as public services (i.e. you can't use `public: false` for them).
 
+
+> #### Event subscribers are callables
+>
+> Any service that is a [PHP callable](http://php.net/manual/en/language.types.callable.php) itself can be used as an
+> event subscriber. If a service itself is not callable, SimpleBus looks for a `notify` method and calls it. If you want
+> to use a custom method, just add a `method` attribute to the `event_subscriber` tag:
+>
+> ```yaml
+> services:
+>     user_registered_event_subscriber:
+>         ...
+>         tags:
+>             - { name: event_subscriber, subscribes_to: ..., method: userRegistered }
+```
+
 ## Setting the event name resolving strategy
 
 To find the correct event subscribers for a given event, the name of the event is used. This can be either 1) its fully-
