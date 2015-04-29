@@ -47,13 +47,19 @@ services:
         class: SimpleBus\Message\Name\NamedMessageNameResolver
         public: false
 
+    simple_bus.event_bus.callable_resolver:
+        class: SimpleBus\Message\CallableResolver\ServiceLocatorAwareCallableResolver
+        public: false
+        arguments:
+            - [@service_container, 'get']
+
     simple_bus.event_bus.event_subscribers_collection:
-        class: SimpleBus\Message\Subscriber\Collection\LazyLoadingMessageSubscriberCollection
+        class: SimpleBus\Message\CallableResolver\CallableCollection
         public: false
         arguments:
             # collection of event subscriber services ids, will be provided by the RegisterSubscribers compiler pas
             - []
-            - @simple_bus.event_bus.invokable_service_locator
+            - @simple_bus.event_bus.callable_resolver
 
     simple_bus.event_bus.event_subscribers_resolver:
         class: SimpleBus\Message\Subscriber\Resolver\NameBasedMessageSubscriberResolver
@@ -61,12 +67,6 @@ services:
         arguments:
             - @simple_bus.event_bus.event_name_resolver
             - @simple_bus.event_bus.event_subscribers_collection
-
-    simple_bus.event_bus.invokable_service_locator:
-        class: SimpleBus\SymfonyBridge\DependencyInjection\InvokableServiceLocator
-        public: false
-        arguments:
-            - @service_container
 
     simple_bus.event_bus.handles_recorded_mesages_middleware:
         class: SimpleBus\Message\Recorder\HandlesRecordedMessagesMiddleware

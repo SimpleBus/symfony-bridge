@@ -3,10 +3,8 @@
 namespace SimpleBus\SymfonyBridge\Tests\Functional\SmokeTest;
 
 use SimpleBus\Message\Bus\MessageBus;
-use SimpleBus\Message\Message;
-use SimpleBus\Message\Subscriber\MessageSubscriber;
 
-class TestEntityCreatedEventSubscriber implements MessageSubscriber
+class TestEntityCreatedEventSubscriber
 {
     private $commandBus;
     public $eventHandled = false;
@@ -16,7 +14,7 @@ class TestEntityCreatedEventSubscriber implements MessageSubscriber
         $this->commandBus = $commandBus;
     }
 
-    public function notify(Message $message)
+    public function notify()
     {
         $this->eventHandled = true;
 

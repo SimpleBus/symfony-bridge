@@ -2,14 +2,11 @@
 
 namespace SimpleBus\SymfonyBridge\Tests\Functional\SmokeTest;
 
-use SimpleBus\Message\Message;
-use SimpleBus\Message\Subscriber\MessageSubscriber;
-
-class SomeOtherEventSubscriber implements MessageSubscriber
+class SomeOtherEventSubscriber
 {
     public $eventHandled = false;
 
-    public function notify(Message $event)
+    public function notify()
     {
         $this->eventHandled = true;
     }

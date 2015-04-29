@@ -24,13 +24,19 @@ services:
         class: SimpleBus\Message\Name\NamedMessageNameResolver
         public: false
 
+    simple_bus.command_bus.callable_resolver:
+        class: SimpleBus\Message\CallableResolver\ServiceLocatorAwareCallableResolver
+        public: false
+        arguments:
+            - [@service_container, 'get']
+
     simple_bus.command_bus.command_handler_map:
-        class: SimpleBus\Message\Handler\Map\LazyLoadingMessageHandlerMap
+        class: SimpleBus\Message\CallableResolver\CallableMap
         public: false
         arguments:
             # collection of command handler service ids, will be provided by the RegisterHandlers compiler pass
             - []
-            - @simple_bus.command_bus.invokable_service_locator
+            - @simple_bus.command_bus.callable_resolver
 
     simple_bus.command_bus.command_handler_resolver:
         class: SimpleBus\Message\Handler\Resolver\NameBasedMessageHandlerResolver
@@ -38,12 +44,6 @@ services:
         arguments:
             - @simple_bus.command_bus.command_name_resolver
             - @simple_bus.command_bus.command_handler_map
-
-    simple_bus.command_bus.invokable_service_locator:
-        class: SimpleBus\SymfonyBridge\DependencyInjection\InvokableServiceLocator
-        public: false
-        arguments:
-            - @service_container
 
     simple_bus.command_bus.finishes_command_before_handling_next_middleware:
         class: SimpleBus\Message\Bus\Middleware\FinishesHandlingMessageBeforeHandlingNext

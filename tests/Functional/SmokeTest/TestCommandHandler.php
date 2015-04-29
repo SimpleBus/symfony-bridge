@@ -3,11 +3,9 @@
 namespace SimpleBus\SymfonyBridge\Tests\Functional\SmokeTest;
 
 use Doctrine\ORM\EntityManager;
-use SimpleBus\Message\Handler\MessageHandler;
-use SimpleBus\Message\Message;
 use SimpleBus\SymfonyBridge\Tests\Functional\SmokeTest\Entity\TestEntity;
 
-class TestCommandHandler implements MessageHandler
+class TestCommandHandler
 {
     public $commandHandled = false;
 
@@ -18,7 +16,7 @@ class TestCommandHandler implements MessageHandler
         $this->entityManager = $entityManager;
     }
 
-    public function handle(Message $command)
+    public function handle()
     {
         $this->commandHandled = true;
 

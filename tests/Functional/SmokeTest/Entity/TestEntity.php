@@ -3,14 +3,14 @@
 namespace SimpleBus\SymfonyBridge\Tests\Functional\SmokeTest\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use SimpleBus\Message\Recorder\ContainsRecordedMessages;
 use SimpleBus\Message\Recorder\PrivateMessageRecorderCapabilities;
-use SimpleBus\Message\Recorder\RecordsMessages;
 use SimpleBus\SymfonyBridge\Tests\Functional\SmokeTest\TestEntityCreated;
 
 /**
  * @ORM\Entity
  */
-class TestEntity implements RecordsMessages
+class TestEntity implements ContainsRecordedMessages
 {
     use PrivateMessageRecorderCapabilities;
 

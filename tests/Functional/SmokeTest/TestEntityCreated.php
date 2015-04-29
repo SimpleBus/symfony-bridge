@@ -3,10 +3,9 @@
 namespace SimpleBus\SymfonyBridge\Tests\Functional\SmokeTest;
 
 use SimpleBus\Message\Name\NamedMessage;
-use SimpleBus\Message\Type\Event;
 use SimpleBus\SymfonyBridge\Tests\Functional\SmokeTest\Entity\TestEntity;
 
-class TestEntityCreated implements Event, NamedMessage
+class TestEntityCreated implements NamedMessage
 {
     private $testEntity;
 
