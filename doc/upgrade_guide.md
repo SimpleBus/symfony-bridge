@@ -4,6 +4,32 @@ currentMenu: upgrade_guide
 
 # Upgrade guide
 
+## From 3.x to 4.0
+
+Version `4.0` works with `SimpleBus/MessageBus` `2.0` so you have to make the changes descibred in its
+[upgrade guide](http://simplebus.github.io/MessageBus/doc/upgrade_guide.html) as well.
+
+The biggest change for the `SymfonyBridge` package is that command handler and event subscriber services don't have to
+have `handle` or `notify` methods respectively:
+
+1. If the services are valid callables already (i.e. they have a public `__invoke()` method), then they are used as
+they are.
+2. If the service has a public `handle()` method, that method will be used.
+3. If the service has a public `notify()` method, that method will be used.
+4. Otherwise you have to specify which method should be called in the tag attributes:
+
+```yaml
+- { name: command_handler, handles: ..., method: theMethodThatShouldBeCalled }
+
+# or
+
+- { name: event_subscriber, subscribes_to: ..., method: theMethodThatShouldBeCalled }
+```
+
+This means that in theory you can now also have one handler handle different commands in different methods, and
+subscribers which subscribe to multiple events. This is not recommended in most cases, but at least you have this option
+now.
+
 ## From 1.0 to 2.0
 
 ### Commands

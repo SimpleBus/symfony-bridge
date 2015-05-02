@@ -145,11 +145,9 @@ can collect events while a command is being handled. If you want to record new e
 `event_recorder` service as a constructor argument of a command handler:
 
 ```php
-use SimpleBus\Message\Handler\MessageHandler;
-use SimpleBus\Message\Message;
 use SimpleBus\Message\Recorder\RecordsMessages;
 
-class SomeInterestingCommandHandler implements MessageHandler
+class SomeInterestingCommandHandler
 {
     private $eventRecorder;
 
@@ -158,11 +156,11 @@ class SomeInterestingCommandHandler implements MessageHandler
         $this->eventRecorder = $eventRecorder;
     }
 
-    public function handle(Message $message)
+    public function handle($command)
     {
         ...
 
-        // create an event (which is itself an instance of Message)
+        // create an event
         $event = new SomethingInterestingHappened();
 
         // record the event
@@ -191,7 +189,6 @@ In case you have another source for recorded message (for instance a class that 
 
 ```php
 use SimpleBus\Message\Recorder\ContainsRecordedMessages;
-use SimpleBus\Message\Message;
 
 class PropelDomainEvents implements ContainsRecordedMessages
 {
