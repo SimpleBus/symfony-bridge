@@ -52,7 +52,7 @@ class RegisterHandlers implements CompilerPassInterface
                     $callable = $serviceId;
                 }
 
-                $handlers[$key] = $callable;
+                $handlers[ltrim($key, '\\')] = $callable;
             }
         );
 
