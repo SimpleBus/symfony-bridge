@@ -107,7 +107,7 @@ services:
             - { name: command_handler, handles: register_user }
 ```
 
-Make sure that the value of `subscribes_to` matches the return value of `RegisterUser::messageName()`.
+Make sure that the value of `handles` matches the return value of `RegisterUser::messageName()`.
 
 ## Adding command bus middleware
 
