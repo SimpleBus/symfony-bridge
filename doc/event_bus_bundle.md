@@ -36,7 +36,7 @@ This bundle provides the `event_bus` service which is an instance of `MessageBus
 handle events, e.g. by fetching it inside a container-aware controller:
 
 ```php
-// $event is an instance of SimpleBus\Message\Type\Event
+// $event is an arbitrary object that will be passed to the event subscriber
 $event = ...;
 
 $this->get('event_bus')->handle($event);
