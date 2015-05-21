@@ -35,7 +35,7 @@ This bundle provides the `command_bus` service which is an instance of `SimpleBu
 like, you can let it handle commands, e.g. inside a container-aware controller:
 
 ```php
-// $command is an instance of SimpleBus\Message\Type\Command
+// $command is an arbitrary object that will be passed to the command handler
 $command = ...;
 
 $this->get('command_bus')->handle($command);
