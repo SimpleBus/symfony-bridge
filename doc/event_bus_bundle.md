@@ -197,7 +197,7 @@ class PropelDomainEvents implements ContainsRecordedMessages
         // return an array of Message instances
     }
 
-    public function eraseRecordedMessages()
+    public function eraseMessages()
     {
         // clear the internal array containing the recorded messages
     }
