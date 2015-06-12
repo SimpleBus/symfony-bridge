@@ -1,6 +1,6 @@
 title: SimpleBus/SymfonyBridge
 subTitle: Use SimpleBus/MessageBus in a Symfony application
-baseUrl: http://simplebus.github.io/SymfonyBridge
+baseUrl: //simplebus.github.io/SymfonyBridge
 menu:
     items:
         home:
