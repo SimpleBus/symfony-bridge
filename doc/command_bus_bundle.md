@@ -134,13 +134,13 @@ command bus.
 > [Marking Services as public /
 > private](http://symfony.com/doc/current/components/dependency_injection/advanced.html#marking-services-as-public-private)
 
-> ## Logging
->
-> If you want to log every command that is being handled, enable logging in `config.yml`:
->
-> ```yaml
-> command_bus:
->     logging: ~
-> ```
->
-> Messages will be logged to the `command_bus` channel.
+## Logging
+
+If you want to log every command that is being handled, enable logging in `config.yml`:
+
+```yaml
+command_bus:
+    logging: ~
+```
+
+Messages will be logged to the `command_bus` channel.
