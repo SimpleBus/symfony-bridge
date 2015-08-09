@@ -38,6 +38,8 @@ class SmokeTest extends \PHPUnit_Framework_TestCase
         $this->assertContains('command_bus.DEBUG: Finished handling a message', $loggedMessages);
         $this->assertContains('event_bus.DEBUG: Started handling a message', $loggedMessages);
         $this->assertContains('event_bus.DEBUG: Finished handling a message', $loggedMessages);
+        $this->assertContains('event_bus.DEBUG: Started notifying a subscriber', $loggedMessages);
+        $this->assertContains('event_bus.DEBUG: Finished notifying a subscriber', $loggedMessages);
     }
 
     private function createSchema(ContainerInterface $container)

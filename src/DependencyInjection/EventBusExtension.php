@@ -41,7 +41,9 @@ class EventBusExtension extends ConfigurableExtension
 
             $container->getDefinition('simple_bus.event_bus.notifies_message_subscribers_middleware')
                 ->replaceArgument(1, new Reference('logger'))
-                ->replaceArgument(2, '%simple_bus.event_bus.logging.level%');
+                ->replaceArgument(2, '%simple_bus.event_bus.logging.level%')
+                ->addTag('monolog.logger', ['channel' => 'event_bus'])
+            ;
         }
     }
 }
