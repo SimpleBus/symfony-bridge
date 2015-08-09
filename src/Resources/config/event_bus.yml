@@ -36,6 +36,8 @@ services:
         public: false
         arguments:
             - @simple_bus.event_bus.event_subscribers_resolver
+            - ~ # can be a logger, may be provided by EventBusExtension when logging enabled
+            - ~ # can be the logging level, may be provided by EventBusExtension when logging enabled
         tags:
             - { name: event_bus_middleware, priority: -1000 }
 

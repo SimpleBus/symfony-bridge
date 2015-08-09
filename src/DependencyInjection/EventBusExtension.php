@@ -2,6 +2,7 @@
 
 namespace SimpleBus\SymfonyBridge\DependencyInjection;
 
+use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\HttpKernel\DependencyInjection\ConfigurableExtension;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -37,6 +38,10 @@ class EventBusExtension extends ConfigurableExtension
 
         if ($mergedConfig['logging']['enabled']) {
             $loader->load('event_bus_logging.yml');
+
+            $container->getDefinition('simple_bus.event_bus.notifies_message_subscribers_middleware')
+                ->replaceArgument(1, new Reference('logger'))
+                ->replaceArgument(2, '%simple_bus.event_bus.logging.level%');
         }
     }
 }
