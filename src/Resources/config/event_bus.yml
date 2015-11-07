@@ -76,3 +76,6 @@ services:
         arguments:
             - @simple_bus.event_bus.aggregates_recorded_messages
             - @simple_bus.event_bus
+
+    simple_bus.event_dispatcher:
+        class: SimpleBus\Message\Recorder\HandlesRecordedMessages
