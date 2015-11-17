@@ -12,7 +12,7 @@ services:
         class: SimpleBus\Message\Handler\DelegatesToMessageHandlerMiddleware
         public: false
         arguments:
-            - @simple_bus.command_bus.command_handler_resolver
+            - '@simple_bus.command_bus.command_handler_resolver'
         tags:
             - { name: command_bus_middleware, priority: -1000 }
 
@@ -28,7 +28,7 @@ services:
         class: SimpleBus\Message\CallableResolver\ServiceLocatorAwareCallableResolver
         public: false
         arguments:
-            - [@service_container, 'get']
+            - ['@service_container', 'get']
 
     simple_bus.command_bus.command_handler_map:
         class: SimpleBus\Message\CallableResolver\CallableMap
@@ -36,14 +36,14 @@ services:
         arguments:
             # collection of command handler service ids, will be provided by the RegisterHandlers compiler pass
             - []
-            - @simple_bus.command_bus.callable_resolver
+            - '@simple_bus.command_bus.callable_resolver'
 
     simple_bus.command_bus.command_handler_resolver:
         class: SimpleBus\Message\Handler\Resolver\NameBasedMessageHandlerResolver
         public: false
         arguments:
-            - @simple_bus.command_bus.command_name_resolver
-            - @simple_bus.command_bus.command_handler_map
+            - '@simple_bus.command_bus.command_name_resolver'
+            - '@simple_bus.command_bus.command_handler_map'
 
     simple_bus.command_bus.finishes_command_before_handling_next_middleware:
         class: SimpleBus\Message\Bus\Middleware\FinishesHandlingMessageBeforeHandlingNext

@@ -6,7 +6,7 @@ services:
         class: SimpleBus\Message\Logging\LoggingMiddleware
         public: false
         arguments:
-            - @logger
+            - '@logger'
             - %simple_bus.command_bus.logging.level%
         tags:
             - { name: command_bus_middleware, priority: -999 }

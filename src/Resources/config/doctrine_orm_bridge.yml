@@ -3,7 +3,7 @@ services:
         class: SimpleBus\DoctrineORMBridge\MessageBus\WrapsMessageHandlingInTransaction
         public: false
         arguments:
-            - @doctrine
+            - '@doctrine'
             - %simple_bus.doctrine_orm_bridge.entity_manager%
 
     # for BC
