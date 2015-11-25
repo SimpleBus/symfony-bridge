@@ -8,14 +8,14 @@ services:
     test_command_handler:
         class: SimpleBus\SymfonyBridge\Tests\Functional\SmokeTest\TestCommandHandler
         arguments:
-            - @doctrine.orm.default_entity_manager
+            - '@doctrine.orm.default_entity_manager'
         tags:
             - { name: command_handler, handles: SimpleBus\SymfonyBridge\Tests\Functional\SmokeTest\TestCommand }
 
     some_other_test_command_handler:
         class: SimpleBus\SymfonyBridge\Tests\Functional\SmokeTest\SomeOtherTestCommandHandler
         arguments:
-            - @event_recorder
+            - '@event_recorder'
         tags:
             - { name: command_handler, handles: SimpleBus\SymfonyBridge\Tests\Functional\SmokeTest\SomeOtherTestCommand }
 
@@ -24,14 +24,14 @@ services:
         tags:
             - { name: event_subscriber, subscribes_to: test_entity_created }
         arguments:
-            - @command_bus
+            - '@command_bus'
 
     some_other_event_subscriber:
         class: SimpleBus\SymfonyBridge\Tests\Functional\SmokeTest\SomeOtherEventSubscriber
         tags:
             - { name: event_subscriber, subscribes_to: some_other_event }
         arguments:
-            - @command_bus
+            - '@command_bus'
 
 doctrine:
     dbal:
