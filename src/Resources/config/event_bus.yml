@@ -70,7 +70,7 @@ services:
             - '@simple_bus.event_bus.event_name_resolver'
             - '@simple_bus.event_bus.event_subscribers_collection'
 
-    simple_bus.event_bus.handles_recorded_mesages_middleware:
+    simple_bus.event_bus.handles_recorded_messages_middleware:
         class: SimpleBus\Message\Recorder\HandlesRecordedMessagesMiddleware
         public: false
         arguments:
