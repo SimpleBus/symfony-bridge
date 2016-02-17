@@ -51,7 +51,7 @@ class SimpleBusEventBusBundle extends Bundle
         CompilerPassUtil::prependBeforeOptimizationPass(
             $container,
             new AddMiddlewareTags(
-                'simple_bus.event_bus.handles_recorded_mesages_middleware',
+                'simple_bus.event_bus.handles_recorded_messages_middleware',
                 ['command'],
                 200
             )
