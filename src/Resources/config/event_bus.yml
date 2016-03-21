@@ -76,3 +76,7 @@ services:
         arguments:
             - '@simple_bus.event_bus.aggregates_recorded_messages'
             - '@simple_bus.event_bus'
+    
+    simple_bus.event_bus.handles_recorded_mesages_middleware:
+        alias: simple_bus.event_bus.handles_recorded_messages_middleware
+        public: false
