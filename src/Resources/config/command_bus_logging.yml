@@ -7,7 +7,7 @@ services:
         public: false
         arguments:
             - '@logger'
-            - %simple_bus.command_bus.logging.level%
+            - '%simple_bus.command_bus.logging.level%'
         tags:
             - { name: command_bus_middleware, priority: -999 }
             - { name: monolog.logger, channel: command_bus }

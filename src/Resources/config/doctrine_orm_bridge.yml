@@ -4,7 +4,7 @@ services:
         public: false
         arguments:
             - '@doctrine'
-            - %simple_bus.doctrine_orm_bridge.entity_manager%
+            - '%simple_bus.doctrine_orm_bridge.entity_manager%'
 
     # for BC
     simple_bus.doctrine_orm_bridge.aggregates_multiple_event_providers:
