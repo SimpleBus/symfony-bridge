@@ -24,13 +24,15 @@
         "simple-bus/doctrine-orm-bridge": "For integration with Doctrine ORM",
         "doctrine/orm": "For integration with Doctrine ORM",
         "doctrine/doctrine-bundle": "For integration with Doctrine ORM",
-        "symfony/monolog-bundle": "For logging messages"
+        "symfony/monolog-bundle": "For logging messages",
+        "symfony/console": "For using the console commands"
     },
     "require-dev": {
         "phpunit/phpunit": "~4.0",
         "simple-bus/doctrine-orm-bridge": "~4.0",
         "doctrine/orm": "~2.3",
         "doctrine/doctrine-bundle": "~1.0",
+        "symfony/console": "~2.3|~3.0",
         "symfony/monolog-bridge": "~2.3|~3.0",
         "symfony/monolog-bundle": "~2.3|~3.0",
         "satooshi/php-coveralls": "~0.6"
