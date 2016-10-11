@@ -15,7 +15,7 @@ class HandleMessageCommand extends Command
 
     public function setMessageBus(MessageBus $messageBus)
     {
-        $this->messageBus = $commandBus;
+        $this->messageBus = $messageBus;
     }
 
     protected function configure()
