@@ -5,7 +5,7 @@ namespace SimpleBus\SymfonyBridge\Tests\Functional;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Tools\SchemaTool;
 use SimpleBus\SymfonyBridge\Tests\Functional\SmokeTest\TestCommand;
-use SimpleBus\SymfonyBridge\Tests\Functional\SmokeTest\TestKernel;
+use SimpleBus\SymfonyBridge\Tests\Functional\TestKernel;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class SmokeTest extends \PHPUnit_Framework_TestCase
@@ -15,7 +15,7 @@ class SmokeTest extends \PHPUnit_Framework_TestCase
      */
     public function it_handles_a_command_then_dispatches_events_for_all_modified_entities()
     {
-        $kernel = new TestKernel('test', true);
+        $kernel = new TestKernel('test', true, 'smoke', __DIR__ . '/SmokeTest/config.yml');
         $kernel->boot();
         $container = $kernel->getContainer();
 

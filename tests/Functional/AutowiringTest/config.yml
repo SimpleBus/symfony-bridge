@@ -1,0 +1,18 @@
+services:
+    test_event_subscriber:
+        class: SimpleBus\SymfonyBridge\Tests\Functional\AutowiringTest\SendEmailVerificationInstructionsSubscriber
+        tags:
+            - { name: event_subscriber_autowired }
+
+event_bus:
+    event_name_resolver_strategy: class_based
+
+doctrine:
+    dbal:
+        driver: pdo_sqlite
+        path: :memory:
+        memory: true
+    orm:
+        entity_managers:
+            default:
+                connection: default

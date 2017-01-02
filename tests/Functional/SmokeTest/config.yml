@@ -30,8 +30,6 @@ services:
         class: SimpleBus\SymfonyBridge\Tests\Functional\SmokeTest\SomeOtherEventSubscriber
         tags:
             - { name: event_subscriber, subscribes_to: some_other_event }
-        arguments:
-            - '@command_bus'
 
 doctrine:
     dbal:
@@ -45,7 +43,7 @@ doctrine:
                 mappings:
                     test:
                         type: annotation
-                        dir: "%kernel.root_dir%/Entity/"
+                        dir: "%kernel.root_dir%/SmokeTest/Entity/"
                         prefix: SimpleBus\SymfonyBridge\Tests\Functional\SmokeTest\Entity
                         alias: Test
                         is_bundle: false
