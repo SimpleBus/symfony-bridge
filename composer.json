@@ -36,8 +36,7 @@
         "doctrine/orm": "~2.3",
         "doctrine/doctrine-bundle": "~1.0",
         "symfony/monolog-bridge": "~2.3|~3.0",
-        "symfony/monolog-bundle": "~2.3|~3.0",
-        "satooshi/php-coveralls": "~0.6"
+        "symfony/monolog-bundle": "~2.3|~3.0"
     },
     "autoload": {
         "psr-4": {
