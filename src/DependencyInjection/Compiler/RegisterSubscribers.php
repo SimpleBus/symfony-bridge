@@ -39,7 +39,7 @@ class RegisterSubscribers implements CompilerPassInterface
 
         $definition = $container->findDefinition($this->serviceId);
 
-        $handlers = array();
+        $handlers = $definition->getArgument(0);
 
         $this->collectServiceIds(
             $container,

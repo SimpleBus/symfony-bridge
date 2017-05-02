@@ -5,6 +5,7 @@ namespace SimpleBus\SymfonyBridge;
 use SimpleBus\SymfonyBridge\DependencyInjection\Compiler\AddMiddlewareTags;
 use SimpleBus\SymfonyBridge\DependencyInjection\Compiler\CompilerPassUtil;
 use SimpleBus\SymfonyBridge\DependencyInjection\Compiler\ConfigureMiddlewares;
+use SimpleBus\SymfonyBridge\DependencyInjection\Compiler\RegisterAutowiredSubscribers;
 use SimpleBus\SymfonyBridge\DependencyInjection\Compiler\RegisterMessageRecorders;
 use SimpleBus\SymfonyBridge\DependencyInjection\Compiler\RegisterSubscribers;
 use SimpleBus\SymfonyBridge\DependencyInjection\EventBusExtension;
@@ -45,6 +46,14 @@ class SimpleBusEventBusBundle extends Bundle
                 'simple_bus.event_bus.event_subscribers_collection',
                 'event_subscriber',
                 'subscribes_to'
+            )
+        );
+
+        $container->addCompilerPass(
+            new RegisterAutowiredSubscribers(
+                'simple_bus.event_bus.event_subscribers_collection',
+                'event_subscriber_autowired',
+                'event_subscriber'
             )
         );
 

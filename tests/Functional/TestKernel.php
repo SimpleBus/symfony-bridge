@@ -1,6 +1,6 @@
 <?php
 
-namespace SimpleBus\SymfonyBridge\Tests\Functional\SmokeTest;
+namespace SimpleBus\SymfonyBridge\Tests\Functional;
 
 use Doctrine\Bundle\DoctrineBundle\DoctrineBundle;
 use SimpleBus\SymfonyBridge\SimpleBusCommandBusBundle;
@@ -13,13 +13,17 @@ use Symfony\Component\HttpKernel\Kernel;
 class TestKernel extends Kernel
 {
     private $tempDir;
+    private $configPath;
 
-    public function __construct($environment, $debug)
+    public function __construct($environment, $debug, $name, $configPath)
     {
         parent::__construct($environment, $debug);
 
         $this->tempDir = sys_get_temp_dir() . '/' . uniqid();
         mkdir($this->tempDir, 0777, true);
+
+        $this->name = $name;
+        $this->configPath = $configPath;
     }
 
     public function registerBundles()
@@ -35,7 +39,7 @@ class TestKernel extends Kernel
 
     public function registerContainerConfiguration(LoaderInterface $loader)
     {
-        $loader->load(__DIR__ . '/config.yml');
+        $loader->load($this->configPath);
     }
 
     public function getCacheDir()
