@@ -35,8 +35,5 @@ install:
 script:
   - vendor/bin/phpunit
 
-after_script:
-  - vendor/bin/coveralls
-
-notifications:
-  email: matthiasnoback@gmail.com
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
