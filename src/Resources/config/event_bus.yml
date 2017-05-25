@@ -80,3 +80,12 @@ services:
     simple_bus.event_bus.handles_recorded_mesages_middleware:
         alias: simple_bus.event_bus.handles_recorded_messages_middleware
         public: false
+
+    simple_bus.event_bus.console_command:
+        class: SimpleBus\SymfonyBridge\ConsoleCommand\HandleMessageCommand
+        arguments:
+            - "simplebus:handle-event"
+        calls:
+            - [ setMessageBus, ["@simple_bus.event_bus"] ]
+        tags:
+            - { name: console.command }

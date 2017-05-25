@@ -50,3 +50,12 @@ services:
         public: false
         tags:
             - { name: command_bus_middleware, priority: 1000 }
+
+    simple_bus.command_bus.console_command:
+        class: SimpleBus\SymfonyBridge\ConsoleCommand\HandleMessageCommand
+        arguments:
+            - "simplebus:handle-command"
+        calls:
+            - [ setMessageBus, ["@simple_bus.command_bus"] ]
+        tags:
+            - { name: console.command }
