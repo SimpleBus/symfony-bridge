@@ -65,6 +65,14 @@ services:
             - { name: event_subscriber, subscribes_to: Fully\Qualified\Class\Name\Of\UserRegistered }
 ```
 
+### Auto-Register event subscribers
+
+You can omit the `subscribes_to` tag attribute if your subscriber meets the following conditions:
+
+1. Uses the "class_based" event name resolving strategy
+2. Subscribers to single event using the `__invoke` method
+3. Has a single, non optional class type hinted `__invoke` method parameter
+
 > #### Event subscribers are lazy-loaded
 >
 > Since only some of the event subscribers are going to handle any particular event, event subscribers are lazy-loaded.

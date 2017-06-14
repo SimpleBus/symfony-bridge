@@ -64,6 +64,14 @@ services:
             - { name: command_handler, handles: Fully\Qualified\Class\Name\Of\RegisterUser }
 ```
 
+### Auto-Register command handlers
+
+You can omit the `handles` tag attribute if your handler meets the following conditions:
+
+1. Uses the "class_based" command name resolving strategy
+2. Handles a single command using the `__invoke` method
+3. Has a single, non optional class type hinted `__invoke` method parameter
+
 > #### Command handlers are lazy-loaded
 >
 > Since only one of the command handlers is going to handle any particular command, command handlers are lazy-loaded.
