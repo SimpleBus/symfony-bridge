@@ -29,6 +29,12 @@ class SimpleBusEventBusBundle extends Bundle
         $this->checkRequirements(array('SimpleBusCommandBusBundle'), $container);
 
         $container->addCompilerPass(
+            new AutoRegister('event_subscriber', 'subscribes_to'),
+            PassConfig::TYPE_BEFORE_OPTIMIZATION,
+            10
+        );
+
+        $container->addCompilerPass(
             new ConfigureMiddlewares(
                 'event_bus',
                 'event_bus_middleware'
@@ -57,12 +63,6 @@ class SimpleBusEventBusBundle extends Bundle
                 ['command'],
                 200
             )
-        );
-
-        $container->addCompilerPass(
-            new AutoRegister('event_subscriber', 'subscribes_to'),
-            PassConfig::TYPE_BEFORE_OPTIMIZATION,
-            10
         );
     }
 

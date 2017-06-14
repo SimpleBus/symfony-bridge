@@ -22,6 +22,12 @@ class SimpleBusCommandBusBundle extends Bundle
     public function build(ContainerBuilder $container)
     {
         $container->addCompilerPass(
+            new AutoRegister('command_handler', 'handles'),
+            PassConfig::TYPE_BEFORE_OPTIMIZATION,
+            10
+        );
+
+        $container->addCompilerPass(
             new ConfigureMiddlewares(
                 'command_bus',
                 'command_bus_middleware'
@@ -34,12 +40,6 @@ class SimpleBusCommandBusBundle extends Bundle
                 'command_handler',
                 'handles'
             )
-        );
-
-        $container->addCompilerPass(
-            new AutoRegister('command_handler', 'handles'),
-            PassConfig::TYPE_BEFORE_OPTIMIZATION,
-            10
         );
     }
 
