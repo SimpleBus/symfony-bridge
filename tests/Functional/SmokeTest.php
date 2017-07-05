@@ -4,20 +4,27 @@ namespace SimpleBus\SymfonyBridge\Tests\Functional;
 
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Tools\SchemaTool;
+use SimpleBus\SymfonyBridge\Tests\Functional\SmokeTest\Auto\AutoCommand;
+use SimpleBus\SymfonyBridge\Tests\Functional\SmokeTest\Auto\AutoEvent;
 use SimpleBus\SymfonyBridge\Tests\Functional\SmokeTest\TestCommand;
 use SimpleBus\SymfonyBridge\Tests\Functional\SmokeTest\TestKernel;
+use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
-class SmokeTest extends \PHPUnit_Framework_TestCase
+class SmokeTest extends KernelTestCase
 {
+    protected static function getKernelClass()
+    {
+        return TestKernel::class;
+    }
+
     /**
      * @test
      */
     public function it_handles_a_command_then_dispatches_events_for_all_modified_entities()
     {
-        $kernel = new TestKernel('test', true);
-        $kernel->boot();
-        $container = $kernel->getContainer();
+        self::bootKernel(['environment' => 'config1']);
+        $container = self::$kernel->getContainer();
 
         $this->createSchema($container);
 
@@ -40,6 +47,42 @@ class SmokeTest extends \PHPUnit_Framework_TestCase
         $this->assertContains('event_bus.DEBUG: Finished handling a message', $loggedMessages);
         $this->assertContains('event_bus.DEBUG: Started notifying a subscriber', $loggedMessages);
         $this->assertContains('event_bus.DEBUG: Finished notifying a subscriber', $loggedMessages);
+    }
+
+    /**
+     * @test
+     */
+    public function it_can_auto_register_event_subscribers()
+    {
+        self::bootKernel(['environment' => 'config2']);
+        $container = self::$kernel->getContainer();
+
+        $subscriber = $container->get('auto_event_subscriber');
+        $event = new AutoEvent();
+
+        $this->assertNull($subscriber->handled);
+
+        $container->get('event_bus')->handle($event);
+
+        $this->assertSame($event, $subscriber->handled);
+    }
+
+    /**
+     * @test
+     */
+    public function it_can_auto_register_command_handlers()
+    {
+        self::bootKernel(['environment' => 'config2']);
+        $container = self::$kernel->getContainer();
+
+        $handler = $container->get('auto_command_handler');
+        $command = new AutoCommand();
+
+        $this->assertNull($handler->handled);
+
+        $container->get('command_bus')->handle($command);
+
+        $this->assertSame($command, $handler->handled);
     }
 
     private function createSchema(ContainerInterface $container)

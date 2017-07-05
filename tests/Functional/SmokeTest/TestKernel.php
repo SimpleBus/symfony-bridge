@@ -18,8 +18,7 @@ class TestKernel extends Kernel
     {
         parent::__construct($environment, $debug);
 
-        $this->tempDir = sys_get_temp_dir() . '/' . uniqid();
-        mkdir($this->tempDir, 0777, true);
+        $this->tempDir = sys_get_temp_dir() . '/simplebus-symfony-bridge';
     }
 
     public function registerBundles()
@@ -35,7 +34,7 @@ class TestKernel extends Kernel
 
     public function registerContainerConfiguration(LoaderInterface $loader)
     {
-        $loader->load(__DIR__ . '/config.yml');
+        $loader->load(sprintf('%s/%s.yml', __DIR__, $this->environment));
     }
 
     public function getCacheDir()

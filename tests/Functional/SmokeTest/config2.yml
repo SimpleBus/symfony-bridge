@@ -1,0 +1,13 @@
+imports:
+    - { resource: config.yml }
+
+services:
+    auto_command_handler:
+        class: SimpleBus\SymfonyBridge\Tests\Functional\SmokeTest\Auto\AutoCommandHandler
+        tags:
+            - { name: command_handler }
+
+    auto_event_subscriber:
+        class: SimpleBus\SymfonyBridge\Tests\Functional\SmokeTest\Auto\AutoEventSubscriber
+        tags:
+            - { name: event_subscriber }
