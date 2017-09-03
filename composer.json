@@ -31,7 +31,7 @@
         "symfony/monolog-bundle": "For logging messages"
     },
     "require-dev": {
-        "phpunit/phpunit": "~4.0",
+        "phpunit/phpunit": "^5.7 || ^6.0",
         "simple-bus/doctrine-orm-bridge": "~5.0",
         "doctrine/orm": "~2.3",
         "doctrine/doctrine-bundle": "~1.0",
