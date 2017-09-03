@@ -2,11 +2,12 @@
 
 namespace SimpleBus\SymfonyBridge\Tests\SymfonyBundle\DependencyInjection\Compiler;
 
+use PHPUnit\Framework\TestCase;
 use SimpleBus\SymfonyBridge\DependencyInjection\Compiler\ConfigureMiddlewares;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
 
-class ConfigureMiddlewaresTest extends \PHPUnit_Framework_TestCase
+class ConfigureMiddlewaresTest extends TestCase
 {
     /**
      * @var ContainerBuilder
