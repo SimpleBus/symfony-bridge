@@ -47,7 +47,12 @@ class RegisterHandlers implements CompilerPassInterface
             $this->keyAttribute,
             function ($key, $serviceId, array $tagAttributes) use (&$handlers) {
                 if (isset($tagAttributes['method'])) {
-                    $callable = [$serviceId, $tagAttributes['method']];
+                    // Symfony 3.3 supports services by classname. This interferes with `is_callable`
+                    // in `ServiceLocatorAwareCallableResolver`
+                    $callable = [
+                        'serviceId' => $serviceId,
+                        'method'    => $tagAttributes['method'],
+                    ];
                 } else {
                     $callable = $serviceId;
                 }
