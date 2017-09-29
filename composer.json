@@ -1,6 +1,6 @@
 {
     "name": "simple-bus/symfony-bridge",
-    "type": "library",
+    "type": "symfony-bundle",
     "description": "Bridge for using command buses and event buses in Symfony projects",
     "keywords": ["Symfony", "Doctrine", "event bus", "command bus"],
     "homepage": "http://github.com/SimpleBus/SymfonyBridge",
