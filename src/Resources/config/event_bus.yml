@@ -3,7 +3,7 @@ services:
         alias: simple_bus.event_bus
 
     simple_bus.event_bus:
-        class: SimpleBus\Message\Bus\Middleware\MessageBusSupportingMiddleware
+        class: SimpleBus\SymfonyBridge\Bus\EventBus
         public: false
         tags:
             - { name: message_bus, type: event, middleware_tag: event_bus_middleware }

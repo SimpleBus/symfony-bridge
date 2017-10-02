@@ -3,7 +3,7 @@ services:
         alias: simple_bus.command_bus
 
     simple_bus.command_bus:
-        class: SimpleBus\Message\Bus\Middleware\MessageBusSupportingMiddleware
+        class: SimpleBus\SymfonyBridge\Bus\CommandBus
         public: false
         tags:
             - { name: message_bus, type: command, middleware_tag: command_bus_middleware }
