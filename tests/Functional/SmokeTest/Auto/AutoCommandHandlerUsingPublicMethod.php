@@ -2,11 +2,11 @@
 
 namespace SimpleBus\SymfonyBridge\Tests\Functional\SmokeTest\Auto;
 
-final class AutoCommandHandler
+final class AutoCommandHandlerUsingPublicMethod
 {
     public $handled;
 
-    public function __invoke(AutoCommand $command)
+    public function someHandleMethod(AutoCommand2 $command)
     {
         $this->handled = $command;
     }

@@ -2,6 +2,6 @@
 
 namespace SimpleBus\SymfonyBridge\Tests\Functional\SmokeTest\Auto;
 
-final class AutoEvent
+final class AutoEvent2
 {
 }

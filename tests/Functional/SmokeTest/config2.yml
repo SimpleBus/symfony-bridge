@@ -2,12 +2,22 @@ imports:
     - { resource: config.yml }
 
 services:
-    auto_command_handler:
-        class: SimpleBus\SymfonyBridge\Tests\Functional\SmokeTest\Auto\AutoCommandHandler
+    auto_command_handler_using_invoke:
+        class: SimpleBus\SymfonyBridge\Tests\Functional\SmokeTest\Auto\AutoCommandHandlerUsingInvoke
         tags:
             - { name: command_handler }
 
-    auto_event_subscriber:
-        class: SimpleBus\SymfonyBridge\Tests\Functional\SmokeTest\Auto\AutoEventSubscriber
+    auto_command_handler_using_public_method:
+        class: SimpleBus\SymfonyBridge\Tests\Functional\SmokeTest\Auto\AutoCommandHandlerUsingPublicMethod
+        tags:
+            - { name: command_handler }
+
+    auto_event_subscriber_using_invoke:
+        class: SimpleBus\SymfonyBridge\Tests\Functional\SmokeTest\Auto\AutoEventSubscriberUsingInvoke
+        tags:
+            - { name: event_subscriber }
+
+    auto_event_subscriber_using_public_method:
+        class: SimpleBus\SymfonyBridge\Tests\Functional\SmokeTest\Auto\AutoEventSubscriberUsingPublicMethod
         tags:
             - { name: event_subscriber }
