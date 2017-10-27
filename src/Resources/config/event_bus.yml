@@ -1,6 +1,7 @@
 services:
     event_bus:
         alias: simple_bus.event_bus
+        public: true
 
     simple_bus.event_bus:
         class: SimpleBus\SymfonyBridge\Bus\EventBus
@@ -59,7 +60,7 @@ services:
         class: SimpleBus\Message\CallableResolver\CallableCollection
         public: false
         arguments:
-            # collection of event subscriber services ids, will be provided by the RegisterSubscribers compiler pas
+            # collection of event subscriber services ids, will be provided by the RegisterSubscribers compiler pass
             - []
             - '@simple_bus.event_bus.callable_resolver'
 

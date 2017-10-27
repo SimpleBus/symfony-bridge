@@ -10,6 +10,9 @@ use Symfony\Component\Config\FileLocator;
 
 class EventBusExtension extends ConfigurableExtension
 {
+    /** @var string */
+    private $alias;
+
     public function __construct($alias)
     {
         $this->alias = $alias;

@@ -5,6 +5,7 @@ namespace SimpleBus\SymfonyBridge\Tests\SymfonyBundle\DependencyInjection\Compil
 use SimpleBus\SymfonyBridge\DependencyInjection\Compiler\ConfigureMiddlewares;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
+use Symfony\Component\HttpKernel\Kernel;
 
 class ConfigureMiddlewaresTest extends \PHPUnit_Framework_TestCase
 {
@@ -41,7 +42,11 @@ class ConfigureMiddlewaresTest extends \PHPUnit_Framework_TestCase
 
         $this->container->compile();
 
-        $this->commandBusContainsMiddlewares(array('middleware200', 'middleware100', 'middleware-100'));
+        if (Kernel::VERSION_ID >= 40000) {
+            $this->commandBusContainsMiddlewaresInSymfony4(array(200, 100, -100));
+        } else {
+            $this->commandBusContainsMiddlewares(array('middleware200', 'middleware100', 'middleware-100'));
+        }
     }
 
     private function createBusDefinition($id, $priority)
@@ -71,5 +76,26 @@ class ConfigureMiddlewaresTest extends \PHPUnit_Framework_TestCase
         }
 
         $this->assertEquals($expectedMiddlewareIds, $actualMiddlewareIds);
+    }
+
+    private function commandBusContainsMiddlewaresInSymfony4($expectedMiddlewareIds)
+    {
+        $middlewaresPriorities = [];
+
+        foreach ($this->mainBusDefinition->getMethodCalls() as $methodCall) {
+            list($method, $arguments) = $methodCall;
+            $this->assertSame('appendMiddleware', $method);
+            $this->assertCount(1, $arguments);
+            /** @var Definition $serviceDefinition */
+            $serviceDefinition = $arguments[0];
+            $this->assertInstanceOf(
+                Definition::class,
+                $serviceDefinition
+            );
+
+            $middlewaresPriorities[] = (string) $serviceDefinition->getTag('middleware')[0]['priority'];
+        }
+
+        $this->assertEquals($expectedMiddlewareIds, $middlewaresPriorities);
     }
 }
