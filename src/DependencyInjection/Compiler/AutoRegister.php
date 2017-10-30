@@ -23,10 +23,14 @@ final class AutoRegister implements CompilerPassInterface
     {
         foreach ($container->findTaggedServiceIds($this->tagName) as $serviceId => $tags) {
             foreach ($tags as $tagAttributes) {
-
-                // if tag attributes are set, skip
+                // if tag attribute is set, skip
                 if (isset($tagAttributes[$this->tagAttribute])) {
                     continue;
+                }
+
+                $registerPublicMethods = false;
+                if (isset($tagAttributes['register_public_methods']) && true === $tagAttributes['register_public_methods']) {
+                    $registerPublicMethods = true;
                 }
 
                 $definition = $container->getDefinition($serviceId);
@@ -37,13 +41,16 @@ final class AutoRegister implements CompilerPassInterface
                 $methods = $reflectionClass->getMethods(\ReflectionMethod::IS_PUBLIC);
 
                 $tagAttributes = [];
-
                 foreach ($methods as $method) {
                     if (true === $method->isConstructor()) {
                         continue;
                     }
 
                     if (true === $method->isDestructor()) {
+                        continue;
+                    }
+
+                    if (false === $registerPublicMethods && '__invoke' !== $method->getName()) {
                         continue;
                     }
 
