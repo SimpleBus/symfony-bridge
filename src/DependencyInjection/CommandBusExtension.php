@@ -31,6 +31,7 @@ class CommandBusExtension extends ConfigurableExtension
         $loader = new YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
 
         $loader->load('command_bus.yml');
+        $loader->load('logging.yml');
 
         $container->setAlias(
             'simple_bus.command_bus.command_name_resolver',

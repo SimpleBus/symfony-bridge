@@ -41,6 +41,14 @@ class SimpleBusCommandBusBundle extends Bundle
                 'handles'
             )
         );
+
+        if (!$container->hasExtension('simplebus_profiler')) {
+            $container->addCompilerPass(
+                new DependencyInjection\Compiler\ProfilerPass()
+            );
+
+            $container->registerExtension(new DependencyInjection\ProfilerExtension());
+        }
     }
 
     public function getContainerExtension()

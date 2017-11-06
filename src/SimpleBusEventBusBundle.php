@@ -64,6 +64,14 @@ class SimpleBusEventBusBundle extends Bundle
                 200
             )
         );
+
+        if (!$container->hasExtension('simplebus_profiler')) {
+            $container->addCompilerPass(
+                new DependencyInjection\Compiler\ProfilerPass()
+            );
+
+            $container->registerExtension(new DependencyInjection\ProfilerExtension());
+        }
     }
 
     public function getContainerExtension()

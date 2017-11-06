@@ -10,7 +10,7 @@ services:
         class: SimpleBus\SymfonyBridge\Bus\CommandBus
         public: false
         tags:
-            - { name: message_bus, type: command, middleware_tag: command_bus_middleware }
+            - { name: message_bus, bus_name: command_bus, type: command, middleware_tag: command_bus_middleware }
 
     simple_bus.command_bus.delegates_to_message_handler_middleware:
         class: SimpleBus\Message\Handler\DelegatesToMessageHandlerMiddleware
