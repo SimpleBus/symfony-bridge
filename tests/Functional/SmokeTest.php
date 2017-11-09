@@ -4,8 +4,11 @@ namespace SimpleBus\SymfonyBridge\Tests\Functional;
 
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Tools\SchemaTool;
-use SimpleBus\SymfonyBridge\Tests\Functional\SmokeTest\Auto\AutoCommand;
-use SimpleBus\SymfonyBridge\Tests\Functional\SmokeTest\Auto\AutoEvent;
+use SimpleBus\SymfonyBridge\Tests\Functional\SmokeTest\Auto\AutoCommand1;
+use SimpleBus\SymfonyBridge\Tests\Functional\SmokeTest\Auto\AutoCommand2;
+use SimpleBus\SymfonyBridge\Tests\Functional\SmokeTest\Auto\AutoEvent1;
+use SimpleBus\SymfonyBridge\Tests\Functional\SmokeTest\Auto\AutoEvent2;
+use SimpleBus\SymfonyBridge\Tests\Functional\SmokeTest\Auto\AutoEvent3;
 use SimpleBus\SymfonyBridge\Tests\Functional\SmokeTest\TestCommand;
 use SimpleBus\SymfonyBridge\Tests\Functional\SmokeTest\TestKernel;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
@@ -52,13 +55,13 @@ class SmokeTest extends KernelTestCase
     /**
      * @test
      */
-    public function it_can_auto_register_event_subscribers()
+    public function it_can_auto_register_event_subscribers_using_invoke()
     {
         self::bootKernel(['environment' => 'config2']);
         $container = self::$kernel->getContainer();
 
-        $subscriber = $container->get('auto_event_subscriber');
-        $event = new AutoEvent();
+        $subscriber = $container->get('auto_event_subscriber_using_invoke');
+        $event = new AutoEvent1();
 
         $this->assertNull($subscriber->handled);
 
@@ -70,13 +73,51 @@ class SmokeTest extends KernelTestCase
     /**
      * @test
      */
-    public function it_can_auto_register_command_handlers()
+    public function it_can_auto_register_event_subscribers_using_public_method()
     {
         self::bootKernel(['environment' => 'config2']);
         $container = self::$kernel->getContainer();
 
-        $handler = $container->get('auto_command_handler');
-        $command = new AutoCommand();
+        $subscriber = $container->get('auto_event_subscriber_using_public_method');
+        $event2 = new AutoEvent2();
+        $event3 = new AutoEvent3();
+
+        $this->assertEmpty($subscriber->handled);
+
+        $container->get('event_bus')->handle($event2);
+        $container->get('event_bus')->handle($event3);
+
+        $this->assertSame([$event2, $event3], $subscriber->handled);
+    }
+
+    /**
+     * @test
+     */
+    public function it_can_auto_register_command_handlers_using_invoke()
+    {
+        self::bootKernel(['environment' => 'config2']);
+        $container = self::$kernel->getContainer();
+
+        $handler = $container->get('auto_command_handler_using_invoke');
+        $command = new AutoCommand1();
+
+        $this->assertNull($handler->handled);
+
+        $container->get('command_bus')->handle($command);
+
+        $this->assertSame($command, $handler->handled);
+    }
+
+    /**
+     * @test
+     */
+    public function it_can_auto_register_command_handlers_using_public_method()
+    {
+        self::bootKernel(['environment' => 'config2']);
+        $container = self::$kernel->getContainer();
+
+        $handler = $container->get('auto_command_handler_using_public_method');
+        $command = new AutoCommand2();
 
         $this->assertNull($handler->handled);
 

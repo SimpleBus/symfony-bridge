@@ -23,10 +23,14 @@ final class AutoRegister implements CompilerPassInterface
     {
         foreach ($container->findTaggedServiceIds($this->tagName) as $serviceId => $tags) {
             foreach ($tags as $tagAttributes) {
-
-                // if tag attributes are set, skip
+                // if tag attribute is set, skip
                 if (isset($tagAttributes[$this->tagAttribute])) {
                     continue;
+                }
+
+                $registerPublicMethods = false;
+                if (isset($tagAttributes['register_public_methods']) && true === $tagAttributes['register_public_methods']) {
+                    $registerPublicMethods = true;
                 }
 
                 $definition = $container->getDefinition($serviceId);
@@ -34,24 +38,46 @@ final class AutoRegister implements CompilerPassInterface
                 // check if service id is class name
                 $reflectionClass = new \ReflectionClass($definition->getClass() ?: $serviceId);
 
-                // if no __invoke method, skip
-                if (!$reflectionClass->hasMethod('__invoke')) {
-                    continue;
+                $methods = $reflectionClass->getMethods(\ReflectionMethod::IS_PUBLIC);
+
+                $tagAttributes = [];
+                foreach ($methods as $method) {
+                    if (true === $method->isConstructor()) {
+                        continue;
+                    }
+
+                    if (true === $method->isDestructor()) {
+                        continue;
+                    }
+
+                    if (false === $registerPublicMethods && '__invoke' !== $method->getName()) {
+                        continue;
+                    }
+
+                    $parameters = $method->getParameters();
+
+                    // if no param or optional param, skip
+                    if (count($parameters) !== 1 || $parameters[0]->isOptional()) {
+                        continue;
+                    }
+
+                    // get the class name
+                    $handles = $parameters[0]->getClass()->getName();
+
+                    $tagAttributes[] = [
+                        $this->tagAttribute => $handles,
+                        'method' => $method->getName()
+                    ];
                 }
 
-                $invokeParameters = $reflectionClass->getMethod('__invoke')->getParameters();
+                if (count($tags) !== 0) {
+                    // auto handle
+                    $definition->clearTag($this->tagName);
 
-                // if no param or optional param, skip
-                if (count($invokeParameters) !== 1 || $invokeParameters[0]->isOptional()) {
-                    return;
+                    foreach ($tagAttributes as $attributes) {
+                        $definition->addTag($this->tagName, $attributes);
+                    }
                 }
-
-                // get the class name
-                $handles = $invokeParameters[0]->getClass()->getName();
-
-                // auto handle
-                $definition->clearTag($this->tagName);
-                $definition->addTag($this->tagName, [$this->tagAttribute => $handles]);
             }
         }
     }
