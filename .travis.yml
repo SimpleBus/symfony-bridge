@@ -25,6 +25,7 @@ before_install:
 
 install:
   - composer install --prefer-dist
+  - composer update --prefer-lowest
 
 script:
   - vendor/bin/phpunit
