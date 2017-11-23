@@ -81,7 +81,7 @@ class ConfigureMiddlewaresTest extends \PHPUnit_Framework_TestCase
                     'Symfony\Component\DependencyInjection\Reference',
                     $referencedService
                 );
-                $referencedService = $this->container->getDefition((string) $referencedService);
+                $referencedService = $this->container->getDefinition((string) $referencedService);
             }
 
             $actualMiddlewareClasses[$referencedService->getClass()] = $referencedService->getTag('middleware')[0]['priority'];
