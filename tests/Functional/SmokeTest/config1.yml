@@ -2,7 +2,7 @@ imports:
     - { resource: config.yml }
 
 parameters:
-    log_file: %kernel.logs_dir%/%kernel.environment%.log
+    log_file: '%kernel.logs_dir%/%kernel.environment%.log'
 
 services:
     test_command_handler:
@@ -11,6 +11,7 @@ services:
             - '@doctrine.orm.default_entity_manager'
         tags:
             - { name: command_handler, handles: SimpleBus\SymfonyBridge\Tests\Functional\SmokeTest\TestCommand }
+        public: true
 
     some_other_test_command_handler:
         class: SimpleBus\SymfonyBridge\Tests\Functional\SmokeTest\SomeOtherTestCommandHandler
@@ -18,6 +19,7 @@ services:
             - '@event_recorder'
         tags:
             - { name: command_handler, handles: SimpleBus\SymfonyBridge\Tests\Functional\SmokeTest\SomeOtherTestCommand }
+        public: true
 
     test_event_subscriber:
         class: SimpleBus\SymfonyBridge\Tests\Functional\SmokeTest\TestEntityCreatedEventSubscriber
@@ -25,6 +27,7 @@ services:
             - { name: event_subscriber, subscribes_to: test_entity_created }
         arguments:
             - '@command_bus'
+        public: true
 
     some_other_event_subscriber:
         class: SimpleBus\SymfonyBridge\Tests\Functional\SmokeTest\SomeOtherEventSubscriber
@@ -32,6 +35,7 @@ services:
             - { name: event_subscriber, subscribes_to: some_other_event }
         arguments:
             - '@command_bus'
+        public: true
 
 command_bus:
     command_name_resolver_strategy: class_based
@@ -45,5 +49,5 @@ monolog:
     handlers:
         main:
             type:  stream
-            path:  %log_file%
+            path:  '%log_file%'
             level: debug
