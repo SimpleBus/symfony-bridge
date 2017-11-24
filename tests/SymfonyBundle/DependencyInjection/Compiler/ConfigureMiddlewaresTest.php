@@ -3,6 +3,9 @@
 namespace SimpleBus\SymfonyBridge\Tests\SymfonyBundle\DependencyInjection\Compiler;
 
 use SimpleBus\SymfonyBridge\DependencyInjection\Compiler\ConfigureMiddlewares;
+use SimpleBus\SymfonyBridge\Tests\Functional\SmokeTest\Auto\AuteEvent1;
+use SimpleBus\SymfonyBridge\Tests\Functional\SmokeTest\Auto\AuteEvent2;
+use SimpleBus\SymfonyBridge\Tests\Functional\SmokeTest\Auto\AuteEvent3;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\HttpKernel\Kernel;
@@ -37,9 +40,9 @@ class ConfigureMiddlewaresTest extends \PHPUnit_Framework_TestCase
     public function it_configures_a_chain_of_buses_according_to_the_given_priorities()
     {
         $classes = [
-            'SimpleBus\SymfonyBridge\Tests\Functional\SmokeTest\Auto\AuteEvent1' => 100,
-            'SimpleBus\SymfonyBridge\Tests\Functional\SmokeTest\Auto\AuteEvent2' => -100,
-            'SimpleBus\SymfonyBridge\Tests\Functional\SmokeTest\Auto\AuteEvent3' => 200,
+            AuteEvent1::class => 100,
+            AuteEvent2::class => -100,
+            AuteEvent3::class => 200,
         ];
 
         foreach ($classes as $class => $priority) {
