@@ -1,4 +1,7 @@
 services:
+    SimpleBus\SymfonyBridge\Bus\EventBus:
+        alias: simple_bus.event_bus
+
     event_bus:
         alias: simple_bus.event_bus
 
