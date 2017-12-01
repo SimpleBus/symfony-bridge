@@ -4,20 +4,24 @@ imports:
 services:
     auto_command_handler_using_invoke:
         class: SimpleBus\SymfonyBridge\Tests\Functional\SmokeTest\Auto\AutoCommandHandlerUsingInvoke
+        public: true
         tags:
             - { name: command_handler }
 
     auto_command_handler_using_public_method:
         class: SimpleBus\SymfonyBridge\Tests\Functional\SmokeTest\Auto\AutoCommandHandlerUsingPublicMethod
+        public: true
         tags:
             - { name: command_handler, register_public_methods: true }
 
     auto_event_subscriber_using_invoke:
         class: SimpleBus\SymfonyBridge\Tests\Functional\SmokeTest\Auto\AutoEventSubscriberUsingInvoke
+        public: true
         tags:
             - { name: event_subscriber }
 
     auto_event_subscriber_using_public_method:
         class: SimpleBus\SymfonyBridge\Tests\Functional\SmokeTest\Auto\AutoEventSubscriberUsingPublicMethod
+        public: true
         tags:
             - { name: event_subscriber, register_public_methods: true }

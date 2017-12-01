@@ -9,6 +9,8 @@ use Symfony\Component\Config\FileLocator;
 
 class DoctrineOrmBridgeExtension extends ConfigurableExtension
 {
+    private $alias;
+
     public function __construct($alias)
     {
         $this->alias = $alias;
