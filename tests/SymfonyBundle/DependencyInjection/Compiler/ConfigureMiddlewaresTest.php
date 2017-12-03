@@ -10,7 +10,7 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\HttpKernel\Kernel;
 
-class ConfigureMiddlewaresTest extends \PHPUnit_Framework_TestCase
+class ConfigureMiddlewaresTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @var ContainerBuilder
