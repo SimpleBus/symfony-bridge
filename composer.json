@@ -48,7 +48,5 @@
         "psr-4": {
             "SimpleBus\\SymfonyBridge\\Tests\\": "tests"
         }
-    },
-    "minimum-stability": "dev",
-    "prefer-stable": true
+    }
 }
