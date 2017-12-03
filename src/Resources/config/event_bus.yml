@@ -4,6 +4,7 @@ services:
 
     event_bus:
         alias: simple_bus.event_bus
+        public: true
 
     simple_bus.event_bus:
         class: SimpleBus\SymfonyBridge\Bus\EventBus

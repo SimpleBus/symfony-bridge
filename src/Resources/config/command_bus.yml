@@ -4,6 +4,7 @@ services:
 
     command_bus:
         alias: simple_bus.command_bus
+        public: true
 
     simple_bus.command_bus:
         class: SimpleBus\SymfonyBridge\Bus\CommandBus
