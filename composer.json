@@ -19,25 +19,25 @@
     "require": {
         "php": "^5.6 || ^7.0",
         "simple-bus/message-bus": "~3.0",
-        "symfony/http-kernel": "~2.3 || ~3.0 || ~4.0",
-        "symfony/dependency-injection": "~2.3 || ~3.0 || ~4.0",
-        "symfony/yaml": "~2.3 || ~3.0 || ~4.0",
-        "symfony/config": "~2.3 || ~3.0 || ~4.0",
-        "symfony/proxy-manager-bridge": "~2.3 || ~3.0 || ~4.0"
+        "symfony/config": "~2.7 || ~3.3 || ~4.0",
+        "symfony/dependency-injection": "~2.7 || ~3.3 || ~4.0",
+        "symfony/http-kernel": "~2.7 || ~3.3 || ~4.0",
+        "symfony/proxy-manager-bridge": "~2.7 || ~3.3 || ~4.0",
+        "symfony/yaml": "~2.7 || ~3.3 || ~4.0"
     },
     "suggest": {
-        "simple-bus/doctrine-orm-bridge": "For integration with Doctrine ORM",
-        "doctrine/orm": "For integration with Doctrine ORM",
         "doctrine/doctrine-bundle": "For integration with Doctrine ORM",
+        "doctrine/orm": "For integration with Doctrine ORM",
+        "simple-bus/doctrine-orm-bridge": "For integration with Doctrine ORM",
         "symfony/monolog-bundle": "For logging messages"
     },
     "require-dev": {
+        "doctrine/doctrine-bundle": "~1.7",
+        "doctrine/orm": "~2.3",
         "phpunit/phpunit": "^5.7 || ^6.0",
         "simple-bus/doctrine-orm-bridge": "~5.0",
-        "doctrine/orm": "~2.3",
-        "doctrine/doctrine-bundle": "~1.0",
-        "symfony/monolog-bridge": "~2.3 || ~3.0 || ~4.0",
-        "symfony/monolog-bundle": "~2.3 || ~3.0 "
+        "symfony/monolog-bridge": "~2.8 || ~3.2 || ~4.0",
+        "symfony/monolog-bundle": "~3.0 || ~3.1"
     },
     "autoload": {
         "psr-4": {
