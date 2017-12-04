@@ -126,6 +126,19 @@ class SmokeTest extends KernelTestCase
         $this->assertSame($command, $handler->handled);
     }
 
+    /**
+     * @test
+     * 
+     * @group depTest
+     *
+     * @expectedException        \LogicException
+     * @expectedExceptionMessage In order to use bundle "DoctrineOrmBridgeBundle" you need to require "symfony/proxy-manager-bridge" package.
+     */
+    public function fails_because_of_mising_dependency()
+    {
+        self::bootKernel(['environment' => 'config2']);
+    }
+
     private function createSchema(ContainerInterface $container)
     {
         $entityManager = $container->get('doctrine.orm.entity_manager');

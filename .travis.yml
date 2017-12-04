@@ -17,10 +17,14 @@ matrix:
       env: SYMFONY_VERSION=3.4.*
     - php: 7.2
       env: SYMFONY_VERSION=4.0.*
+    - php: 7.2
+      env: SYMFONY_VERSION=4.0.* REQUIRE_PROXY_BRIDGE="" EXTRA_PHPUNIT_PARAMS="--group depTest"
 
 env:
   global:
     - SYMFONY_VERSION=""
+    - REQUIRE_PROXY_BRIDGE="yes"
+    - EXTRA_PHPUNIT_PARAMS="--exclude-group depTest"
 
 before_install:
   - composer self-update
@@ -28,9 +32,11 @@ before_install:
 
 install:
   - composer install --prefer-dist
+  - if [ "$REQUIRE_PROXY_BRIDGE" == "yes" ] && [ "$SYMFONY_VERSION" != "" ]; then composer require symfony/proxy-manager-bridge:$SYMFONY_VERSION; fi
+  - if [ "$REQUIRE_PROXY_BRIDGE" == "yes" ] && [ "$SYMFONY_VERSION" == "" ]; then composer require symfony/proxy-manager-bridge; fi
 
 script:
-  - vendor/bin/phpunit
+  - vendor/bin/phpunit $EXTRA_PHPUNIT_PARAMS
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)

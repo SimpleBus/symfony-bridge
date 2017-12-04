@@ -22,14 +22,14 @@
         "symfony/http-kernel": "~2.3 || ~3.0 || ~4.0",
         "symfony/dependency-injection": "~2.3 || ~3.0 || ~4.0",
         "symfony/yaml": "~2.3 || ~3.0 || ~4.0",
-        "symfony/config": "~2.3 || ~3.0 || ~4.0",
-        "symfony/proxy-manager-bridge": "~2.3 || ~3.0 || ~4.0"
+        "symfony/config": "~2.3 || ~3.0 || ~4.0"
     },
     "suggest": {
         "simple-bus/doctrine-orm-bridge": "For integration with Doctrine ORM",
         "doctrine/orm": "For integration with Doctrine ORM",
         "doctrine/doctrine-bundle": "For integration with Doctrine ORM",
-        "symfony/monolog-bundle": "For logging messages"
+        "symfony/monolog-bundle": "For logging messages",
+        "symfony/proxy-manager-bridge": "For integration with Symfony and Doctrine ORM"
     },
     "require-dev": {
         "phpunit/phpunit": "^5.7 || ^6.0",
