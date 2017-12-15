@@ -28,7 +28,7 @@ class DoctrineOrmBridgeBundle extends Bundle
     {
         $this->checkRequirements(array('SimpleBusCommandBusBundle', 'SimpleBusEventBusBundle'), $container);
 
-        $this->checkProxyManagerBrideIsPresent();
+        $this->checkProxyManagerBridgeIsPresent();
 
         $compilerPass = new AddMiddlewareTags(
             'simple_bus.doctrine_orm_bridge.wraps_next_command_in_transaction',
@@ -38,7 +38,7 @@ class DoctrineOrmBridgeBundle extends Bundle
         CompilerPassUtil::prependBeforeOptimizationPass($container, $compilerPass);
     }
 
-    private function checkProxyManagerBrideIsPresent()
+    private function checkProxyManagerBridgeIsPresent()
     {
         if (!class_exists('Symfony\Bridge\ProxyManager\LazyProxy\Instantiator\RuntimeInstantiator')) {
             throw new \LogicException(
