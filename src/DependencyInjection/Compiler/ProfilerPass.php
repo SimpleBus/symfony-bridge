@@ -3,6 +3,7 @@
 namespace SimpleBus\SymfonyBridge\DependencyInjection\Compiler;
 
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
+use Symfony\Component\DependencyInjection\ChildDefinition;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\DefinitionDecorator;
 use Symfony\Component\DependencyInjection\Reference;
@@ -21,7 +22,8 @@ class ProfilerPass implements CompilerPassInterface
                 $busRegistry->addMethodCall('addBus', [$busName, new Reference($serviceId)]);
 
                 $middlewareId = 'simple_bus.logging.profiler_middleware.'.$busName;
-                $middleware = new DefinitionDecorator('simple_bus.logging.profiler_middleware.abstract');
+                $defClass = class_exists(DefinitionDecorator::class) ? DefinitionDecorator::class : ChildDefinition::class;
+                $middleware = new $defClass('simple_bus.logging.profiler_middleware.abstract');
                 $middleware->replaceArgument(1, $busName);
                 $container->setDefinition($middlewareId, $middleware);
 
