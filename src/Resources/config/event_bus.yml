@@ -10,7 +10,7 @@ services:
         class: SimpleBus\SymfonyBridge\Bus\EventBus
         public: false
         tags:
-            - { name: message_bus, type: event, middleware_tag: event_bus_middleware }
+            - { name: message_bus, bus_name: command_bus, type: event, middleware_tag: event_bus_middleware }
 
     simple_bus.event_bus.events.finishes_message_before_handling_next_middleware:
         class: SimpleBus\Message\Bus\Middleware\FinishesHandlingMessageBeforeHandlingNext
