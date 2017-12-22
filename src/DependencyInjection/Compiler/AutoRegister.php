@@ -5,9 +5,6 @@ namespace SimpleBus\SymfonyBridge\DependencyInjection\Compiler;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
-/**
- * @author Kevin Bond <kevinbond@gmail.com>
- */
 final class AutoRegister implements CompilerPassInterface
 {
     private $tagName;
