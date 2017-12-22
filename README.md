@@ -13,3 +13,10 @@ This package contains the following bundles which can be used to integrate
 
 Are you upgrading from a previous version? Read the [upgrade
 guide](http://simplebus.github.io/SymfonyBridge/doc/upgrade_guide.html).
+
+Resources
+---------
+
+  * [Report issues](https://github.com/SimpleBus/SimpleBus/issues) and
+    [send Pull Requests](https://github.com/SimpleBus/SimpleBus/pulls)
+    in the [main SimpleBus repository](https://github.com/SimpleBus/SimpleBus)
