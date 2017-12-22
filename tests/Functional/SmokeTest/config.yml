@@ -1,0 +1,20 @@
+services:
+    annotation_reader:
+        class: Doctrine\Common\Annotations\AnnotationReader
+
+doctrine:
+    dbal:
+        driver: pdo_sqlite
+        path: :memory:
+        memory: true
+    orm:
+        entity_managers:
+            default:
+                connection: default
+                mappings:
+                    test:
+                        type: annotation
+                        dir: "%kernel.root_dir%/Entity/"
+                        prefix: SimpleBus\SymfonyBridge\Tests\Functional\SmokeTest\Entity
+                        alias: Test
+                        is_bundle: false

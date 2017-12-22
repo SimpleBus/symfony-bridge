@@ -1,0 +1,86 @@
+services:
+    SimpleBus\SymfonyBridge\Bus\EventBus:
+        alias: simple_bus.event_bus
+
+    event_bus:
+        alias: simple_bus.event_bus
+        public: true
+
+    simple_bus.event_bus:
+        class: SimpleBus\SymfonyBridge\Bus\EventBus
+        public: false
+        tags:
+            - { name: message_bus, bus_name: command_bus, type: event, middleware_tag: event_bus_middleware }
+
+    simple_bus.event_bus.events.finishes_message_before_handling_next_middleware:
+        class: SimpleBus\Message\Bus\Middleware\FinishesHandlingMessageBeforeHandlingNext
+        public: false
+        tags:
+            - { name: event_bus_middleware, priority: 1000 }
+
+    simple_bus.event_bus.aggregates_recorded_messages:
+        class: SimpleBus\Message\Recorder\AggregatesRecordedMessages
+        public: false
+        arguments:
+            # collection of RecordsMessages instances, will be provided by the RegisterMessageRecorders compiler pass
+            - []
+
+    event_recorder:
+        alias: simple_bus.event_bus.public_event_recorder
+        public: false
+
+    simple_bus.event_bus.public_event_recorder:
+        class: SimpleBus\Message\Recorder\PublicMessageRecorder
+        public: false
+        tags:
+            - { name: event_recorder }
+
+    simple_bus.event_bus.notifies_message_subscribers_middleware:
+        class: SimpleBus\Message\Subscriber\NotifiesMessageSubscribersMiddleware
+        public: false
+        arguments:
+            - '@simple_bus.event_bus.event_subscribers_resolver'
+            - ~ # can be a logger, may be provided by EventBusExtension when logging enabled
+            - ~ # can be the logging level, may be provided by EventBusExtension when logging enabled
+        tags:
+            - { name: event_bus_middleware, priority: -1000 }
+
+    simple_bus.event_bus.class_based_event_name_resolver:
+        class: SimpleBus\Message\Name\ClassBasedNameResolver
+        public: false
+
+    simple_bus.event_bus.named_message_event_name_resolver:
+        class: SimpleBus\Message\Name\NamedMessageNameResolver
+        public: false
+
+    simple_bus.event_bus.callable_resolver:
+        class: SimpleBus\Message\CallableResolver\ServiceLocatorAwareCallableResolver
+        public: false
+        arguments:
+            - ['@service_container', 'get']
+
+    simple_bus.event_bus.event_subscribers_collection:
+        class: SimpleBus\Message\CallableResolver\CallableCollection
+        public: false
+        arguments:
+            # collection of event subscriber services ids, will be provided by the RegisterSubscribers compiler pas
+            - []
+            - '@simple_bus.event_bus.callable_resolver'
+
+    simple_bus.event_bus.event_subscribers_resolver:
+        class: SimpleBus\Message\Subscriber\Resolver\NameBasedMessageSubscriberResolver
+        public: false
+        arguments:
+            - '@simple_bus.event_bus.event_name_resolver'
+            - '@simple_bus.event_bus.event_subscribers_collection'
+
+    simple_bus.event_bus.handles_recorded_messages_middleware:
+        class: SimpleBus\Message\Recorder\HandlesRecordedMessagesMiddleware
+        public: false
+        arguments:
+            - '@simple_bus.event_bus.aggregates_recorded_messages'
+            - '@simple_bus.event_bus'
+    
+    simple_bus.event_bus.handles_recorded_mesages_middleware:
+        alias: simple_bus.event_bus.handles_recorded_messages_middleware
+        public: false

@@ -1,0 +1,29 @@
+title: SimpleBus/SymfonyBridge
+subTitle: Use SimpleBus/MessageBus in a Symfony application
+baseUrl: //simplebus.github.io/SymfonyBridge
+menu:
+    items:
+        home:
+            itemId: home
+            text: Home
+            relativeUrl: ""
+        getting_started:
+            itemId: getting_started
+            text: Getting started
+            relativeUrl: doc/getting_started.html
+        command_bus_bundle:
+            itemId: command_bus_bundle
+            text: Command bus bundle
+            relativeUrl: doc/command_bus_bundle.html
+        event_bus_bundle:
+            itemId: event_bus_bundle
+            text: Event bus bundle
+            relativeUrl: doc/event_bus_bundle.html
+        doctrine_orm_bridge_bundle:
+            itemId: doctrine_orm_bridge_bundle
+            text: Doctrine ORM bridge bundle
+            relativeUrl: doc/doctrine_orm_bridge_bundle.html
+        upgrade_guide:
+            itemId: upgrade_guide
+            text: Upgrade guide
+            relativeUrl: doc/upgrade_guide.html

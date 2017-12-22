@@ -1,0 +1,27 @@
+imports:
+    - { resource: config.yml }
+
+services:
+    auto_command_handler_using_invoke:
+        class: SimpleBus\SymfonyBridge\Tests\Functional\SmokeTest\Auto\AutoCommandHandlerUsingInvoke
+        tags:
+            - { name: command_handler }
+        public: true
+
+    auto_command_handler_using_public_method:
+        class: SimpleBus\SymfonyBridge\Tests\Functional\SmokeTest\Auto\AutoCommandHandlerUsingPublicMethod
+        tags:
+            - { name: command_handler, register_public_methods: true }
+        public: true
+
+    auto_event_subscriber_using_invoke:
+        class: SimpleBus\SymfonyBridge\Tests\Functional\SmokeTest\Auto\AutoEventSubscriberUsingInvoke
+        tags:
+            - { name: event_subscriber }
+        public: true
+
+    auto_event_subscriber_using_public_method:
+        class: SimpleBus\SymfonyBridge\Tests\Functional\SmokeTest\Auto\AutoEventSubscriberUsingPublicMethod
+        tags:
+            - { name: event_subscriber, register_public_methods: true }
+        public: true

@@ -1,0 +1,56 @@
+services:
+    SimpleBus\SymfonyBridge\Bus\CommandBus:
+        alias: simple_bus.command_bus
+
+    command_bus:
+        alias: simple_bus.command_bus
+        public: true
+
+    simple_bus.command_bus:
+        class: SimpleBus\SymfonyBridge\Bus\CommandBus
+        public: false
+        tags:
+            - { name: message_bus, bus_name: command_bus, type: command, middleware_tag: command_bus_middleware }
+
+    simple_bus.command_bus.delegates_to_message_handler_middleware:
+        class: SimpleBus\Message\Handler\DelegatesToMessageHandlerMiddleware
+        public: false
+        arguments:
+            - '@simple_bus.command_bus.command_handler_resolver'
+        tags:
+            - { name: command_bus_middleware, priority: -1000 }
+
+    simple_bus.command_bus.class_based_command_name_resolver:
+        class: SimpleBus\Message\Name\ClassBasedNameResolver
+        public: false
+
+    simple_bus.command_bus.named_message_command_name_resolver:
+        class: SimpleBus\Message\Name\NamedMessageNameResolver
+        public: false
+
+    simple_bus.command_bus.callable_resolver:
+        class: SimpleBus\Message\CallableResolver\ServiceLocatorAwareCallableResolver
+        public: false
+        arguments:
+            - ['@service_container', 'get']
+
+    simple_bus.command_bus.command_handler_map:
+        class: SimpleBus\Message\CallableResolver\CallableMap
+        public: false
+        arguments:
+            # collection of command handler service ids, will be provided by the RegisterHandlers compiler pass
+            - []
+            - '@simple_bus.command_bus.callable_resolver'
+
+    simple_bus.command_bus.command_handler_resolver:
+        class: SimpleBus\Message\Handler\Resolver\NameBasedMessageHandlerResolver
+        public: false
+        arguments:
+            - '@simple_bus.command_bus.command_name_resolver'
+            - '@simple_bus.command_bus.command_handler_map'
+
+    simple_bus.command_bus.finishes_command_before_handling_next_middleware:
+        class: SimpleBus\Message\Bus\Middleware\FinishesHandlingMessageBeforeHandlingNext
+        public: false
+        tags:
+            - { name: command_bus_middleware, priority: 1000 }

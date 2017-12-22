@@ -1,0 +1,13 @@
+parameters:
+    simple_bus.command_bus.logging.level: debug
+
+services:
+    simple_bus.command_bus.logging_middleware:
+        class: SimpleBus\Message\Logging\LoggingMiddleware
+        public: false
+        arguments:
+            - '@logger'
+            - '%simple_bus.command_bus.logging.level%'
+        tags:
+            - { name: command_bus_middleware, priority: -999 }
+            - { name: monolog.logger, channel: command_bus }
