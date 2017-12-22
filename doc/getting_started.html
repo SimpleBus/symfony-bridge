@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <title>SimpleBus/SymfonyBridge</title>
+
+        <link rel="stylesheet" href="//simplebus.github.io/SymfonyBridge/css/bootstrap.min.css">
+        <link rel="stylesheet" href="//simplebus.github.io/SymfonyBridge/css/font-awesome.min.css">
+        <link rel="stylesheet" href="//simplebus.github.io/SymfonyBridge/css/highlight.dark.css">
+        <link rel="stylesheet" href="//simplebus.github.io/SymfonyBridge/css/main.css">
+    </head>
+    <body>
+
+        <header class="navbar navbar-default navbar-fixed-top">
+
+            <a class="navbar-brand" href="//simplebus.github.io/SymfonyBridge/">
+                SimpleBus/SymfonyBridge
+                <small class="hidden-xs hidden-sm">
+                    Use SimpleBus/MessageBus in a Symfony application
+                </small>
+            </a>
+
+            
+        </header>
+
+        <main class="container-fluid">
+            <div class="row">
+
+                
+                    <nav id="sidebar" class="col-sm-3 col-lg-2" role="navigation">
+
+                        <ul class="nav nav-pills nav-stacked">
+                                                            <li class="">
+                                    <a href="//simplebus.github.io/SymfonyBridge/">
+                                        Home
+                                    </a>
+                                </li>
+                                                            <li class="active">
+                                    <a href="//simplebus.github.io/SymfonyBridge/doc/getting_started.html">
+                                        Getting started
+                                    </a>
+                                </li>
+                                                            <li class="">
+                                    <a href="//simplebus.github.io/SymfonyBridge/doc/command_bus_bundle.html">
+                                        Command bus bundle
+                                    </a>
+                                </li>
+                                                            <li class="">
+                                    <a href="//simplebus.github.io/SymfonyBridge/doc/event_bus_bundle.html">
+                                        Event bus bundle
+                                    </a>
+                                </li>
+                                                            <li class="">
+                                    <a href="//simplebus.github.io/SymfonyBridge/doc/doctrine_orm_bridge_bundle.html">
+                                        Doctrine ORM bridge bundle
+                                    </a>
+                                </li>
+                                                            <li class="">
+                                    <a href="//simplebus.github.io/SymfonyBridge/doc/upgrade_guide.html">
+                                        Upgrade guide
+                                    </a>
+                                </li>
+                                                    </ul>
+
+                    </nav>
+
+                
+                <section id="content" class="col-sm-offset-3 col-lg-offset-2 col-sm-9 col-lg-10">
+                    <h1 id="getting-started">Getting started</h1>
+<h2 id="installation">Installation</h2>
+<p>Using <a href="https://getcomposer.org/">Composer</a>:</p>
+<pre><code class="language-bash">composer require simple-bus/symfony-bridge</code></pre>
+<p>Now enable the <a href="command_bus_bundle.html">CommandBusBundle</a>, the <a href="event_bus_bundle.md">EventBusBundle</a> and/or the
+<a href="doctrine_orm_bridge_bundle.html">DoctrineORMBridgeBundle</a>.</p>
+                </section>
+
+            </div>
+        </main>
+
+        <footer>
+            <div class="container-fluid">
+                <p class="text-muted">
+                    website generated with <a href="http://couscous.io" title="Markdown website generator">Couscous</a>
+                </p>
+            </div>
+        </footer>
+
+        <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+        <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+        <script src="//yastatic.net/highlightjs/8.2/highlight.min.js"></script>
+
+        <script>
+            $(function() {
+                $("section>h1").wrap('<div class="page-header" />');
+                // Syntax highlighting
+                hljs.initHighlightingOnLoad();
+            });
+        </script>
+
+    </body>
+</html>

@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <title>SimpleBus/SymfonyBridge</title>
+
+        <link rel="stylesheet" href="//simplebus.github.io/SymfonyBridge/css/bootstrap.min.css">
+        <link rel="stylesheet" href="//simplebus.github.io/SymfonyBridge/css/font-awesome.min.css">
+        <link rel="stylesheet" href="//simplebus.github.io/SymfonyBridge/css/highlight.dark.css">
+        <link rel="stylesheet" href="//simplebus.github.io/SymfonyBridge/css/main.css">
+    </head>
+    <body>
+
+        <header class="navbar navbar-default navbar-fixed-top">
+
+            <a class="navbar-brand" href="//simplebus.github.io/SymfonyBridge/">
+                SimpleBus/SymfonyBridge
+                <small class="hidden-xs hidden-sm">
+                    Use SimpleBus/MessageBus in a Symfony application
+                </small>
+            </a>
+
+            
+        </header>
+
+        <main class="container-fluid">
+            <div class="row">
+
+                
+                    <nav id="sidebar" class="col-sm-3 col-lg-2" role="navigation">
+
+                        <ul class="nav nav-pills nav-stacked">
+                                                            <li class="">
+                                    <a href="//simplebus.github.io/SymfonyBridge/">
+                                        Home
+                                    </a>
+                                </li>
+                                                            <li class="">
+                                    <a href="//simplebus.github.io/SymfonyBridge/doc/getting_started.html">
+                                        Getting started
+                                    </a>
+                                </li>
+                                                            <li class="">
+                                    <a href="//simplebus.github.io/SymfonyBridge/doc/command_bus_bundle.html">
+                                        Command bus bundle
+                                    </a>
+                                </li>
+                                                            <li class="active">
+                                    <a href="//simplebus.github.io/SymfonyBridge/doc/event_bus_bundle.html">
+                                        Event bus bundle
+                                    </a>
+                                </li>
+                                                            <li class="">
+                                    <a href="//simplebus.github.io/SymfonyBridge/doc/doctrine_orm_bridge_bundle.html">
+                                        Doctrine ORM bridge bundle
+                                    </a>
+                                </li>
+                                                            <li class="">
+                                    <a href="//simplebus.github.io/SymfonyBridge/doc/upgrade_guide.html">
+                                        Upgrade guide
+                                    </a>
+                                </li>
+                                                    </ul>
+
+                    </nav>
+
+                
+                <section id="content" class="col-sm-offset-3 col-lg-offset-2 col-sm-9 col-lg-10">
+                    <h1 id="event-bus-bundle">Event bus bundle</h1>
+<p>Using the building blocks supplied by the <a href="https://github.com/SimpleBus/MessageBus">SimpleBus/MessageBus library</a> you
+can create an event bus, which is basically a message bus, with some middlewares and a collection of message
+subscribers. This is described in the <a href="http://simplebus.github.io/MessageBus/doc/event_bus.html">documentation of
+MessageBus</a>.</p>
+<p>If you use Symfony, you don't have to manually configure an event bus in each project. The <a href="https://github.com/SimpleBus/SymfonyBridge">SimpleBus/SymfonyBridge
+library</a> package comes with the <code>SimpleBusEventBusBundle</code> which handles it
+for you.</p>
+<p>First enable the bundle in your application's kernel:</p>
+<pre><code class="language-php">class AppKernel extends Kernel
+{
+    public function registerBundles()
+    {
+        $bundles = array(
+            ...
+            new SimpleBus\SymfonyBridge\SimpleBusEventBusBundle()
+        )
+        ...
+    }
+    ...
+}</code></pre>
+<h2 id="using-the-event-bus">Using the event bus</h2>
+<p>This bundle provides the <code>event_bus</code> service which is an instance of <code>MessageBus</code>. Wherever you like, you can let it
+handle events, e.g. by fetching it inside a container-aware controller:</p>
+<pre><code class="language-php">// $event is an arbitrary object that will be passed to the event subscriber
+$event = ...;
+
+$this-&gt;get('event_bus')-&gt;handle($event);</code></pre>
+<p>However, you are encouraged to properly inject the <code>event_bus</code> service as a dependency whenever you need it:</p>
+<pre><code class="language-yaml">services:
+    some_service:
+        arguments:
+            - @event_bus</code></pre>
+<h2 id="registering-event-subscribers">Registering event subscribers</h2>
+<p>As described in the <a href="http://simplebus.github.io/MessageBus/doc/event_bus.html">MessageBus documentation</a> you can
+notify event subscribers about the occurrence of a particular event. This bundle allows you to register your own
+event subscribers by adding the <code>event_subscriber</code> tag to the event subscriber's service definition:</p>
+<pre><code class="language-yaml">services:
+    user_registered_event_subscriber:
+        class: Fully\Qualified\Class\Name\Of\UserRegisteredEventSubscriber
+        tags:
+            - { name: event_subscriber, subscribes_to: Fully\Qualified\Class\Name\Of\UserRegistered }</code></pre>
+<blockquote>
+<h4 id="event-subscribers-are-lazy-loaded">Event subscribers are lazy-loaded</h4>
+<p>Since only some of the event subscribers are going to handle any particular event, event subscribers are lazy-loaded.
+This means that their services should be defined as public services (i.e. you can't use <code>public: false</code> for them).</p>
+<h4 id="event-subscribers-are-callables">Event subscribers are callables</h4>
+<p>Any service that is a <a href="http://php.net/manual/en/language.types.callable.php">PHP callable</a> itself can be used as an
+event subscriber. If a service itself is not callable, SimpleBus looks for a <code>notify</code> method and calls it. If you want
+to use a custom method, just add a <code>method</code> attribute to the <code>event_subscriber</code> tag:</p>
+<pre><code class="language-yaml">services:
+    user_registered_event_subscriber:
+        ...
+        tags:
+            - { name: event_subscriber, subscribes_to: ..., method: userRegistered }</code></pre>
+</blockquote>
+<h2 id="setting-the-event-name-resolving-strategy">Setting the event name resolving strategy</h2>
+<p>To find the correct event subscribers for a given event, the name of the event is used. This can be either 1) its fully-
+qualified class name (FQCN) or, 2) if the event implements the <code>SimpleBus\Message\Name\NamedMessage</code> interface, the
+value returned by its static <code>messageName()</code> method. By default, the first strategy is used, but you can configure it
+in your application configuration:</p>
+<pre><code class="language-yaml">event_bus:
+    # default value for this key is "class_based"
+    event_name_resolver_strategy: named_message</code></pre>
+<p>When you change the strategy, you also have to change the value of the <code>subscribes_to</code> attribute of your event
+subscriber service definitions:</p>
+<pre><code class="language-yaml">services:
+    user_registered_event_subscriber:
+        class: Fully\Qualified\Class\Name\Of\UserRegisteredEventSubscriber
+        tags:
+            - { name: event_subscriber, subscribes_to: user_registered }</code></pre>
+<p>Make sure that the value of <code>subscribes_to</code> matches the return value of <code>UserRegistered::messageName()</code>.</p>
+<h2 id="adding-event-bus-middlewares">Adding event bus middlewares</h2>
+<p>As described in the <a href="http://simplebus.github.io/MessageBus/doc/event_bus.html">MessageBus documentation</a> you can
+extend the behavior of the event bus by adding middlewares to it. This bundle allows you to register your own
+middlewares by adding the <code>event_bus_middleware</code> tag to middleware service definitions:</p>
+<pre><code class="language-yaml">services:
+    specialized_event_bus_middleware:
+        class: YourSpecializedEventBusMiddleware
+        public: false
+        tags:
+            - { name: event_bus_middleware, priority: 100 }</code></pre>
+<p>By providing a value for the <code>priority</code> tag attribute you can influence the order in which middlewares are added to the
+event bus.</p>
+<blockquote>
+<h4 id="middlewares-are-not-lazy-loaded">Middlewares are not lazy-loaded</h4>
+<p>Whenever you use the event bus, you also use all of its middlewares, so event bus middlewares are not lazy-loaded.
+This means that their services should be defined as private services (i.e. you should use <code>public: false</code>). See also:
+<a href="http://symfony.com/doc/current/components/dependency_injection/advanced.html#marking-services-as-public-private">Marking Services as public /
+private</a></p>
+</blockquote>
+<h2 id="event-recorders">Event recorders</h2>
+<h3 id="recording-events">Recording events</h3>
+<p>As explained <a href="http://simplebus.github.io/MessageBus/doc/message_recorder.html">in the documentation of MessageBus</a> you
+can collect events while a command is being handled. If you want to record new events you can inject the
+<code>event_recorder</code> service as a constructor argument of a command handler:</p>
+<pre><code class="language-php">use SimpleBus\Message\Recorder\RecordsMessages;
+
+class SomeInterestingCommandHandler
+{
+    private $eventRecorder;
+
+    public function __construct(RecordsMessages $eventRecorder)
+    {
+        $this-&gt;eventRecorder = $eventRecorder;
+    }
+
+    public function handle($command)
+    {
+        ...
+
+        // create an event
+        $event = new SomethingInterestingHappened();
+
+        // record the event
+        $this-&gt;eventRecorder-&gt;record($event);
+    }
+}</code></pre>
+<p>The corresponding service definition looks like this:</p>
+<pre><code class="language-yaml">services:
+    some_interesting_command_handler:
+    arguments:
+        - @event_recorder
+    tags:
+        - { name: command_handler, handles: Fully\Qualified\Name\Of\SomeInterestingCommand</code></pre>
+<p>Recorded events will be handled after the command has been completely handled.</p>
+<h3 id="registering-your-own-message-recorders">Registering your own message recorders</h3>
+<p>In case you have another source for recorded message (for instance a class that collects domain events like the
+<a href="https://github.com/SimpleBus/DoctrineORMBridge">DoctrineORMBridge</a> does), you can register it as a message recorder:</p>
+<pre><code class="language-php">use SimpleBus\Message\Recorder\ContainsRecordedMessages;
+
+class PropelDomainEvents implements ContainsRecordedMessages
+{
+    public function recordedMessages()
+    {
+        // return an array of Message instances
+    }
+
+    public function eraseMessages()
+    {
+        // clear the internal array containing the recorded messages
+    }
+}</code></pre>
+<p>The corresponding service definition looks like this:</p>
+<pre><code class="language-yaml">services:
+    propel_domain_events:
+        class: Fully\Qualified\Class\Name\Of\PropelDomainEvents
+        public: false
+        tags:
+            - { name: event_recorder }</code></pre>
+<blockquote>
+<h2 id="logging">Logging</h2>
+<p>If you want to log every event that is being handled, enable logging in <code>config.yml</code>:</p>
+<pre><code class="language-yaml">event_bus:
+    logging: ~</code></pre>
+<p>Messages will be logged to the <code>event_bus</code> channel.</p>
+</blockquote>
+                </section>
+
+            </div>
+        </main>
+
+        <footer>
+            <div class="container-fluid">
+                <p class="text-muted">
+                    website generated with <a href="http://couscous.io" title="Markdown website generator">Couscous</a>
+                </p>
+            </div>
+        </footer>
+
+        <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+        <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+        <script src="//yastatic.net/highlightjs/8.2/highlight.min.js"></script>
+
+        <script>
+            $(function() {
+                $("section>h1").wrap('<div class="page-header" />');
+                // Syntax highlighting
+                hljs.initHighlightingOnLoad();
+            });
+        </script>
+
+    </body>
+</html>
