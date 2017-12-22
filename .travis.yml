@@ -24,7 +24,7 @@ env:
 
 before_install:
   - composer self-update
-  - if [ "$SYMFONY_VERSION" != "" ]; then composer require --no-update symfony/http-kernel:$SYMFONY_VERSION symfony/dependency-injection:$SYMFONY_VERSION symfony/yaml:$SYMFONY_VERSION symfony/config:$SYMFONY_VERSION symfony/monolog-bridge:$SYMFONY_VERSION; fi
+  - if [ "$SYMFONY_VERSION" != "" ]; then composer require --no-update symfony/http-kernel:$SYMFONY_VERSION symfony/dependency-injection:$SYMFONY_VERSION symfony/yaml:$SYMFONY_VERSION symfony/config:$SYMFONY_VERSION symfony/monolog-bridge:$SYMFONY_VERSION symfony/framework-bundle:$SYMFONY_VERSION; fi
 
 install:
   - composer install --prefer-dist

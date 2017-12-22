@@ -32,12 +32,13 @@
         "symfony/monolog-bundle": "For logging messages"
     },
     "require-dev": {
+        "doctrine/doctrine-bundle": "~1.0",
+        "doctrine/orm": "~2.3",
         "phpunit/phpunit": "^5.7 || ^6.0",
         "simple-bus/doctrine-orm-bridge": "~5.0",
-        "doctrine/orm": "~2.3",
-        "doctrine/doctrine-bundle": "~1.0",
+        "symfony/framework-bundle": "~2.0 || ~3.0 || ~4.0",
         "symfony/monolog-bridge": "~2.3 || ~3.0 || ~4.0",
-        "symfony/monolog-bundle": "~2.3 || ~3.0 "
+        "symfony/monolog-bundle": "~2.3 || ~3.0"
     },
     "autoload": {
         "psr-4": {
