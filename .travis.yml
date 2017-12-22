@@ -38,5 +38,3 @@ install:
 script:
   - vendor/bin/phpunit $EXTRA_PHPUNIT_PARAMS
 
-after_success:
-  - bash <(curl -s https://codecov.io/bash)

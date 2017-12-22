@@ -1,6 +1,6 @@
 # SimpleBus/SymfonyBridge
 
-[![Build Status](https://travis-ci.org/SimpleBus/SymfonyBridge.svg?branch=master)](https://travis-ci.org/SimpleBus/SymfonyBridge) [![codecov](https://codecov.io/gh/SimpleBus/SymfonyBridge/branch/master/graph/badge.svg)](https://codecov.io/gh/SimpleBus/SymfonyBridge)
+[![Build Status](https://travis-ci.org/SimpleBus/SymfonyBridge.svg?branch=master)](https://travis-ci.org/SimpleBus/SymfonyBridge)
 
 By [Matthias Noback](http://php-and-symfony.matthiasnoback.nl/)
 
