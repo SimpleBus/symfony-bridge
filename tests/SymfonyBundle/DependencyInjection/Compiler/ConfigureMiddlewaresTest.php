@@ -2,6 +2,7 @@
 
 namespace SimpleBus\SymfonyBridge\Tests\SymfonyBundle\DependencyInjection\Compiler;
 
+use PHPUnit\Framework\TestCase;
 use SimpleBus\SymfonyBridge\DependencyInjection\Compiler\ConfigureMiddlewares;
 use SimpleBus\SymfonyBridge\Tests\Functional\SmokeTest\Auto\AuteEvent1;
 use SimpleBus\SymfonyBridge\Tests\Functional\SmokeTest\Auto\AuteEvent2;
@@ -10,7 +11,7 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\HttpKernel\Kernel;
 
-class ConfigureMiddlewaresTest extends \PHPUnit\Framework\TestCase
+class ConfigureMiddlewaresTest extends TestCase
 {
     /**
      * @var ContainerBuilder
