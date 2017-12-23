@@ -21,6 +21,14 @@ class SmokeTest extends KernelTestCase
         return TestKernel::class;
     }
 
+    protected function tearDown()
+    {
+        parent::tearDown();
+
+        static::$class = null;
+        static::$kernel = null;
+    }
+
     /**
      * @test
      */

@@ -46,4 +46,9 @@ class TestKernel extends Kernel
     {
         return $this->tempDir . '/logs';
     }
+
+    protected function getContainerClass()
+    {
+        return parent::getContainerClass() . sha1(__NAMESPACE__);
+    }
 }
