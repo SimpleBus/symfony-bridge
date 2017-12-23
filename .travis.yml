@@ -18,13 +18,13 @@ matrix:
     - php: 7.2
       env: SYMFONY_VERSION=4.0.*
     - php: 7.2
-      env: SYMFONY_VERSION=4.0.* REQUIRE_PROXY_BRIDGE="" EXTRA_PHPUNIT_PARAMS="--group depTest"
+      env: SYMFONY_VERSION=4.0.* REQUIRE_PROXY_BRIDGE="" EXTRA_PHPUNIT_PARAMS="--group SymfonyBridgeProxyManagerDependency"
 
 env:
   global:
     - SYMFONY_VERSION=""
     - REQUIRE_PROXY_BRIDGE="yes"
-    - EXTRA_PHPUNIT_PARAMS="--exclude-group depTest"
+    - EXTRA_PHPUNIT_PARAMS=""
     - COMPOSER_FLAGS="--prefer-dist"
 
 before_install:
