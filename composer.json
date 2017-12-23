@@ -19,10 +19,10 @@
     "require": {
         "php": "^7.1",
         "simple-bus/message-bus": "~3.0",
-        "symfony/http-kernel": "~2.3 || ~3.0 || ~4.0",
-        "symfony/dependency-injection": "~2.3 || ~3.0 || ~4.0",
-        "symfony/yaml": "~2.3 || ~3.0 || ~4.0",
-        "symfony/config": "~2.3 || ~3.0 || ~4.0"
+        "symfony/http-kernel": "~2.7 || ~3.3 || ~4.0",
+        "symfony/dependency-injection": "~2.7 || ~3.3 || ~4.0",
+        "symfony/yaml": "~2.7 || ~3.3 || ~4.0",
+        "symfony/config": "~2.7 || ~3.3 || ~4.0"
     },
     "suggest": {
         "simple-bus/doctrine-orm-bridge": "For integration with Doctrine ORM",
@@ -36,8 +36,8 @@
         "doctrine/orm": "~2.3",
         "phpunit/phpunit": "^5.7 || ^6.0",
         "simple-bus/doctrine-orm-bridge": "~5.0",
-        "symfony/framework-bundle": "~2.0 || ~3.0 || ~4.0",
-        "symfony/monolog-bridge": "~2.3 || ~3.0 || ~4.0",
+        "symfony/framework-bundle": "~2.7 || ~3.3 || ~4.0",
+        "symfony/monolog-bridge": "~2.7 || ~3.3 || ~4.0",
         "symfony/monolog-bundle": "~2.3 || ~3.0"
     },
     "autoload": {
