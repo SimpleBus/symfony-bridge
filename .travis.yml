@@ -6,6 +6,8 @@ matrix:
   include:
     - php: 7.1
     - php: 7.2
+      env: COMPOSER_FLAGS="--prefer-lowest"
+    - php: 7.2
       env: SYMFONY_VERSION=2.7.*
     - php: 7.2
       env: SYMFONY_VERSION=2.8.*
@@ -23,13 +25,14 @@ env:
     - SYMFONY_VERSION=""
     - REQUIRE_PROXY_BRIDGE="yes"
     - EXTRA_PHPUNIT_PARAMS="--exclude-group depTest"
+    - COMPOSER_FLAGS="--prefer-dist"
 
 before_install:
   - composer self-update
   - if [ "$SYMFONY_VERSION" != "" ]; then composer require --no-update symfony/http-kernel:$SYMFONY_VERSION symfony/dependency-injection:$SYMFONY_VERSION symfony/yaml:$SYMFONY_VERSION symfony/config:$SYMFONY_VERSION symfony/monolog-bridge:$SYMFONY_VERSION symfony/framework-bundle:$SYMFONY_VERSION; fi
 
 install:
-  - composer install --prefer-dist
+  - composer update $COMPOSER_FLAGS
   - if [ "$REQUIRE_PROXY_BRIDGE" == "yes" ] && [ "$SYMFONY_VERSION" != "" ]; then composer require symfony/proxy-manager-bridge:$SYMFONY_VERSION; fi
   - if [ "$REQUIRE_PROXY_BRIDGE" == "yes" ] && [ "$SYMFONY_VERSION" == "" ]; then composer require symfony/proxy-manager-bridge; fi
 
