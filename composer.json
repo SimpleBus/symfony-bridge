@@ -2,7 +2,12 @@
     "name": "simple-bus/symfony-bridge",
     "type": "symfony-bundle",
     "description": "Bridge for using command buses and event buses in Symfony projects",
-    "keywords": ["Symfony", "Doctrine", "event bus", "command bus"],
+    "keywords": [
+        "Symfony",
+        "Doctrine",
+        "event bus",
+        "command bus"
+    ],
     "homepage": "http://github.com/SimpleBus/SymfonyBridge",
     "license": "MIT",
     "authors": [
@@ -19,17 +24,10 @@
     "require": {
         "php": "^7.1",
         "simple-bus/message-bus": "~3.0",
-        "symfony/http-kernel": "~2.7 || ~3.3 || ~4.0",
+        "symfony/config": "~2.7 || ~3.3 || ~4.0",
         "symfony/dependency-injection": "~2.7 || ~3.3 || ~4.0",
-        "symfony/yaml": "~2.7 || ~3.3 || ~4.0",
-        "symfony/config": "~2.7 || ~3.3 || ~4.0"
-    },
-    "suggest": {
-        "simple-bus/doctrine-orm-bridge": "For integration with Doctrine ORM",
-        "doctrine/orm": "For integration with Doctrine ORM",
-        "doctrine/doctrine-bundle": "For integration with Doctrine ORM",
-        "symfony/monolog-bundle": "For logging messages",
-        "symfony/proxy-manager-bridge": "For integration with Symfony and Doctrine ORM"
+        "symfony/http-kernel": "~2.7 || ~3.3 || ~4.0",
+        "symfony/yaml": "~2.7 || ~3.3 || ~4.0"
     },
     "require-dev": {
         "doctrine/doctrine-bundle": "~1.0",
@@ -41,6 +39,13 @@
         "symfony/monolog-bundle": "~2.3 || ~3.0",
         "symfony/proxy-manager-bridge": "~2.7 || ~3.3 || ~4.0"
     },
+    "suggest": {
+        "doctrine/doctrine-bundle": "For integration with Doctrine ORM",
+        "doctrine/orm": "For integration with Doctrine ORM",
+        "simple-bus/doctrine-orm-bridge": "For integration with Doctrine ORM",
+        "symfony/monolog-bundle": "For logging messages",
+        "symfony/proxy-manager-bridge": "For integration with Symfony and Doctrine ORM"
+    },
     "autoload": {
         "psr-4": {
             "SimpleBus\\SymfonyBridge\\": "src"
@@ -50,5 +55,8 @@
         "psr-4": {
             "SimpleBus\\SymfonyBridge\\Tests\\": "tests"
         }
+    },
+    "config": {
+        "sort-packages": true
     }
 }
