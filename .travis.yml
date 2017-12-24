@@ -2,11 +2,19 @@ sudo: false
 
 language: php
 
+cache:
+  directories:
+    - $HOME/.composer/cache/files
+
 matrix:
+  fast_finish: true
   include:
     - php: 7.1
     - php: 7.2
+    - php: 7.2
       env: COMPOSER_FLAGS="--prefer-lowest"
+
+    # Test Symfony versions
     - php: 7.2
       env: SYMFONY_VERSION=2.7.*
     - php: 7.2
@@ -19,22 +27,23 @@ matrix:
       env: SYMFONY_VERSION=4.0.*
     - php: 7.2
       env: SYMFONY_VERSION=4.0.* REMOVE_PROXY_BRIDGE="yes" EXTRA_PHPUNIT_PARAMS="--group SymfonyBridgeProxyManagerDependency"
+  allow_failures:
+    - env: COMPOSER_FLAGS="--prefer-lowest"
 
 env:
   global:
-    - SYMFONY_VERSION=""
-    - REMOVE_PROXY_BRIDGE="no"
+    - COMPOSER_FLAGS=""
     - EXTRA_PHPUNIT_PARAMS=""
-    - COMPOSER_FLAGS="--prefer-dist"
+    - REMOVE_PROXY_BRIDGE="no"
+    - SYMFONY_VERSION=""
 
 before_install:
   - composer self-update
   - if [ "$SYMFONY_VERSION" != "" ]; then composer require --no-update symfony/http-kernel:$SYMFONY_VERSION symfony/dependency-injection:$SYMFONY_VERSION symfony/yaml:$SYMFONY_VERSION symfony/config:$SYMFONY_VERSION symfony/monolog-bridge:$SYMFONY_VERSION symfony/framework-bundle:$SYMFONY_VERSION symfony/proxy-manager-bridge:$SYMFONY_VERSION; fi
 
 install:
-  - composer update $COMPOSER_FLAGS
+  - composer update --prefer-dist $COMPOSER_FLAGS
   - if [ "$REMOVE_PROXY_BRIDGE" == "yes" ]; then composer remove symfony/proxy-manager-bridge; fi
 
 script:
-  - vendor/bin/phpunit $EXTRA_PHPUNIT_PARAMS
-
+  - ./vendor/bin/phpunit $EXTRA_PHPUNIT_PARAMS
