@@ -16,11 +16,7 @@ matrix:
 
     # Test Symfony versions
     - php: 7.2
-      env: SYMFONY_VERSION=2.7.*
-    - php: 7.2
       env: SYMFONY_VERSION=2.8.*
-    - php: 7.2
-      env: SYMFONY_VERSION=3.3.*
     - php: 7.2
       env: SYMFONY_VERSION=3.4.*
     - php: 7.2
