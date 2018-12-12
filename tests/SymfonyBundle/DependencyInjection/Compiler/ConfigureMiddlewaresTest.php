@@ -31,6 +31,7 @@ class ConfigureMiddlewaresTest extends TestCase
     {
         $this->container = new ContainerBuilder();
         $this->mainBusDefinition = new Definition('stdClass');
+        $this->mainBusDefinition->setPublic(true);
         $this->container->setDefinition($this->mainBusId, $this->mainBusDefinition);
         $this->container->addCompilerPass(new ConfigureMiddlewares($this->mainBusId, $this->middlewareTag));
     }
