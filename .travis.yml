@@ -11,21 +11,22 @@ matrix:
   include:
     - php: 7.1
     - php: 7.2
-    - php: 7.2
+    - php: 7.3
+    - php: 7.3
       env: COMPOSER_FLAGS="--prefer-lowest"
 
     # Test Symfony versions
     - php: 7.2
       env: SYMFONY_VERSION=2.8.*
-    - php: 7.2
+    - php: 7.3
       env: SYMFONY_VERSION=3.4.*
-    - php: 7.2
+    - php: 7.3
       env: SYMFONY_VERSION=4.0.*
-    - php: 7.2
+    - php: 7.3
       env: SYMFONY_VERSION=4.1.*
-    - php: 7.2
+    - php: 7.3
       env: SYMFONY_VERSION=4.2.*
-    - php: 7.2
+    - php: 7.3
       env: SYMFONY_VERSION=4.2.* REMOVE_PROXY_BRIDGE="yes" EXTRA_PHPUNIT_PARAMS="--group SymfonyBridgeProxyManagerDependency"
   allow_failures:
     - env: COMPOSER_FLAGS="--prefer-lowest"
