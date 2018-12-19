@@ -41,17 +41,6 @@ class SimpleBusCommandBusBundle extends Bundle
                 'handles'
             )
         );
-
-        // @TODO Fix unit tests
-        // LogicException: Tag "message_bus" of service "simple_bus.asynchronous.command_bus" should have an attribute "bus_name"
-        //
-        //if (!$container->hasExtension('simplebus_profiler')) {
-        //    $container->addCompilerPass(
-        //        new DependencyInjection\Compiler\ProfilerPass()
-        //    );
-        //
-        //    $container->registerExtension(new DependencyInjection\ProfilerExtension());
-        //}
     }
 
     public function getContainerExtension()
