@@ -39,7 +39,8 @@ services:
 
 command_bus:
     command_name_resolver_strategy: class_based
-    logging: ~
+    middlewares:
+        logger: true
 
 event_bus:
     event_name_resolver_strategy: named_message

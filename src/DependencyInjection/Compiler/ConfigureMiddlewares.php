@@ -26,6 +26,11 @@ class ConfigureMiddlewares implements CompilerPassInterface
             return;
         }
 
+        if (!$container->hasParameter('simple_bus.command_bus.append_tagged_middlewares')
+            || !$container->getParameter('simple_bus.command_bus.append_tagged_middlewares')) {
+            return;
+        }
+
         $middlewareIds = new \SplPriorityQueue();
 
         foreach ($container->findTaggedServiceIds($this->busTag) as $specializedBusId => $tags) {
