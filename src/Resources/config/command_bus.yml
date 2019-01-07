@@ -52,5 +52,3 @@ services:
     simple_bus.command_bus.finishes_command_before_handling_next_middleware:
         class: SimpleBus\Message\Bus\Middleware\FinishesHandlingMessageBeforeHandlingNext
         public: false
-        tags:
-            - { name: command_bus_middleware, priority: 1000 }

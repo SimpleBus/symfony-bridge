@@ -2,10 +2,10 @@
 
 namespace SimpleBus\SymfonyBridge\DependencyInjection;
 
-use Symfony\Component\HttpKernel\DependencyInjection\ConfigurableExtension;
-use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
-use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
+use Symfony\Component\HttpKernel\DependencyInjection\ConfigurableExtension;
 
 class CommandBusExtension extends ConfigurableExtension
 {
@@ -39,6 +39,11 @@ class CommandBusExtension extends ConfigurableExtension
 
         if ($mergedConfig['logging']['enabled']) {
             $loader->load('command_bus_logging.yml');
+        }
+
+        if ($mergedConfig['unnest_commands']) {
+            $container->getDefinition('simple_bus.command_bus.finishes_command_before_handling_next_middleware')
+                ->addTag('command_bus_middleware', ['priority' => 1000]);
         }
     }
 }
