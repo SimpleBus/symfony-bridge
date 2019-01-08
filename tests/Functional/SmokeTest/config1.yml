@@ -37,6 +37,20 @@ services:
             - '@command_bus'
         public: true
 
+    nesting_command_handler:
+        class: SimpleBus\SymfonyBridge\Tests\Functional\SmokeTest\Nested\NestedCommandHandler
+        arguments:
+            - '@command_bus'
+            - '@nesting_records_bag'
+            - 2
+        tags:
+            - { name: command_handler, handles: SimpleBus\SymfonyBridge\Tests\Functional\SmokeTest\Nested\NestedCommand }
+        public: true
+
+    nesting_records_bag:
+        class: SimpleBus\SymfonyBridge\Tests\Functional\SmokeTest\Nested\RecordsBag
+        public: true
+
 command_bus:
     command_name_resolver_strategy: class_based
     middlewares:
