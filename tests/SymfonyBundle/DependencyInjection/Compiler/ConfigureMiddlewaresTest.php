@@ -34,7 +34,6 @@ class ConfigureMiddlewaresTest extends TestCase
         $this->mainBusDefinition->setPublic(true);
         $this->container->setDefinition($this->mainBusId, $this->mainBusDefinition);
         $this->container->addCompilerPass(new ConfigureMiddlewares($this->mainBusId, $this->middlewareTag));
-        $this->container->setParameter('simple_bus.command_bus.append_tagged_middlewares', true);
     }
 
     /**

@@ -57,7 +57,5 @@ class CommandBusExtension extends ConfigurableExtension
             $container->getDefinition('simple_bus.command_bus.finishes_command_before_handling_next_middleware')
                 ->addTag('command_bus_middleware', ['priority' => 1000]);
         }
-
-        $container->setParameter('simple_bus.command_bus.append_tagged_middlewares', $mergedConfig['middlewares']['other_middlewares']);
     }
 }

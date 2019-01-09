@@ -31,7 +31,6 @@ class CommandBusConfiguration implements ConfigurationInterface
                     ->children()
                         ->booleanNode('logger')->defaultFalse()->end()
                         ->booleanNode('finishes_command_before_handling_next')->defaultTrue()->end()
-                        ->booleanNode('other_middlewares')->defaultTrue()->end()
                     ->end()
                 ->end()
                 ->arrayNode('logging')
