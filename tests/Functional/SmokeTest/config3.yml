@@ -10,7 +10,7 @@ services:
             - 2
         tags:
             - { name: command_handler, handles: SimpleBus\SymfonyBridge\Tests\Functional\SmokeTest\Nested\NestedCommand }
-        public: true
+        public: false
 
     nesting_records_bag:
         class: SimpleBus\SymfonyBridge\Tests\Functional\SmokeTest\Nested\RecordsBag

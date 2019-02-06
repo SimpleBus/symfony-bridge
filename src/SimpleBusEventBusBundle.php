@@ -51,6 +51,7 @@ class SimpleBusEventBusBundle extends Bundle
         $container->addCompilerPass(
             new RegisterSubscribers(
                 'simple_bus.event_bus.event_subscribers_collection',
+                'simple_bus.event_bus.event_subscribers_service_locator',
                 'event_subscriber',
                 'subscribes_to'
             )

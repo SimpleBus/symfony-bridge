@@ -57,7 +57,14 @@ services:
         class: SimpleBus\Message\CallableResolver\ServiceLocatorAwareCallableResolver
         public: false
         arguments:
-            - ['@service_container', 'get']
+            - ['@simple_bus.event_bus.event_subscribers_service_locator', 'get']
+
+    simple_bus.event_bus.event_subscribers_service_locator:
+        class: Symfony\Component\DependencyInjection\ServiceLocator
+        tags: ['container.service_locator']
+        arguments:
+            # collection of command handler service ids, will be provided by the RegisterHandlers compiler pass
+            - []
 
     simple_bus.event_bus.event_subscribers_collection:
         class: SimpleBus\Message\CallableResolver\CallableCollection

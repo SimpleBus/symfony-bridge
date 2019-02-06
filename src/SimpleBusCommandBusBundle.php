@@ -37,6 +37,7 @@ class SimpleBusCommandBusBundle extends Bundle
         $container->addCompilerPass(
             new RegisterHandlers(
                 'simple_bus.command_bus.command_handler_map',
+                'simple_bus.command_bus.command_handler_service_locator',
                 'command_handler',
                 'handles'
             )

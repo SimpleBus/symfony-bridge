@@ -4,8 +4,6 @@ namespace SimpleBus\SymfonyBridge\Tests\Functional\SmokeTest\Auto;
 
 final class AutoEventSubscriberUsingPublicMethod
 {
-    public $handled = [];
-
     public function __construct()
     {
 
@@ -18,11 +16,11 @@ final class AutoEventSubscriberUsingPublicMethod
 
     public function someEventHandler(AutoEvent2 $event)
     {
-        $this->handled[] = $event;
+        $event->setHandledBy($this);
     }
 
     public function someOtherEventHandler(AutoEvent3 $event)
     {
-        $this->handled[] = $event;
+        $event->setHandledBy($this);
     }
 }
