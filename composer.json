@@ -24,20 +24,20 @@
     "require": {
         "php": "^7.1",
         "simple-bus/message-bus": "~3.0",
-        "symfony/config": "~2.7 || ~3.3 || ~4.0",
-        "symfony/dependency-injection": "~2.7 || ~3.3 || ~4.0",
-        "symfony/http-kernel": "~2.7 || ~3.3 || ~4.0",
-        "symfony/yaml": "~2.7 || ~3.3 || ~4.0"
+        "symfony/config": "~3.3 || ~4.0",
+        "symfony/dependency-injection": "~3.3 || ~4.0",
+        "symfony/http-kernel": "~3.3 || ~4.0",
+        "symfony/yaml": "~3.3 || ~4.0"
     },
     "require-dev": {
         "doctrine/doctrine-bundle": "~1.0",
         "doctrine/orm": "~2.5",
         "phpunit/phpunit": "^5.7 || ^6.0",
         "simple-bus/doctrine-orm-bridge": "~5.0",
-        "symfony/framework-bundle": "~2.7 || ~3.3 || ~4.0",
-        "symfony/monolog-bridge": "~2.7 || ~3.3 || ~4.0",
+        "symfony/framework-bundle": "~3.3 || ~4.0",
+        "symfony/monolog-bridge": "~3.3 || ~4.0",
         "symfony/monolog-bundle": "~2.3 || ~3.0",
-        "symfony/proxy-manager-bridge": "~2.7 || ~3.3 || ~4.0"
+        "symfony/proxy-manager-bridge": "~3.3 || ~4.0"
     },
     "suggest": {
         "doctrine/doctrine-bundle": "For integration with Doctrine ORM",
