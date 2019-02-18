@@ -18,7 +18,14 @@ class CommandBusConfiguration implements ConfigurationInterface
     {
         $treeBuilder = new TreeBuilder($this->alias);
 
-        $rootNode = $treeBuilder->root($this->alias);
+        if (method_exists($treeBuilder, 'getRootNode')) {
+            // Symfony 4.2 +
+            $rootNode = $treeBuilder->getRootNode();
+        } else {
+            // Symfony 4.1 and below
+            $rootNode = $treeBuilder->root($this->alias);
+        }
+
         $rootNode
             ->addDefaultsIfNotSet()
             ->children()
