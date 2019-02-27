@@ -25,6 +25,9 @@ services:
             # collection of RecordsMessages instances, will be provided by the RegisterMessageRecorders compiler pass
             - []
 
+    SimpleBus\Message\Recorder\RecordsMessages:
+        alias: 'event_recorder'
+
     event_recorder:
         alias: simple_bus.event_bus.public_event_recorder
         public: false
@@ -73,6 +76,9 @@ services:
             # collection of event subscriber services ids, will be provided by the RegisterSubscribers compiler pas
             - []
             - '@simple_bus.event_bus.callable_resolver'
+
+    SimpleBus\Message\Subscriber\Resolver\MessageSubscribersResolver:
+        alias: 'simple_bus.event_bus.event_subscribers_resolver'
 
     simple_bus.event_bus.event_subscribers_resolver:
         class: SimpleBus\Message\Subscriber\Resolver\NameBasedMessageSubscriberResolver
