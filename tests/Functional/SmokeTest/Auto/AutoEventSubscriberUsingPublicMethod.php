@@ -23,4 +23,9 @@ final class AutoEventSubscriberUsingPublicMethod
     {
         $event->setHandledBy($this);
     }
+
+    public function randomPublicMethod($value)
+    {
+
+    }
 }

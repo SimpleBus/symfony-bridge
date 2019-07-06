@@ -2,7 +2,6 @@
 
 namespace SimpleBus\SymfonyBridge\DependencyInjection\Compiler;
 
-use RuntimeException;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
@@ -54,14 +53,9 @@ final class AutoRegister implements CompilerPassInterface
 
                     $parameters = $method->getParameters();
 
-                    // if no param or optional param, skip
-                    if (count($parameters) !== 1 || $parameters[0]->isOptional()) {
+                    // if no param, optional param or non-class param, skip
+                    if (count($parameters) !== 1 || $parameters[0]->isOptional() || $parameters[0]->getClass() === null) {
                         continue;
-                    }
-
-                    if ($parameters[0]->getClass() === null) {
-                        throw new RuntimeException(sprintf('Could not get auto register class %s because the first parameter %s of public method %s should be have a class typehint. Either specify the typehint, make the function non-public, or disable auto registration.', $method->class,
-                            $parameters[0]->getName(), $method->getName()));
                     }
 
                     // get the class name

@@ -8,4 +8,9 @@ final class AutoCommandHandlerUsingPublicMethod
     {
         $command->setHandled(true);
     }
+
+    public function randomPublicMethod($value)
+    {
+
+    }
 }
