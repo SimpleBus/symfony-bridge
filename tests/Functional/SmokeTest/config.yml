@@ -14,7 +14,7 @@ doctrine:
                 mappings:
                     test:
                         type: annotation
-                        dir: "%kernel.root_dir%/Entity/"
+                        dir: "%kernel.project_dir%/Entity/"
                         prefix: SimpleBus\SymfonyBridge\Tests\Functional\SmokeTest\Entity
                         alias: Test
                         is_bundle: false
