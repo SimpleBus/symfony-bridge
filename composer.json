@@ -26,7 +26,7 @@
         }
     ],
     "require": {
-        "php": "^7.1",
+        "php": "^7.3",
         "simple-bus/message-bus": "~3.0",
         "symfony/config": "~3.3 || ~4.0",
         "symfony/dependency-injection": "~3.3 || ~4.0",

@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/SimpleBus/SymfonyBridge.svg?branch=master)](https://travis-ci.org/SimpleBus/SymfonyBridge)
 
-By [Matthias Noback](http://php-and-symfony.matthiasnoback.nl/)
+By [Matthias Noback](http://php-and-symfony.matthiasnoback.nl/), Cliff Odijk, Ruud Kamphuis
 
 This package contains the following bundles which can be used to integrate
 [SimpleBus/MessageBus](https://github.com/SimpleBus/MessageBus) with a Symfony application:
