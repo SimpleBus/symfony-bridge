@@ -27,7 +27,7 @@ class ConfigureMiddlewaresTest extends TestCase
      */
     private $mainBusDefinition;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->container = new ContainerBuilder();
         $this->mainBusDefinition = new Definition('stdClass');

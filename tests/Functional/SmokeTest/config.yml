@@ -2,6 +2,9 @@ services:
     annotation_reader:
         class: Doctrine\Common\Annotations\AnnotationReader
 
+framework:
+    secret: 'secret'
+
 doctrine:
     dbal:
         driver: pdo_sqlite
@@ -14,7 +17,7 @@ doctrine:
                 mappings:
                     test:
                         type: annotation
-                        dir: "%kernel.root_dir%/Entity/"
+                        dir: "%kernel.project_dir%/Entity/"
                         prefix: SimpleBus\SymfonyBridge\Tests\Functional\SmokeTest\Entity
                         alias: Test
                         is_bundle: false

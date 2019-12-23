@@ -6,6 +6,7 @@ use Doctrine\Bundle\DoctrineBundle\DoctrineBundle;
 use SimpleBus\SymfonyBridge\SimpleBusCommandBusBundle;
 use SimpleBus\SymfonyBridge\DoctrineOrmBridgeBundle;
 use SimpleBus\SymfonyBridge\SimpleBusEventBusBundle;
+use Symfony\Bundle\FrameworkBundle\FrameworkBundle;
 use Symfony\Bundle\MonologBundle\MonologBundle;
 use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\HttpKernel\Kernel;
@@ -24,6 +25,7 @@ class TestKernel extends Kernel
     public function registerBundles()
     {
         return array(
+            new FrameworkBundle(),
             new DoctrineBundle(),
             new SimpleBusCommandBusBundle(),
             new SimpleBusEventBusBundle(),
@@ -45,6 +47,11 @@ class TestKernel extends Kernel
     public function getLogDir()
     {
         return $this->tempDir . '/logs';
+    }
+
+    public function getProjectDir()
+    {
+        return __DIR__;
     }
 
     protected function getContainerClass()

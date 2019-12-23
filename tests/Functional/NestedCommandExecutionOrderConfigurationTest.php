@@ -75,7 +75,7 @@ final class NestedCommandExecutionOrderConfigurationTest extends KernelTestCase
     }
 
     /** {@inheritdoc} */
-    protected function tearDown()
+    protected function tearDown(): void
     {
         parent::tearDown();
 

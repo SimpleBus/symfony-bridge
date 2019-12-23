@@ -4,6 +4,7 @@ namespace SimpleBus\SymfonyBridge\Tests\Functional;
 
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Tools\SchemaTool;
+use LogicException;
 use SimpleBus\SymfonyBridge\Tests\Functional\SmokeTest\Auto\AutoCommand1;
 use SimpleBus\SymfonyBridge\Tests\Functional\SmokeTest\Auto\AutoCommand2;
 use SimpleBus\SymfonyBridge\Tests\Functional\SmokeTest\Auto\AutoEvent1;
@@ -23,7 +24,7 @@ class SmokeTest extends KernelTestCase
         return TestKernel::class;
     }
 
-    protected function tearDown()
+    protected function tearDown(): void
     {
         parent::tearDown();
 
@@ -54,12 +55,12 @@ class SmokeTest extends KernelTestCase
 
         // it has logged some things
         $loggedMessages = file_get_contents($container->getParameter('log_file'));
-        $this->assertContains('command_bus.DEBUG: Started handling a message', $loggedMessages);
-        $this->assertContains('command_bus.DEBUG: Finished handling a message', $loggedMessages);
-        $this->assertContains('event_bus.DEBUG: Started handling a message', $loggedMessages);
-        $this->assertContains('event_bus.DEBUG: Finished handling a message', $loggedMessages);
-        $this->assertContains('event_bus.DEBUG: Started notifying a subscriber', $loggedMessages);
-        $this->assertContains('event_bus.DEBUG: Finished notifying a subscriber', $loggedMessages);
+        $this->assertStringContainsString('command_bus.DEBUG: Started handling a message', $loggedMessages);
+        $this->assertStringContainsString('command_bus.DEBUG: Finished handling a message', $loggedMessages);
+        $this->assertStringContainsString('event_bus.DEBUG: Started handling a message', $loggedMessages);
+        $this->assertStringContainsString('event_bus.DEBUG: Finished handling a message', $loggedMessages);
+        $this->assertStringContainsString('event_bus.DEBUG: Started notifying a subscriber', $loggedMessages);
+        $this->assertStringContainsString('event_bus.DEBUG: Finished notifying a subscriber', $loggedMessages);
     }
 
     /**
@@ -136,14 +137,13 @@ class SmokeTest extends KernelTestCase
 
     /**
      * @test
-     * 
      * @group SymfonyBridgeProxyManagerDependency
-     *
-     * @expectedException        \LogicException
-     * @expectedExceptionMessage In order to use bundle "DoctrineOrmBridgeBundle" you need to require "symfony/proxy-manager-bridge" package.
      */
     public function fails_because_of_mising_dependency()
     {
+        $this->expectException(LogicException::class);
+        $this->expectExceptionMessage('In order to use bundle "DoctrineOrmBridgeBundle" you need to require "symfony/proxy-manager-bridge" package.');
+
         self::bootKernel(['environment' => 'config2']);
     }
 
