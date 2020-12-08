@@ -1,0 +1,10 @@
+parameters:
+    simple_bus.command_bus.logging.level: debug
+
+services:
+    simple_bus.command_bus.logging_middleware:
+        class: SimpleBus\Message\Logging\LoggingMiddleware
+        public: false
+        arguments:
+            - '@logger'
+            - '%simple_bus.command_bus.logging.level%'

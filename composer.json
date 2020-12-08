@@ -1,0 +1,69 @@
+{
+    "name": "simple-bus/symfony-bridge",
+    "type": "symfony-bundle",
+    "description": "Bridge for using command buses and event buses in Symfony projects",
+    "keywords": [
+        "Symfony",
+        "Doctrine",
+        "event bus",
+        "command bus"
+    ],
+    "homepage": "http://github.com/SimpleBus/SymfonyBridge",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Cliff Odijk",
+            "email": "cliff@jcid.nl"
+        },
+        {
+            "name": "Ruud Kamphuis",
+            "homepage": "https://github.com/ruudk"
+        },
+        {
+            "name": "Matthias Noback",
+            "email": "matthiasnoback@gmail.com",
+            "homepage": "http://php-and-symfony.matthiasnoback.nl"
+        }
+    ],
+    "require": {
+        "php": "^7.3",
+        "simple-bus/message-bus": "^3.0.3",
+        "symfony/config": "^4.4 || ^5.0",
+        "symfony/dependency-injection": "^4.4 || ^5.0",
+        "symfony/http-kernel": "^4.4 || ^5.0",
+        "symfony/yaml": "^4.4 || ^5.0"
+    },
+    "require-dev": {
+        "doctrine/doctrine-bundle": "^2.0",
+        "doctrine/orm": "^2.7",
+        "phpunit/phpunit": "^8.5",
+        "simple-bus/doctrine-orm-bridge": "^5.0",
+        "symfony/framework-bundle": "^4.4 || ^5.0",
+        "symfony/monolog-bridge": "^4.4 || ^5.0",
+        "symfony/monolog-bundle": "^3.4",
+        "symfony/proxy-manager-bridge": "^4.4 || ^5.0"
+    },
+    "conflict": {
+        "zendframework/zend-code": "<3.3.1"
+    },
+    "suggest": {
+        "doctrine/doctrine-bundle": "For integration with Doctrine ORM",
+        "doctrine/orm": "For integration with Doctrine ORM",
+        "simple-bus/doctrine-orm-bridge": "For integration with Doctrine ORM",
+        "symfony/monolog-bundle": "For logging messages",
+        "symfony/proxy-manager-bridge": "For integration with Symfony and Doctrine ORM"
+    },
+    "autoload": {
+        "psr-4": {
+            "SimpleBus\\SymfonyBridge\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "SimpleBus\\SymfonyBridge\\Tests\\": "tests"
+        }
+    },
+    "config": {
+        "sort-packages": true
+    }
+}

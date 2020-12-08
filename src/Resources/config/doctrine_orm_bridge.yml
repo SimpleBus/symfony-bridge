@@ -1,0 +1,19 @@
+services:
+    simple_bus.doctrine_orm_bridge.wraps_next_command_in_transaction:
+        class: SimpleBus\DoctrineORMBridge\MessageBus\WrapsMessageHandlingInTransaction
+        public: false
+        arguments:
+            - '@doctrine'
+            - '%simple_bus.doctrine_orm_bridge.entity_manager%'
+
+    # for BC
+    simple_bus.doctrine_orm_bridge.aggregates_multiple_event_providers:
+        alias: simple_bus.doctrine_orm_bridge.collects_events_from_entities
+        public: false
+
+    simple_bus.doctrine_orm_bridge.collects_events_from_entities:
+        class: SimpleBus\DoctrineORMBridge\EventListener\CollectsEventsFromEntities
+        public: false
+        tags:
+            # doctrine.event_subscriber tag will be added by DoctrineOrmBridgeExtension
+            - { name: event_recorder }
