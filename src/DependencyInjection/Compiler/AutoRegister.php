@@ -54,12 +54,12 @@ final class AutoRegister implements CompilerPassInterface
                     $parameters = $method->getParameters();
 
                     // if no param, optional param or non-class param, skip
-                    if (count($parameters) !== 1 || $parameters[0]->isOptional() || $parameters[0]->getClass() === null) {
+                    if (count($parameters) !== 1 || $parameters[0]->isOptional() || $parameters[0]->getType() === null) {
                         continue;
                     }
 
                     // get the class name
-                    $handles = $parameters[0]->getClass()->getName();
+                    $handles = $parameters[0]->getType()->getName();
 
                     $tagAttributes[] = [
                         $this->tagAttribute => $handles,
