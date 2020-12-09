@@ -34,8 +34,8 @@
         "symfony/yaml": "^4.4 || ^5.0"
     },
     "require-dev": {
-        "doctrine/doctrine-bundle": "^2.0",
-        "doctrine/orm": "^2.7",
+        "doctrine/doctrine-bundle": "^2.2",
+        "doctrine/orm": "^2.8",
         "phpunit/phpunit": "^8.5",
         "simple-bus/doctrine-orm-bridge": "^5.0",
         "symfony/framework-bundle": "^4.4 || ^5.0",
