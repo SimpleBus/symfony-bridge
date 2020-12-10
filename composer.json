@@ -33,7 +33,7 @@
         }
     ],
     "require": {
-        "php": "^7.3 || ^8.0",
+        "php": "^7.4 || ^8.0",
         "simple-bus/message-bus": "^3.0.3",
         "symfony/config": "^4.4.17 || ^5.1.9",
         "symfony/dependency-injection": "^4.4.17 || ^5.1.9",
