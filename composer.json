@@ -36,7 +36,7 @@
     "require-dev": {
         "doctrine/doctrine-bundle": "^2.2",
         "doctrine/orm": "^2.8",
-        "phpunit/phpunit": "^8.5",
+        "phpunit/phpunit": "^9.3",
         "simple-bus/doctrine-orm-bridge": "^5.0",
         "symfony/framework-bundle": "^4.4 || ^5.0",
         "symfony/monolog-bridge": "^4.4 || ^5.0",
