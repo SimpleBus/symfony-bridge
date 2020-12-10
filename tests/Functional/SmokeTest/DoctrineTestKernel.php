@@ -11,7 +11,7 @@ use Symfony\Bundle\MonologBundle\MonologBundle;
 use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\HttpKernel\Kernel;
 
-class TestKernel extends Kernel
+class DoctrineTestKernel extends Kernel
 {
     private $tempDir;
 
@@ -29,6 +29,7 @@ class TestKernel extends Kernel
             new DoctrineBundle(),
             new SimpleBusCommandBusBundle(),
             new SimpleBusEventBusBundle(),
+            new DoctrineOrmBridgeBundle(),
             new MonologBundle()
         );
     }

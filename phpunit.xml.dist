@@ -21,12 +21,6 @@
         </testsuite>
     </testsuites>
 
-    <groups>
-        <exclude>
-            <group>SymfonyBridgeProxyManagerDependency</group>
-        </exclude>
-    </groups>
-
     <filter>
         <whitelist>
             <directory>./src</directory>
