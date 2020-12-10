@@ -30,18 +30,18 @@
         "simple-bus/message-bus": "^3.0.3",
         "symfony/config": "^4.4.17 || ^5.1.9",
         "symfony/dependency-injection": "^4.4.17 || ^5.1.9",
-        "symfony/http-kernel": "^4.4 || ^5.0",
-        "symfony/yaml": "^4.4 || ^5.0"
+        "symfony/http-kernel": "^4.4 || ^5.1",
+        "symfony/yaml": "^4.4 || ^5.1"
     },
     "require-dev": {
         "doctrine/doctrine-bundle": "^2.2",
         "doctrine/orm": "^2.8",
         "phpunit/phpunit": "^9.3",
         "simple-bus/doctrine-orm-bridge": "^5.0",
-        "symfony/framework-bundle": "^4.4 || ^5.0",
-        "symfony/monolog-bridge": "^4.4 || ^5.0",
+        "symfony/framework-bundle": "^4.4 || ^5.1",
+        "symfony/monolog-bridge": "^4.4 || ^5.1",
         "symfony/monolog-bundle": "^3.4",
-        "symfony/proxy-manager-bridge": "^4.4 || ^5.0"
+        "symfony/proxy-manager-bridge": "^4.4 || ^5.1"
     },
     "conflict": {
         "zendframework/zend-code": "<3.3.1"
