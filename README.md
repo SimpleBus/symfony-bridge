@@ -1,6 +1,6 @@
 # SimpleBus/SymfonyBridge
 
-[![Build Status](https://travis-ci.org/SimpleBus/SymfonyBridge.svg?branch=master)](https://travis-ci.org/SimpleBus/SymfonyBridge)
+[![Tests Actions Status](https://github.com/SimpleBus/SimpleBus/workflows/Tests/badge.svg)](https://github.com/SimpleBus/SimpleBus/actions)
 
 By [Matthias Noback](http://php-and-symfony.matthiasnoback.nl/), Cliff Odijk, Ruud Kamphuis
 
