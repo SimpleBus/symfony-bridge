@@ -24,14 +24,14 @@ class DoctrineTestKernel extends Kernel
 
     public function registerBundles()
     {
-        return array(
+        return [
             new FrameworkBundle(),
             new DoctrineBundle(),
             new SimpleBusCommandBusBundle(),
             new SimpleBusEventBusBundle(),
             new DoctrineOrmBridgeBundle(),
             new MonologBundle()
-        );
+        ];
     }
 
     public function registerContainerConfiguration(LoaderInterface $loader)

@@ -29,7 +29,7 @@ class RegisterMessageRecorders implements CompilerPassInterface
 
         $aggregator = $container->findDefinition($this->aggregatorId);
 
-        $recorders = array();
+        $recorders = [];
         foreach (array_keys($container->findTaggedServiceIds($this->recorderTag)) as $recorderId) {
             $recorders[] = new Reference($recorderId);
         }

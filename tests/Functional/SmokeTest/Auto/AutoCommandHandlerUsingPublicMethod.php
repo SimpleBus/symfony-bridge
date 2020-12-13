@@ -11,6 +11,5 @@ final class AutoCommandHandlerUsingPublicMethod
 
     public function randomPublicMethod($value)
     {
-
     }
 }

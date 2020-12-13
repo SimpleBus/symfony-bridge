@@ -39,7 +39,7 @@ class ConfigureMiddlewares implements CompilerPassInterface
 
         $mainBusDefinition = $container->findDefinition($this->mainBusId);
         foreach ($orderedMiddlewareIds as $middlewareId) {
-            $mainBusDefinition->addMethodCall('appendMiddleware', array(new Reference($middlewareId)));
+            $mainBusDefinition->addMethodCall('appendMiddleware', [new Reference($middlewareId)]);
         }
     }
 }

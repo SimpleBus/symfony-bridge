@@ -25,7 +25,7 @@ class SimpleBusEventBusBundle extends Bundle
 
     public function build(ContainerBuilder $container)
     {
-        $this->checkRequirements(array('SimpleBusCommandBusBundle'), $container);
+        $this->checkRequirements(['SimpleBusCommandBusBundle'], $container);
 
         $container->addCompilerPass(
             new AutoRegister('event_subscriber', 'subscribes_to'),

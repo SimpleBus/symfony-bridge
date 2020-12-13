@@ -26,7 +26,7 @@ class DoctrineOrmBridgeBundle extends Bundle
 
     public function build(ContainerBuilder $container)
     {
-        $this->checkRequirements(array('SimpleBusCommandBusBundle', 'SimpleBusEventBusBundle'), $container);
+        $this->checkRequirements(['SimpleBusCommandBusBundle', 'SimpleBusEventBusBundle'], $container);
 
         $this->checkProxyManagerBridgeIsPresent();
 

@@ -59,7 +59,7 @@ class ConfigureMiddlewaresTest extends TestCase
     private function createBusDefinition($class, $priority)
     {
         $definition = new Definition($class);
-        $definition->addTag($this->middlewareTag, array('priority' => $priority));
+        $definition->addTag($this->middlewareTag, ['priority' => $priority]);
 
         $this->container->setDefinition($class, $definition);
 
@@ -71,7 +71,7 @@ class ConfigureMiddlewaresTest extends TestCase
         $actualMiddlewareClasses = [];
 
         foreach ($this->mainBusDefinition->getMethodCalls() as $methodCall) {
-            list($method, $arguments) = $methodCall;
+            [$method, $arguments] = $methodCall;
             $this->assertSame('appendMiddleware', $method);
             $this->assertCount(1, $arguments);
             $referencedService = $arguments[0];

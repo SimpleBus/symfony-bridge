@@ -6,12 +6,10 @@ final class AutoEventSubscriberUsingPublicMethod
 {
     public function __construct()
     {
-
     }
 
     public function __destruct()
     {
-
     }
 
     public function someEventHandler(AutoEvent2 $event)
@@ -26,6 +24,5 @@ final class AutoEventSubscriberUsingPublicMethod
 
     public function randomPublicMethod($value)
     {
-
     }
 }

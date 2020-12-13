@@ -48,8 +48,8 @@ class RegisterSubscribers implements CompilerPassInterface
         $callableDefinition = $container->findDefinition($this->callableServiceId);
         $serviceLocatorDefinition = $container->findDefinition($this->serviceLocatorId);
 
-        $handlers = array();
-        $services = array();
+        $handlers = [];
+        $services = [];
 
         $this->collectServiceIds(
             $container,
