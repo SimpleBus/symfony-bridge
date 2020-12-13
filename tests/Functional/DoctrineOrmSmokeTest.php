@@ -5,16 +5,8 @@ namespace SimpleBus\SymfonyBridge\Tests\Functional;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Tools\SchemaTool;
 use LogicException;
-use SimpleBus\SymfonyBridge\Tests\Functional\SmokeTest\Auto\AutoCommand1;
-use SimpleBus\SymfonyBridge\Tests\Functional\SmokeTest\Auto\AutoCommand2;
-use SimpleBus\SymfonyBridge\Tests\Functional\SmokeTest\Auto\AutoEvent1;
-use SimpleBus\SymfonyBridge\Tests\Functional\SmokeTest\Auto\AutoEvent2;
-use SimpleBus\SymfonyBridge\Tests\Functional\SmokeTest\Auto\AutoEvent3;
-use SimpleBus\SymfonyBridge\Tests\Functional\SmokeTest\Auto\AutoEventSubscriberUsingInvoke;
-use SimpleBus\SymfonyBridge\Tests\Functional\SmokeTest\Auto\AutoEventSubscriberUsingPublicMethod;
 use SimpleBus\SymfonyBridge\Tests\Functional\SmokeTest\DoctrineTestKernel;
 use SimpleBus\SymfonyBridge\Tests\Functional\SmokeTest\TestCommand;
-use SimpleBus\SymfonyBridge\Tests\Functional\SmokeTest\TestKernel;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -36,7 +28,7 @@ class DoctrineOrmSmokeTest extends KernelTestCase
     /**
      * @test
      */
-    public function it_handles_a_command_then_dispatches_events_for_all_modified_entities()
+    public function itHandlesACommandThenDispatchesEventsForAllModifiedEntities()
     {
         if (!class_exists('Symfony\Bridge\ProxyManager\LazyProxy\Instantiator\RuntimeInstantiator')) {
             $this->markTestSkipped('This test requires "symfony/proxy-manager-bridge" to be installed.');
@@ -73,7 +65,7 @@ class DoctrineOrmSmokeTest extends KernelTestCase
     /**
      * @test
      */
-    public function fails_because_of_mising_dependency()
+    public function failsBecauseOfMisingDependency()
     {
         if (class_exists('Symfony\Bridge\ProxyManager\LazyProxy\Instantiator\RuntimeInstantiator')) {
             $this->markTestSkipped('This test requires "symfony/proxy-manager-bridge" to NOT be installed.');
@@ -91,7 +83,6 @@ class DoctrineOrmSmokeTest extends KernelTestCase
     {
         $entityManager = $container->get('doctrine.orm.entity_manager');
         /** @var EntityManager $entityManager */
-
         $schemaTool = new SchemaTool($entityManager);
         $schemaTool->createSchema($entityManager->getMetadataFactory()->getAllMetadata());
     }

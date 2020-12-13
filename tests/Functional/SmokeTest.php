@@ -2,9 +2,6 @@
 
 namespace SimpleBus\SymfonyBridge\Tests\Functional;
 
-use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\Tools\SchemaTool;
-use LogicException;
 use SimpleBus\SymfonyBridge\Tests\Functional\SmokeTest\Auto\AutoCommand1;
 use SimpleBus\SymfonyBridge\Tests\Functional\SmokeTest\Auto\AutoCommand2;
 use SimpleBus\SymfonyBridge\Tests\Functional\SmokeTest\Auto\AutoEvent1;
@@ -12,10 +9,8 @@ use SimpleBus\SymfonyBridge\Tests\Functional\SmokeTest\Auto\AutoEvent2;
 use SimpleBus\SymfonyBridge\Tests\Functional\SmokeTest\Auto\AutoEvent3;
 use SimpleBus\SymfonyBridge\Tests\Functional\SmokeTest\Auto\AutoEventSubscriberUsingInvoke;
 use SimpleBus\SymfonyBridge\Tests\Functional\SmokeTest\Auto\AutoEventSubscriberUsingPublicMethod;
-use SimpleBus\SymfonyBridge\Tests\Functional\SmokeTest\TestCommand;
 use SimpleBus\SymfonyBridge\Tests\Functional\SmokeTest\TestKernel;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class SmokeTest extends KernelTestCase
 {
@@ -35,7 +30,7 @@ class SmokeTest extends KernelTestCase
     /**
      * @test
      */
-    public function it_can_auto_register_event_subscribers_using_invoke()
+    public function itCanAutoRegisterEventSubscribersUsingInvoke()
     {
         self::bootKernel(['environment' => 'config2']);
         $container = self::$kernel->getContainer();
@@ -52,7 +47,7 @@ class SmokeTest extends KernelTestCase
     /**
      * @test
      */
-    public function it_can_auto_register_event_subscribers_using_public_method()
+    public function itCanAutoRegisterEventSubscribersUsingPublicMethod()
     {
         self::bootKernel(['environment' => 'config2']);
         $container = self::$kernel->getContainer();
@@ -73,7 +68,7 @@ class SmokeTest extends KernelTestCase
     /**
      * @test
      */
-    public function it_can_auto_register_command_handlers_using_invoke()
+    public function itCanAutoRegisterCommandHandlersUsingInvoke()
     {
         self::bootKernel(['environment' => 'config2']);
         $container = self::$kernel->getContainer();
@@ -90,7 +85,7 @@ class SmokeTest extends KernelTestCase
     /**
      * @test
      */
-    public function it_can_auto_register_command_handlers_using_public_method()
+    public function itCanAutoRegisterCommandHandlersUsingPublicMethod()
     {
         self::bootKernel(['environment' => 'config2']);
         $container = self::$kernel->getContainer();

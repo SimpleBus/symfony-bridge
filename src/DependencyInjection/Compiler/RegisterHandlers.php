@@ -16,10 +16,10 @@ class RegisterHandlers implements CompilerPassInterface
     private $keyAttribute;
 
     /**
-     * @param string  $callableServiceId    The service id of the MessageHandlerMap
-     * @param string  $serviceLocatorId     The service id of the ServiceLocator
-     * @param string  $tag                  The tag name of message handler services
-     * @param string  $keyAttribute         The name of the tag attribute that contains the name of the handler
+     * @param string $callableServiceId The service id of the MessageHandlerMap
+     * @param string $serviceLocatorId  The service id of the ServiceLocator
+     * @param string $tag               The tag name of message handler services
+     * @param string $keyAttribute      The name of the tag attribute that contains the name of the handler
      */
     public function __construct($callableServiceId, $serviceLocatorId, $tag, $keyAttribute)
     {
@@ -32,8 +32,6 @@ class RegisterHandlers implements CompilerPassInterface
     /**
      * Search for message handler services and provide them as a constructor argument to the message handler map
      * service.
-     *
-     * @param ContainerBuilder $container
      */
     public function process(ContainerBuilder $container)
     {
@@ -61,7 +59,7 @@ class RegisterHandlers implements CompilerPassInterface
                     // in `ServiceLocatorAwareCallableResolver`
                     $callable = [
                         'serviceId' => $serviceId,
-                        'method'    => $tagAttributes['method'],
+                        'method' => $tagAttributes['method'],
                     ];
                 } else {
                     $callable = $serviceId;

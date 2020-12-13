@@ -3,8 +3,8 @@
 namespace SimpleBus\SymfonyBridge\Tests\Functional\SmokeTest;
 
 use Doctrine\Bundle\DoctrineBundle\DoctrineBundle;
-use SimpleBus\SymfonyBridge\SimpleBusCommandBusBundle;
 use SimpleBus\SymfonyBridge\DoctrineOrmBridgeBundle;
+use SimpleBus\SymfonyBridge\SimpleBusCommandBusBundle;
 use SimpleBus\SymfonyBridge\SimpleBusEventBusBundle;
 use Symfony\Bundle\FrameworkBundle\FrameworkBundle;
 use Symfony\Bundle\MonologBundle\MonologBundle;
@@ -19,7 +19,7 @@ class DoctrineTestKernel extends Kernel
     {
         parent::__construct($environment, $debug);
 
-        $this->tempDir = sys_get_temp_dir() . '/simplebus-symfony-bridge';
+        $this->tempDir = sys_get_temp_dir().'/simplebus-symfony-bridge';
     }
 
     public function registerBundles()
@@ -30,7 +30,7 @@ class DoctrineTestKernel extends Kernel
             new SimpleBusCommandBusBundle(),
             new SimpleBusEventBusBundle(),
             new DoctrineOrmBridgeBundle(),
-            new MonologBundle()
+            new MonologBundle(),
         ];
     }
 
@@ -41,12 +41,12 @@ class DoctrineTestKernel extends Kernel
 
     public function getCacheDir()
     {
-        return $this->tempDir . '/cache';
+        return $this->tempDir.'/cache';
     }
 
     public function getLogDir()
     {
-        return $this->tempDir . '/logs';
+        return $this->tempDir.'/logs';
     }
 
     public function getProjectDir()
@@ -56,6 +56,6 @@ class DoctrineTestKernel extends Kernel
 
     protected function getContainerClass()
     {
-        return parent::getContainerClass() . sha1(__NAMESPACE__);
+        return parent::getContainerClass().sha1(__NAMESPACE__);
     }
 }

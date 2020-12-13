@@ -17,13 +17,7 @@ trait RequiresOtherBundles
 
         foreach ($requiredBundles as $requiredBundle) {
             if (!isset($enabledBundles[$requiredBundle])) {
-                throw new \LogicException(
-                    sprintf(
-                        'In order to use bundle "%s" you also need to enable "%s"',
-                        $this->getName(),
-                        $requiredBundle
-                    )
-                );
+                throw new \LogicException(sprintf('In order to use bundle "%s" you also need to enable "%s"', $this->getName(), $requiredBundle));
             }
         }
     }

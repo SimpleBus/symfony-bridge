@@ -20,7 +20,7 @@ class AddMiddlewareTags implements CompilerPassInterface
     private $addTagForMessageBusesOfTypes;
 
     /**
-     * @var integer
+     * @var int
      */
     private $middlewarePriority;
 
@@ -70,14 +70,7 @@ class AddMiddlewareTags implements CompilerPassInterface
     private function getAttribute(array $tagAttributes, $attribute, $tag, $serviceId)
     {
         if (!isset($tagAttributes[$attribute])) {
-            throw new \LogicException(
-                sprintf(
-                    'Tag "%s" of service "%s" should have an attribute "%s"',
-                    $tag,
-                    $serviceId,
-                    $attribute
-                )
-            );
+            throw new \LogicException(sprintf('Tag "%s" of service "%s" should have an attribute "%s"', $tag, $serviceId, $attribute));
         }
 
         return $tagAttributes[$attribute];

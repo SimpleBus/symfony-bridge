@@ -6,12 +6,12 @@ final class AutoCommand2
 {
     private $handled = false;
 
-    public function isHandled() : bool
+    public function isHandled(): bool
     {
         return $this->handled;
     }
 
-    public function setHandled(bool $handled) : void
+    public function setHandled(bool $handled): void
     {
         $this->handled = $handled;
     }

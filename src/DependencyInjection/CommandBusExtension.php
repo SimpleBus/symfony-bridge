@@ -28,14 +28,14 @@ class CommandBusExtension extends ConfigurableExtension
 
     protected function loadInternal(array $mergedConfig, ContainerBuilder $container)
     {
-        $loader = new YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
+        $loader = new YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
 
         $loader->load('command_bus.yml');
         $loader->load('command_bus_logging.yml');
 
         $container->setAlias(
             'simple_bus.command_bus.command_name_resolver',
-            'simple_bus.command_bus.' . $mergedConfig['command_name_resolver_strategy'] . '_command_name_resolver'
+            'simple_bus.command_bus.'.$mergedConfig['command_name_resolver_strategy'].'_command_name_resolver'
         );
 
         if ($mergedConfig['logging']['enabled']) {

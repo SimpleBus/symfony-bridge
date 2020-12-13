@@ -44,13 +44,7 @@ class DoctrineOrmBridgeBundle extends Bundle
     private function checkProxyManagerBridgeIsPresent()
     {
         if (!class_exists('Symfony\Bridge\ProxyManager\LazyProxy\Instantiator\RuntimeInstantiator')) {
-            throw new \LogicException(
-                sprintf(
-                    'In order to use bundle "%s" you need to require "%s" package.',
-                    $this->getName(),
-                    'symfony/proxy-manager-bridge'
-                )
-            );
+            throw new \LogicException(sprintf('In order to use bundle "%s" you need to require "%s" package.', $this->getName(), 'symfony/proxy-manager-bridge'));
         }
     }
 }

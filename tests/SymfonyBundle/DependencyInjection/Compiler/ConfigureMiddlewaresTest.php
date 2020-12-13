@@ -39,7 +39,7 @@ class ConfigureMiddlewaresTest extends TestCase
     /**
      * @test
      */
-    public function it_configures_a_chain_of_buses_according_to_the_given_priorities()
+    public function itConfiguresAChainOfBusesAccordingToTheGivenPriorities()
     {
         $classes = [
             AuteEvent1::class => 100,
