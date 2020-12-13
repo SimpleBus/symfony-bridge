@@ -27,7 +27,7 @@ class ConfigureMiddlewares implements CompilerPassInterface
 
         foreach ($container->findTaggedServiceIds($this->busTag) as $specializedBusId => $tags) {
             foreach ($tags as $tagAttributes) {
-                $priority = isset($tagAttributes['priority']) ? $tagAttributes['priority'] : 0;
+                $priority = $tagAttributes['priority'] ?? 0;
                 $middlewareIds->insert($specializedBusId, $priority);
             }
         }
