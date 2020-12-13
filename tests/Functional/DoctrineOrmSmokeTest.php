@@ -10,13 +10,12 @@ use SimpleBus\SymfonyBridge\Tests\Functional\SmokeTest\TestCommand;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
+/**
+ * @internal
+ * @coversNothing
+ */
 class DoctrineOrmSmokeTest extends KernelTestCase
 {
-    protected static function getKernelClass()
-    {
-        return DoctrineTestKernel::class;
-    }
-
     protected function tearDown(): void
     {
         parent::tearDown();
@@ -77,6 +76,11 @@ class DoctrineOrmSmokeTest extends KernelTestCase
         $this->expectExceptionMessage('In order to use bundle "DoctrineOrmBridgeBundle" you need to require "symfony/proxy-manager-bridge" package.');
 
         self::bootKernel(['environment' => 'config2']);
+    }
+
+    protected static function getKernelClass()
+    {
+        return DoctrineTestKernel::class;
     }
 
     private function createSchema(ContainerInterface $container)

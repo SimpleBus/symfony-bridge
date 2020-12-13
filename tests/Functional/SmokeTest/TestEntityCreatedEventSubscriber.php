@@ -6,8 +6,8 @@ use SimpleBus\Message\Bus\MessageBus;
 
 class TestEntityCreatedEventSubscriber
 {
-    private $commandBus;
     public $eventHandled = false;
+    private $commandBus;
 
     public function __construct(MessageBus $commandBus)
     {

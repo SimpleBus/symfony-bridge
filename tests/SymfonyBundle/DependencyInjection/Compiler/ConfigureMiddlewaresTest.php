@@ -11,6 +11,10 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\HttpKernel\Kernel;
 
+/**
+ * @internal
+ * @coversNothing
+ */
 class ConfigureMiddlewaresTest extends TestCase
 {
     /**

@@ -12,13 +12,12 @@ use SimpleBus\SymfonyBridge\Tests\Functional\SmokeTest\Auto\AutoEventSubscriberU
 use SimpleBus\SymfonyBridge\Tests\Functional\SmokeTest\TestKernel;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
+/**
+ * @internal
+ * @coversNothing
+ */
 class SmokeTest extends KernelTestCase
 {
-    protected static function getKernelClass()
-    {
-        return TestKernel::class;
-    }
-
     protected function tearDown(): void
     {
         parent::tearDown();
@@ -97,5 +96,10 @@ class SmokeTest extends KernelTestCase
         $container->get('command_bus')->handle($command);
 
         $this->assertTrue($command->isHandled());
+    }
+
+    protected static function getKernelClass()
+    {
+        return TestKernel::class;
     }
 }

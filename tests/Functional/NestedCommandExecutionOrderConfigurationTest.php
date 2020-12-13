@@ -9,11 +9,19 @@ use SimpleBus\SymfonyBridge\Tests\Functional\SmokeTest\Nested\RecordsBag;
 use SimpleBus\SymfonyBridge\Tests\Functional\SmokeTest\TestKernel;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
+/**
+ * @internal
+ * @coversNothing
+ */
 final class NestedCommandExecutionOrderConfigurationTest extends KernelTestCase
 {
-    protected static function getKernelClass(): string
+    /** {@inheritdoc} */
+    protected function tearDown(): void
     {
-        return TestKernel::class;
+        parent::tearDown();
+
+        static::$class = null;
+        static::$kernel = null;
     }
 
     /**
@@ -72,12 +80,8 @@ final class NestedCommandExecutionOrderConfigurationTest extends KernelTestCase
         );
     }
 
-    /** {@inheritdoc} */
-    protected function tearDown(): void
+    protected static function getKernelClass(): string
     {
-        parent::tearDown();
-
-        static::$class = null;
-        static::$kernel = null;
+        return TestKernel::class;
     }
 }
