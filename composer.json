@@ -25,13 +25,6 @@
             "homepage": "http://php-and-symfony.matthiasnoback.nl"
         }
     ],
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "https://github.com/greg0ire/ProxyManager.git",
-            "description": "Use fork until PHP 8 is supported https://github.com/Ocramius/ProxyManager/pull/628"
-        }
-    ],
     "require": {
         "php": "^7.4 || ^8.0",
         "simple-bus/message-bus": "^3.0.3",
@@ -40,19 +33,20 @@
         "symfony/http-kernel": "^4.4 || ^5.1",
         "symfony/yaml": "^4.4 || ^5.1"
     },
+    "conflict": {
+        "zendframework/zend-code": "<3.3.1"
+    },
     "require-dev": {
         "doctrine/doctrine-bundle": "^2.2",
         "doctrine/orm": "^2.8",
-        "phpunit/phpunit": "^9.3",
+        "ergebnis/composer-normalize": "^2.11",
         "ocramius/proxy-manager": "dev-allow-php-8 as 2.10.99",
+        "phpunit/phpunit": "^9.3",
         "simple-bus/doctrine-orm-bridge": "^5.0",
         "symfony/framework-bundle": "^4.4 || ^5.1",
         "symfony/monolog-bridge": "^4.4 || ^5.1",
         "symfony/monolog-bundle": "^3.4",
         "symfony/proxy-manager-bridge": "^4.4 || ^5.1"
-    },
-    "conflict": {
-        "zendframework/zend-code": "<3.3.1"
     },
     "suggest": {
         "doctrine/doctrine-bundle": "For integration with Doctrine ORM",
@@ -60,6 +54,9 @@
         "simple-bus/doctrine-orm-bridge": "For integration with Doctrine ORM",
         "symfony/monolog-bundle": "For logging messages",
         "symfony/proxy-manager-bridge": "For integration with Symfony and Doctrine ORM"
+    },
+    "config": {
+        "sort-packages": true
     },
     "autoload": {
         "psr-4": {
@@ -71,9 +68,13 @@
             "SimpleBus\\SymfonyBridge\\Tests\\": "tests"
         }
     },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/greg0ire/ProxyManager.git",
+            "description": "Use fork until PHP 8 is supported https://github.com/Ocramius/ProxyManager/pull/628"
+        }
+    ],
     "minimum-stability": "dev",
-    "prefer-stable": true,
-    "config": {
-        "sort-packages": true
-    }
+    "prefer-stable": true
 }
