@@ -2,12 +2,7 @@
     "name": "simple-bus/symfony-bridge",
     "type": "symfony-bundle",
     "description": "Bridge for using command buses and event buses in Symfony projects",
-    "keywords": [
-        "Symfony",
-        "Doctrine",
-        "event bus",
-        "command bus"
-    ],
+    "keywords": ["Symfony", "Doctrine", "event bus", "command bus"],
     "homepage": "http://github.com/SimpleBus/SymfonyBridge",
     "license": "MIT",
     "authors": [
@@ -27,7 +22,7 @@
     ],
     "require": {
         "php": "^7.4 || ^8.0",
-        "simple-bus/message-bus": "^3.0.3",
+        "simple-bus/message-bus": "^6.0",
         "symfony/config": "^4.4.17 || ^5.2",
         "symfony/dependency-injection": "^4.4.17 || ^5.2",
         "symfony/http-kernel": "^4.4 || ^5.2",
@@ -42,7 +37,7 @@
         "ergebnis/composer-normalize": "^2.11",
         "ocramius/proxy-manager": "^2.11.1",
         "phpunit/phpunit": "^9.3",
-        "simple-bus/doctrine-orm-bridge": "^5.0",
+        "simple-bus/doctrine-orm-bridge": "^6.0",
         "symfony/framework-bundle": "^4.4 || ^5.2",
         "symfony/monolog-bridge": "^4.4 || ^5.2",
         "symfony/monolog-bundle": "^3.4",
