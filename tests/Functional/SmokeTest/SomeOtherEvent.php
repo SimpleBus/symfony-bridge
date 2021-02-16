@@ -6,7 +6,7 @@ use SimpleBus\Message\Name\NamedMessage;
 
 class SomeOtherEvent implements NamedMessage
 {
-    public static function messageName()
+    public static function messageName(): string
     {
         return 'some_other_event';
     }

@@ -4,5 +4,8 @@ namespace SimpleBus\SymfonyBridge\Tests\Functional\SmokeTest\Nested;
 
 final class RecordsBag
 {
-    public $records;
+    /**
+     * @var object[]
+     */
+    public array $records;
 }

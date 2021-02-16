@@ -4,7 +4,7 @@ namespace SimpleBus\SymfonyBridge\Tests\Functional\SmokeTest\Auto;
 
 final class AutoCommand2
 {
-    private $handled = false;
+    private bool $handled = false;
 
     public function isHandled(): bool
     {

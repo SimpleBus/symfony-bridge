@@ -6,18 +6,11 @@ use SimpleBus\Message\Bus\MessageBus;
 
 final class NestedCommandHandler
 {
-    /**
-     * @var int
-     */
-    private $maxNestingLevel;
-    /**
-     * @var RecordsBag
-     */
-    private $recordsBag;
-    /**
-     * @var MessageBus
-     */
-    private $commandBus;
+    private int $maxNestingLevel;
+
+    private RecordsBag $recordsBag;
+
+    private MessageBus $commandBus;
 
     public function __construct(MessageBus $commandBus, RecordsBag $recordsBag, int $maxNestingLevel)
     {

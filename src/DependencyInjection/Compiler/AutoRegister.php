@@ -2,21 +2,24 @@
 
 namespace SimpleBus\SymfonyBridge\DependencyInjection\Compiler;
 
+use ReflectionClass;
+use ReflectionMethod;
+use ReflectionNamedType;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 final class AutoRegister implements CompilerPassInterface
 {
-    private $tagName;
-    private $tagAttribute;
+    private string $tagName;
+    private string $tagAttribute;
 
-    public function __construct($tagName, $tagAttribute)
+    public function __construct(string $tagName, string $tagAttribute)
     {
         $this->tagName = $tagName;
         $this->tagAttribute = $tagAttribute;
     }
 
-    public function process(ContainerBuilder $container)
+    public function process(ContainerBuilder $container): void
     {
         foreach ($container->findTaggedServiceIds($this->tagName) as $serviceId => $tags) {
             foreach ($tags as $tagAttributes) {
@@ -33,9 +36,10 @@ final class AutoRegister implements CompilerPassInterface
                 $definition = $container->getDefinition($serviceId);
 
                 // check if service id is class name
-                $reflectionClass = new \ReflectionClass($definition->getClass() ?: $serviceId);
+                /** @phpstan-ignore-next-line */
+                $reflectionClass = new ReflectionClass($definition->getClass() ?: $serviceId);
 
-                $methods = $reflectionClass->getMethods(\ReflectionMethod::IS_PUBLIC);
+                $methods = $reflectionClass->getMethods(ReflectionMethod::IS_PUBLIC);
 
                 $tagAttributes = [];
                 foreach ($methods as $method) {
@@ -54,12 +58,17 @@ final class AutoRegister implements CompilerPassInterface
                     $parameters = $method->getParameters();
 
                     // if no param, optional param or non-class param, skip
-                    if (1 !== count($parameters) || $parameters[0]->isOptional() || null === $parameters[0]->getType()) {
+                    if (1 !== count($parameters) || $parameters[0]->isOptional()) {
+                        continue;
+                    }
+
+                    $type = $parameters[0]->getType();
+                    if (null === $type || !$type instanceof ReflectionNamedType) {
                         continue;
                     }
 
                     // get the class name
-                    $handles = $parameters[0]->getType()->getName();
+                    $handles = $type->getName();
 
                     $tagAttributes[] = [
                         $this->tagAttribute => $handles,

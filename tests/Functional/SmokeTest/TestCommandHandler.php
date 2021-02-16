@@ -7,16 +7,16 @@ use SimpleBus\SymfonyBridge\Tests\Functional\SmokeTest\Entity\TestEntity;
 
 class TestCommandHandler
 {
-    public $commandHandled = false;
+    public bool $commandHandled = false;
 
-    private $entityManager;
+    private EntityManager $entityManager;
 
     public function __construct(EntityManager $entityManager)
     {
         $this->entityManager = $entityManager;
     }
 
-    public function handle()
+    public function handle(): void
     {
         $this->commandHandled = true;
 

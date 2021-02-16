@@ -12,14 +12,14 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 class SimpleBusCommandBusBundle extends Bundle
 {
-    private $configurationAlias;
+    private string $configurationAlias;
 
-    public function __construct($alias = 'command_bus')
+    public function __construct(string $alias = 'command_bus')
     {
         $this->configurationAlias = $alias;
     }
 
-    public function build(ContainerBuilder $container)
+    public function build(ContainerBuilder $container): void
     {
         $container->addCompilerPass(
             new AutoRegister('command_handler', 'handles'),
@@ -44,7 +44,7 @@ class SimpleBusCommandBusBundle extends Bundle
         );
     }
 
-    public function getContainerExtension()
+    public function getContainerExtension(): CommandBusExtension
     {
         return new CommandBusExtension($this->configurationAlias);
     }

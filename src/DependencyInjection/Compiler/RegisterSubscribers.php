@@ -10,10 +10,10 @@ class RegisterSubscribers implements CompilerPassInterface
 {
     use CollectServices;
 
-    private $callableServiceId;
-    private $serviceLocatorId;
-    private $tag;
-    private $keyAttribute;
+    private string $callableServiceId;
+    private string $serviceLocatorId;
+    private string $tag;
+    private string $keyAttribute;
 
     /**
      * @param string $callableServiceId The service id of the MessageSubscriberCollection
@@ -21,7 +21,7 @@ class RegisterSubscribers implements CompilerPassInterface
      * @param string $tag               The tag name of message subscriber services
      * @param string $keyAttribute      The name of the tag attribute that contains the name of the subscriber
      */
-    public function __construct($callableServiceId, $serviceLocatorId, $tag, $keyAttribute)
+    public function __construct(string $callableServiceId, string $serviceLocatorId, string $tag, string $keyAttribute)
     {
         $this->callableServiceId = $callableServiceId;
         $this->serviceLocatorId = $serviceLocatorId;
@@ -33,7 +33,7 @@ class RegisterSubscribers implements CompilerPassInterface
      * Search for message subscriber services and provide them as a constructor argument to the message subscriber
      * collection service.
      */
-    public function process(ContainerBuilder $container)
+    public function process(ContainerBuilder $container): void
     {
         if (!$container->has($this->callableServiceId)) {
             return;

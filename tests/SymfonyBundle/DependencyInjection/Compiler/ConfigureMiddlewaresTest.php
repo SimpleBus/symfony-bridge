@@ -4,12 +4,11 @@ namespace SimpleBus\SymfonyBridge\Tests\SymfonyBundle\DependencyInjection\Compil
 
 use PHPUnit\Framework\TestCase;
 use SimpleBus\SymfonyBridge\DependencyInjection\Compiler\ConfigureMiddlewares;
-use SimpleBus\SymfonyBridge\Tests\Functional\SmokeTest\Auto\AuteEvent1;
-use SimpleBus\SymfonyBridge\Tests\Functional\SmokeTest\Auto\AuteEvent2;
-use SimpleBus\SymfonyBridge\Tests\Functional\SmokeTest\Auto\AuteEvent3;
+use SimpleBus\SymfonyBridge\Tests\Functional\SmokeTest\Auto\AutoEvent1;
+use SimpleBus\SymfonyBridge\Tests\Functional\SmokeTest\Auto\AutoEvent2;
+use SimpleBus\SymfonyBridge\Tests\Functional\SmokeTest\Auto\AutoEvent3;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
-use Symfony\Component\HttpKernel\Kernel;
 
 /**
  * @internal
@@ -17,19 +16,13 @@ use Symfony\Component\HttpKernel\Kernel;
  */
 class ConfigureMiddlewaresTest extends TestCase
 {
-    /**
-     * @var ContainerBuilder
-     */
-    private $container;
+    private ContainerBuilder $container;
 
-    private $mainBusId = 'main_bus';
+    private string $mainBusId = 'main_bus';
 
-    private $middlewareTag = 'middleware';
+    private string $middlewareTag = 'middleware';
 
-    /**
-     * @var Definition
-     */
-    private $mainBusDefinition;
+    private Definition $mainBusDefinition;
 
     protected function setUp(): void
     {
@@ -43,12 +36,12 @@ class ConfigureMiddlewaresTest extends TestCase
     /**
      * @test
      */
-    public function itConfiguresAChainOfBusesAccordingToTheGivenPriorities()
+    public function itConfiguresAChainOfBusesAccordingToTheGivenPriorities(): void
     {
         $classes = [
-            AuteEvent1::class => 100,
-            AuteEvent2::class => -100,
-            AuteEvent3::class => 200,
+            AutoEvent1::class => 100,
+            AutoEvent2::class => -100,
+            AutoEvent3::class => 200,
         ];
 
         foreach ($classes as $class => $priority) {
@@ -60,7 +53,10 @@ class ConfigureMiddlewaresTest extends TestCase
         $this->commandBusContainsMiddlewares($classes);
     }
 
-    private function createBusDefinition($class, $priority)
+    /**
+     * @param class-string $class
+     */
+    private function createBusDefinition(string $class, int $priority): Definition
     {
         $definition = new Definition($class);
         $definition->addTag($this->middlewareTag, ['priority' => $priority]);
@@ -70,7 +66,10 @@ class ConfigureMiddlewaresTest extends TestCase
         return $definition;
     }
 
-    private function commandBusContainsMiddlewares($expectedMiddlewareclasses)
+    /**
+     * @param array<class-string, int> $expectedMiddlewareclasses
+     */
+    private function commandBusContainsMiddlewares(array $expectedMiddlewareclasses): void
     {
         $actualMiddlewareClasses = [];
 
@@ -80,18 +79,10 @@ class ConfigureMiddlewaresTest extends TestCase
             $this->assertCount(1, $arguments);
             $referencedService = $arguments[0];
 
-            if (Kernel::VERSION_ID >= 40000) {
-                $this->assertInstanceOf(
-                    'Symfony\Component\DependencyInjection\Definition',
-                    $referencedService
-                );
-            } else {
-                $this->assertInstanceOf(
-                    'Symfony\Component\DependencyInjection\Reference',
-                    $referencedService
-                );
-                $referencedService = $this->container->getDefinition((string) $referencedService);
-            }
+            $this->assertInstanceOf(
+                'Symfony\Component\DependencyInjection\Definition',
+                $referencedService
+            );
 
             $actualMiddlewareClasses[$referencedService->getClass()] = $referencedService->getTag('middleware')[0]['priority'];
         }

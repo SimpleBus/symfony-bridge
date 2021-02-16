@@ -5,8 +5,13 @@ namespace SimpleBus\SymfonyBridge\Tests\Functional;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Tools\SchemaTool;
 use LogicException;
+use SimpleBus\Message\Bus\MessageBus;
 use SimpleBus\SymfonyBridge\Tests\Functional\SmokeTest\DoctrineTestKernel;
+use SimpleBus\SymfonyBridge\Tests\Functional\SmokeTest\SomeOtherEventSubscriber;
+use SimpleBus\SymfonyBridge\Tests\Functional\SmokeTest\SomeOtherTestCommandHandler;
 use SimpleBus\SymfonyBridge\Tests\Functional\SmokeTest\TestCommand;
+use SimpleBus\SymfonyBridge\Tests\Functional\SmokeTest\TestCommandHandler;
+use SimpleBus\SymfonyBridge\Tests\Functional\SmokeTest\TestEntityCreatedEventSubscriber;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -21,17 +26,17 @@ class DoctrineOrmSmokeTest extends KernelTestCase
         parent::tearDown();
 
         static::$class = null;
-        static::$kernel = null;
     }
 
     /**
      * @test
      */
-    public function itHandlesACommandThenDispatchesEventsForAllModifiedEntities()
+    public function itHandlesACommandThenDispatchesEventsForAllModifiedEntities(): void
     {
         if (!class_exists('Symfony\Bridge\ProxyManager\LazyProxy\Instantiator\RuntimeInstantiator')) {
             $this->markTestSkipped('This test requires "symfony/proxy-manager-bridge" to be installed.');
 
+            // @phpstan-ignore-next-line
             return;
         }
 
@@ -40,19 +45,33 @@ class DoctrineOrmSmokeTest extends KernelTestCase
 
         $this->createSchema($container);
 
-        $commandBus = $container->get('command_bus');
         $command = new TestCommand();
+        $commandBus = $container->get('command_bus');
+
+        $this->assertInstanceOf(MessageBus::class, $commandBus);
+
         $commandBus->handle($command);
 
-        $this->assertTrue($container->get('test_command_handler')->commandHandled);
-        $this->assertTrue($container->get('test_event_subscriber')->eventHandled);
+        $testCommandHandler = $container->get('test_command_handler');
+        $this->assertInstanceOf(TestCommandHandler::class, $testCommandHandler);
+        $this->assertTrue($testCommandHandler->commandHandled);
+
+        $testEventSubscriber = $container->get('test_event_subscriber');
+        $this->assertInstanceOf(TestEntityCreatedEventSubscriber::class, $testEventSubscriber);
+        $this->assertTrue($testEventSubscriber->eventHandled);
 
         // some_other_test_command is triggered by test_event_handler
-        $this->assertTrue($container->get('some_other_test_command_handler')->commandHandled);
-        $this->assertTrue($container->get('some_other_event_subscriber')->eventHandled);
+        $someOtherTestCommandHandler = $container->get('some_other_test_command_handler');
+        $this->assertInstanceOf(SomeOtherTestCommandHandler::class, $someOtherTestCommandHandler);
+        $this->assertTrue($someOtherTestCommandHandler->commandHandled);
+
+        $someOtherEventSubscriber = $container->get('some_other_event_subscriber');
+        $this->assertInstanceOf(SomeOtherEventSubscriber::class, $someOtherEventSubscriber);
+        $this->assertTrue($someOtherEventSubscriber->eventHandled);
 
         // it has logged some things
-        $loggedMessages = file_get_contents($container->getParameter('log_file'));
+        $logFile = $container->getParameter('log_file');
+        $loggedMessages = is_string($logFile) ? (file_get_contents($logFile) ?: '') : '';
         $this->assertStringContainsString('command_bus.DEBUG: Started handling a message', $loggedMessages);
         $this->assertStringContainsString('command_bus.DEBUG: Finished handling a message', $loggedMessages);
         $this->assertStringContainsString('event_bus.DEBUG: Started handling a message', $loggedMessages);
@@ -64,11 +83,12 @@ class DoctrineOrmSmokeTest extends KernelTestCase
     /**
      * @test
      */
-    public function failsBecauseOfMisingDependency()
+    public function failsBecauseOfMisingDependency(): void
     {
         if (class_exists('Symfony\Bridge\ProxyManager\LazyProxy\Instantiator\RuntimeInstantiator')) {
             $this->markTestSkipped('This test requires "symfony/proxy-manager-bridge" to NOT be installed.');
 
+            // @phpstan-ignore-next-line
             return;
         }
 
@@ -78,15 +98,15 @@ class DoctrineOrmSmokeTest extends KernelTestCase
         self::bootKernel(['environment' => 'config2']);
     }
 
-    protected static function getKernelClass()
+    protected static function getKernelClass(): string
     {
         return DoctrineTestKernel::class;
     }
 
-    private function createSchema(ContainerInterface $container)
+    private function createSchema(ContainerInterface $container): void
     {
-        $entityManager = $container->get('doctrine.orm.entity_manager');
         /** @var EntityManager $entityManager */
+        $entityManager = $container->get('doctrine.orm.entity_manager');
         $schemaTool = new SchemaTool($entityManager);
         $schemaTool->createSchema($entityManager->getMetadataFactory()->getAllMetadata());
     }

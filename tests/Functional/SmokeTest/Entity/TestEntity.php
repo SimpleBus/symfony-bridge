@@ -19,7 +19,7 @@ class TestEntity implements ContainsRecordedMessages
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    public $id;
+    public int $id;
 
     public function __construct()
     {

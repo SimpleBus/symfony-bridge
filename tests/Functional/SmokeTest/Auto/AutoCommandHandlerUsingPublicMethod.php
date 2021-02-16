@@ -4,12 +4,12 @@ namespace SimpleBus\SymfonyBridge\Tests\Functional\SmokeTest\Auto;
 
 final class AutoCommandHandlerUsingPublicMethod
 {
-    public function someHandleMethod(AutoCommand2 $command)
+    public function someHandleMethod(AutoCommand2 $command): void
     {
         $command->setHandled(true);
     }
 
-    public function randomPublicMethod($value)
+    public function randomPublicMethod(string $value): void
     {
     }
 }

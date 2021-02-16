@@ -10,24 +10,30 @@ use Symfony\Component\HttpKernel\DependencyInjection\ConfigurableExtension;
 
 class EventBusExtension extends ConfigurableExtension
 {
-    private $alias;
+    private string $alias;
 
-    public function __construct($alias)
+    public function __construct(string $alias)
     {
         $this->alias = $alias;
     }
 
-    public function getAlias()
+    public function getAlias(): string
     {
         return $this->alias;
     }
 
-    public function getConfiguration(array $config, ContainerBuilder $container)
+    /**
+     * @param mixed[] $config
+     */
+    public function getConfiguration(array $config, ContainerBuilder $container): EventBusConfiguration
     {
         return new EventBusConfiguration($this->getAlias());
     }
 
-    protected function loadInternal(array $mergedConfig, ContainerBuilder $container)
+    /**
+     * @param mixed[] $mergedConfig
+     */
+    protected function loadInternal(array $mergedConfig, ContainerBuilder $container): void
     {
         $loader = new YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
 
@@ -44,8 +50,7 @@ class EventBusExtension extends ConfigurableExtension
             $container->getDefinition('simple_bus.event_bus.notifies_message_subscribers_middleware')
                 ->replaceArgument(1, new Reference('logger'))
                 ->replaceArgument(2, '%simple_bus.event_bus.logging.level%')
-                ->addTag('monolog.logger', ['channel' => 'event_bus'])
-            ;
+                ->addTag('monolog.logger', ['channel' => 'event_bus']);
         }
     }
 }

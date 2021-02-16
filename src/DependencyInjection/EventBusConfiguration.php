@@ -7,14 +7,14 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
 
 class EventBusConfiguration implements ConfigurationInterface
 {
-    private $alias;
+    private string $alias;
 
-    public function __construct($alias)
+    public function __construct(string $alias)
     {
         $this->alias = $alias;
     }
 
-    public function getConfigTreeBuilder()
+    public function getConfigTreeBuilder(): TreeBuilder
     {
         $treeBuilder = new TreeBuilder($this->alias);
         $rootNode = $treeBuilder->getRootNode();

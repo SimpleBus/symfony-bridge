@@ -9,24 +9,30 @@ use Symfony\Component\HttpKernel\DependencyInjection\ConfigurableExtension;
 
 class CommandBusExtension extends ConfigurableExtension
 {
-    private $alias;
+    private string $alias;
 
-    public function __construct($alias)
+    public function __construct(string $alias)
     {
         $this->alias = $alias;
     }
 
-    public function getAlias()
+    public function getAlias(): string
     {
         return $this->alias;
     }
 
-    public function getConfiguration(array $config, ContainerBuilder $container)
+    /**
+     * @param mixed[] $config
+     */
+    public function getConfiguration(array $config, ContainerBuilder $container): CommandBusConfiguration
     {
         return new CommandBusConfiguration($this->getAlias());
     }
 
-    protected function loadInternal(array $mergedConfig, ContainerBuilder $container)
+    /**
+     * @param mixed[] $mergedConfig
+     */
+    protected function loadInternal(array $mergedConfig, ContainerBuilder $container): void
     {
         $loader = new YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
 

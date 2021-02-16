@@ -16,14 +16,14 @@ class SimpleBusEventBusBundle extends Bundle
 {
     use RequiresOtherBundles;
 
-    private $configurationAlias;
+    private string $configurationAlias;
 
-    public function __construct($alias = 'event_bus')
+    public function __construct(string $alias = 'event_bus')
     {
         $this->configurationAlias = $alias;
     }
 
-    public function build(ContainerBuilder $container)
+    public function build(ContainerBuilder $container): void
     {
         $this->checkRequirements(['SimpleBusCommandBusBundle'], $container);
 
@@ -67,7 +67,7 @@ class SimpleBusEventBusBundle extends Bundle
         );
     }
 
-    public function getContainerExtension()
+    public function getContainerExtension(): EventBusExtension
     {
         return new EventBusExtension($this->configurationAlias);
     }

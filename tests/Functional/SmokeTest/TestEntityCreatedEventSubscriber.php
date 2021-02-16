@@ -6,15 +6,15 @@ use SimpleBus\Message\Bus\MessageBus;
 
 class TestEntityCreatedEventSubscriber
 {
-    public $eventHandled = false;
-    private $commandBus;
+    public bool $eventHandled = false;
+    private MessageBus $commandBus;
 
     public function __construct(MessageBus $commandBus)
     {
         $this->commandBus = $commandBus;
     }
 
-    public function notify()
+    public function notify(): void
     {
         $this->eventHandled = true;
 

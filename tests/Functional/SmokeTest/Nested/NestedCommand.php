@@ -4,7 +4,7 @@ namespace SimpleBus\SymfonyBridge\Tests\Functional\SmokeTest\Nested;
 
 final class NestedCommand
 {
-    public $level;
+    public int $level;
 
     public function __construct(int $level = 0)
     {

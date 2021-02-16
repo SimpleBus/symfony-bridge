@@ -8,20 +8,20 @@ use Symfony\Component\DependencyInjection\Reference;
 
 class RegisterMessageRecorders implements CompilerPassInterface
 {
-    private $aggregatorId;
-    private $recorderTag;
+    private string $aggregatorId;
+    private string $recorderTag;
 
     /**
      * @param string $aggregatorId The id of the service with class AggregatesRecordedMessages
      * @param string $recorderTag  The tag name of message recorder services
      */
-    public function __construct($aggregatorId, $recorderTag)
+    public function __construct(string $aggregatorId, string $recorderTag)
     {
         $this->aggregatorId = $aggregatorId;
         $this->recorderTag = $recorderTag;
     }
 
-    public function process(ContainerBuilder $container)
+    public function process(ContainerBuilder $container): void
     {
         if (!$container->has($this->aggregatorId)) {
             return;

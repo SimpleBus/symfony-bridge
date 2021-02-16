@@ -7,19 +7,19 @@ use SimpleBus\SymfonyBridge\Tests\Functional\SmokeTest\Entity\TestEntity;
 
 class TestEntityCreated implements NamedMessage
 {
-    private $testEntity;
+    private TestEntity $testEntity;
 
     public function __construct(TestEntity $testEntity)
     {
         $this->testEntity = $testEntity;
     }
 
-    public function getTestEntity()
+    public function getTestEntity(): TestEntity
     {
         return $this->testEntity;
     }
 
-    public static function messageName()
+    public static function messageName(): string
     {
         return 'test_entity_created';
     }

@@ -2,36 +2,34 @@
 
 namespace SimpleBus\SymfonyBridge\DependencyInjection\Compiler;
 
+use LogicException;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 class AddMiddlewareTags implements CompilerPassInterface
 {
-    const MESSAGE_BUS_TAG = 'message_bus';
+    private const MESSAGE_BUS_TAG = 'message_bus';
+
+    private string $middlewareServiceId;
 
     /**
-     * @var string
+     * @var string[]
      */
-    private $middlewareServiceId;
+    private array $addTagForMessageBusesOfTypes;
+
+    private int $middlewarePriority;
 
     /**
-     * @var array
+     * @param string[] $addTagForMessageBusesOfTypes
      */
-    private $addTagForMessageBusesOfTypes;
-
-    /**
-     * @var int
-     */
-    private $middlewarePriority;
-
-    public function __construct($middlewareServiceId, array $addTagForMessageBusesOfTypes, $middlewarePriority)
+    public function __construct(string $middlewareServiceId, array $addTagForMessageBusesOfTypes, int $middlewarePriority)
     {
         $this->middlewareServiceId = $middlewareServiceId;
         $this->addTagForMessageBusesOfTypes = $addTagForMessageBusesOfTypes;
         $this->middlewarePriority = $middlewarePriority;
     }
 
-    public function process(ContainerBuilder $container)
+    public function process(ContainerBuilder $container): void
     {
         if (!($container->has($this->middlewareServiceId))) {
             return;
@@ -67,10 +65,13 @@ class AddMiddlewareTags implements CompilerPassInterface
         }
     }
 
-    private function getAttribute(array $tagAttributes, $attribute, $tag, $serviceId)
+    /**
+     * @param array<string, string> $tagAttributes
+     */
+    private function getAttribute(array $tagAttributes, string $attribute, string $tag, string $serviceId): string
     {
         if (!isset($tagAttributes[$attribute])) {
-            throw new \LogicException(sprintf('Tag "%s" of service "%s" should have an attribute "%s"', $tag, $serviceId, $attribute));
+            throw new LogicException(sprintf('Tag "%s" of service "%s" should have an attribute "%s"', $tag, $serviceId, $attribute));
         }
 
         return $tagAttributes[$attribute];

@@ -4,14 +4,20 @@ namespace SimpleBus\SymfonyBridge\Tests\Functional\SmokeTest\Auto;
 
 final class AutoEvent1
 {
-    private $handled = [];
+    /**
+     * @var class-string[]
+     */
+    private array $handled = [];
 
-    public function isHandledBy($subscriber): bool
+    /**
+     * @param class-string $subscriber
+     */
+    public function isHandledBy(string $subscriber): bool
     {
         return in_array($subscriber, $this->handled);
     }
 
-    public function setHandledBy($subscriber): void
+    public function setHandledBy(object $subscriber): void
     {
         $this->handled[] = get_class($subscriber);
     }

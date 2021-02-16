@@ -2,6 +2,7 @@
 
 namespace SimpleBus\SymfonyBridge;
 
+use LogicException;
 use SimpleBus\SymfonyBridge\DependencyInjection\Compiler\AddMiddlewareTags;
 use SimpleBus\SymfonyBridge\DependencyInjection\DoctrineOrmBridgeExtension;
 use Symfony\Component\DependencyInjection\Compiler\PassConfig;
@@ -12,19 +13,19 @@ class DoctrineOrmBridgeBundle extends Bundle
 {
     use RequiresOtherBundles;
 
-    private $configurationAlias;
+    private string $configurationAlias;
 
-    public function __construct($configurationAlias = 'doctrine_orm_bridge')
+    public function __construct(string $configurationAlias = 'doctrine_orm_bridge')
     {
         $this->configurationAlias = $configurationAlias;
     }
 
-    public function getContainerExtension()
+    public function getContainerExtension(): DoctrineOrmBridgeExtension
     {
         return new DoctrineOrmBridgeExtension($this->configurationAlias);
     }
 
-    public function build(ContainerBuilder $container)
+    public function build(ContainerBuilder $container): void
     {
         $this->checkRequirements(['SimpleBusCommandBusBundle', 'SimpleBusEventBusBundle'], $container);
 
@@ -41,10 +42,10 @@ class DoctrineOrmBridgeBundle extends Bundle
         );
     }
 
-    private function checkProxyManagerBridgeIsPresent()
+    private function checkProxyManagerBridgeIsPresent(): void
     {
         if (!class_exists('Symfony\Bridge\ProxyManager\LazyProxy\Instantiator\RuntimeInstantiator')) {
-            throw new \LogicException(sprintf('In order to use bundle "%s" you need to require "%s" package.', $this->getName(), 'symfony/proxy-manager-bridge'));
+            throw new LogicException(sprintf('In order to use bundle "%s" you need to require "%s" package.', $this->getName(), 'symfony/proxy-manager-bridge'));
         }
     }
 }

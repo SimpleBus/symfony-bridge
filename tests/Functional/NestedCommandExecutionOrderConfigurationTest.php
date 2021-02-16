@@ -2,6 +2,7 @@
 
 namespace SimpleBus\SymfonyBridge\Tests\Functional;
 
+use SimpleBus\Message\Bus\MessageBus;
 use SimpleBus\SymfonyBridge\Tests\Functional\SmokeTest\Nested\NestedCommand;
 use SimpleBus\SymfonyBridge\Tests\Functional\SmokeTest\Nested\PostExecutionRecord;
 use SimpleBus\SymfonyBridge\Tests\Functional\SmokeTest\Nested\PreExecutionRecord;
@@ -15,13 +16,11 @@ use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
  */
 final class NestedCommandExecutionOrderConfigurationTest extends KernelTestCase
 {
-    /** {@inheritdoc} */
     protected function tearDown(): void
     {
         parent::tearDown();
 
         static::$class = null;
-        static::$kernel = null;
     }
 
     /**
@@ -32,8 +31,12 @@ final class NestedCommandExecutionOrderConfigurationTest extends KernelTestCase
         self::bootKernel(['environment' => 'config1']);
         $container = self::$kernel->getContainer();
 
-        $commandBus = $container->get('command_bus');
         $command = new NestedCommand();
+
+        $commandBus = $container->get('command_bus');
+
+        $this->assertInstanceOf(MessageBus::class, $commandBus);
+
         $commandBus->handle($command);
 
         /** @var RecordsBag $recorder */
@@ -60,8 +63,12 @@ final class NestedCommandExecutionOrderConfigurationTest extends KernelTestCase
         self::bootKernel(['environment' => 'config3']);
         $container = self::$kernel->getContainer();
 
-        $commandBus = $container->get('command_bus');
         $command = new NestedCommand();
+
+        $commandBus = $container->get('command_bus');
+
+        $this->assertInstanceOf(MessageBus::class, $commandBus);
+
         $commandBus->handle($command);
 
         /** @var RecordsBag $recorder */

@@ -9,20 +9,24 @@ use SimpleBus\SymfonyBridge\SimpleBusEventBusBundle;
 use Symfony\Bundle\FrameworkBundle\FrameworkBundle;
 use Symfony\Bundle\MonologBundle\MonologBundle;
 use Symfony\Component\Config\Loader\LoaderInterface;
+use Symfony\Component\HttpKernel\Bundle\Bundle;
 use Symfony\Component\HttpKernel\Kernel;
 
 class DoctrineTestKernel extends Kernel
 {
-    private $tempDir;
+    private string $tempDir;
 
-    public function __construct($environment, $debug)
+    public function __construct(string $environment, bool $debug)
     {
         parent::__construct($environment, $debug);
 
         $this->tempDir = sys_get_temp_dir().'/simplebus-symfony-bridge';
     }
 
-    public function registerBundles()
+    /**
+     * @return Bundle[]
+     */
+    public function registerBundles(): array
     {
         return [
             new FrameworkBundle(),
@@ -34,27 +38,27 @@ class DoctrineTestKernel extends Kernel
         ];
     }
 
-    public function registerContainerConfiguration(LoaderInterface $loader)
+    public function registerContainerConfiguration(LoaderInterface $loader): void
     {
         $loader->load(sprintf('%s/%s.yml', __DIR__, $this->environment));
     }
 
-    public function getCacheDir()
+    public function getCacheDir(): string
     {
         return $this->tempDir.'/cache';
     }
 
-    public function getLogDir()
+    public function getLogDir(): string
     {
         return $this->tempDir.'/logs';
     }
 
-    public function getProjectDir()
+    public function getProjectDir(): string
     {
         return __DIR__;
     }
 
-    protected function getContainerClass()
+    protected function getContainerClass(): string
     {
         return parent::getContainerClass().sha1(__NAMESPACE__);
     }

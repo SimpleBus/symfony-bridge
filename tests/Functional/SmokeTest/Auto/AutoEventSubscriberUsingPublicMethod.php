@@ -12,17 +12,17 @@ final class AutoEventSubscriberUsingPublicMethod
     {
     }
 
-    public function someEventHandler(AutoEvent2 $event)
+    public function someEventHandler(AutoEvent2 $event): void
     {
         $event->setHandledBy($this);
     }
 
-    public function someOtherEventHandler(AutoEvent3 $event)
+    public function someOtherEventHandler(AutoEvent3 $event): void
     {
         $event->setHandledBy($this);
     }
 
-    public function randomPublicMethod($value)
+    public function randomPublicMethod(string $value): void
     {
     }
 }
