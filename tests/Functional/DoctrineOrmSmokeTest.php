@@ -3,6 +3,7 @@
 namespace SimpleBus\SymfonyBridge\Tests\Functional;
 
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\Mapping\ClassMetadata;
 use Doctrine\ORM\Tools\SchemaTool;
 use LogicException;
 use SimpleBus\Message\Bus\MessageBus;
@@ -107,7 +108,11 @@ class DoctrineOrmSmokeTest extends KernelTestCase
     {
         /** @var EntityManager $entityManager */
         $entityManager = $container->get('doctrine.orm.entity_manager');
+
+        /** @var ClassMetadata[] $metadata */
+        $metadata = $entityManager->getMetadataFactory()->getAllMetadata();
+
         $schemaTool = new SchemaTool($entityManager);
-        $schemaTool->createSchema($entityManager->getMetadataFactory()->getAllMetadata());
+        $schemaTool->createSchema($metadata);
     }
 }
