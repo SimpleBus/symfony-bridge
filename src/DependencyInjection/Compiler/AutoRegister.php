@@ -5,6 +5,7 @@ namespace SimpleBus\SymfonyBridge\DependencyInjection\Compiler;
 use ReflectionClass;
 use ReflectionMethod;
 use ReflectionNamedType;
+use ReflectionUnionType;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
@@ -63,17 +64,30 @@ final class AutoRegister implements CompilerPassInterface
                     }
 
                     $type = $parameters[0]->getType();
-                    if (null === $type || !$type instanceof ReflectionNamedType) {
+                    if (null === $type) {
                         continue;
                     }
 
-                    // get the class name
-                    $handles = $type->getName();
+                    if (!$type instanceof ReflectionNamedType && !$type instanceof ReflectionUnionType) {
+                        continue;
+                    }
 
-                    $tagAttributes[] = [
-                        $this->tagAttribute => $handles,
-                        'method' => $method->getName(),
-                    ];
+                    if ($type instanceof ReflectionUnionType) {
+                        $types = $type->getTypes();
+                    } else {
+                        $types = [$type];
+                    }
+
+                    foreach ($types as $type) {
+                        if (!$type instanceof ReflectionNamedType) {
+                            continue;
+                        }
+
+                        $tagAttributes[] = [
+                            $this->tagAttribute => $type->getName(),
+                            'method' => $method->getName(),
+                        ];
+                    }
                 }
 
                 if (0 !== count($tags)) {

@@ -1,0 +1,9 @@
+imports:
+    - { resource: config.yml }
+
+services:
+    auto_event_subscriber_using_public_method_and_union:
+        class: SimpleBus\SymfonyBridge\Tests\Functional\SmokeTest\Auto\AutoEventSubscriberUsingPublicMethodAndUnion
+        tags:
+            - { name: event_subscriber, register_public_methods: true }
+        public: false
