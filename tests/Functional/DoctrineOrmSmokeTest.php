@@ -109,7 +109,7 @@ class DoctrineOrmSmokeTest extends KernelTestCase
         /** @var EntityManager $entityManager */
         $entityManager = $container->get('doctrine.orm.entity_manager');
 
-        /** @var ClassMetadata[] $metadata */
+        /** @var array<int, ClassMetadata<object>> $metadata */
         $metadata = $entityManager->getMetadataFactory()->getAllMetadata();
 
         $schemaTool = new SchemaTool($entityManager);
