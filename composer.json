@@ -41,7 +41,7 @@
         "doctrine/orm": "^2.8",
         "ergebnis/composer-normalize": "^2.11",
         "friendsofphp/proxy-manager-lts": "^1.0",
-        "phpunit/phpunit": "^9.3",
+        "phpunit/phpunit": "^9.5",
         "simple-bus/doctrine-orm-bridge": "^6.0",
         "symfony/framework-bundle": "^4.4 || ^5.3",
         "symfony/monolog-bridge": "^4.4 || ^5.3",
