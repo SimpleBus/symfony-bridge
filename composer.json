@@ -28,12 +28,15 @@
     "require": {
         "php": "^7.4 || ^8.0",
         "simple-bus/message-bus": "^6.0",
-        "symfony/config": "^4.4.17 || ^5.3",
-        "symfony/dependency-injection": "^4.4.17 || ^5.3",
-        "symfony/http-kernel": "^4.4 || ^5.3",
-        "symfony/yaml": "^4.4 || ^5.3"
+        "symfony/config": "^4.4.30 || ^5.3.7",
+        "symfony/dependency-injection": "^4.4.30 || ^5.3.7",
+        "symfony/http-kernel": "^4.4.30 || ^5.3.7",
+        "symfony/yaml": "^4.4.30 || ^5.3.7"
     },
     "conflict": {
+        "doctrine/dbal": "<2.13.3",
+        "doctrine/persistence": "<2.2.2",
+        "monolog/monolog": "<1.26.1 || >=2.0,<2.3.0",
         "zendframework/zend-code": "<3.3.1"
     },
     "require-dev": {
@@ -41,12 +44,13 @@
         "doctrine/orm": "^2.8",
         "ergebnis/composer-normalize": "^2.11",
         "friendsofphp/proxy-manager-lts": "^1.0",
-        "phpunit/phpunit": "^9.5",
+        "laminas/laminas-code": "^4.5",
+        "phpunit/phpunit": "^9.5.5",
         "simple-bus/doctrine-orm-bridge": "^6.0",
-        "symfony/framework-bundle": "^4.4 || ^5.3",
-        "symfony/monolog-bridge": "^4.4 || ^5.3",
+        "symfony/framework-bundle": "^4.4.30 || ^5.3.7",
+        "symfony/monolog-bridge": "^4.4.30 || ^5.3.7",
         "symfony/monolog-bundle": "^3.4",
-        "symfony/proxy-manager-bridge": "^4.4 || ^5.3"
+        "symfony/proxy-manager-bridge": "^4.4.30 || ^5.3.7"
     },
     "suggest": {
         "doctrine/doctrine-bundle": "For integration with Doctrine ORM",
