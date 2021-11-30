@@ -13,10 +13,6 @@ use SimpleBus\SymfonyBridge\Tests\Functional\SmokeTest\Auto\AutoEventSubscriberU
 use SimpleBus\SymfonyBridge\Tests\Functional\SmokeTest\TestKernel;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
-/**
- * @internal
- * @coversNothing
- */
 class SmokeTest extends KernelTestCase
 {
     protected function tearDown(): void

@@ -42,7 +42,7 @@
     },
     "require-dev": {
         "doctrine/doctrine-bundle": "^2.2",
-        "doctrine/orm": "^2.8",
+        "doctrine/orm": "^2.8.5",
         "ergebnis/composer-normalize": "^2.11",
         "friendsofphp/proxy-manager-lts": "^1.0",
         "laminas/laminas-code": "^4.5",

@@ -10,10 +10,6 @@ use SimpleBus\SymfonyBridge\Tests\Functional\SmokeTest\Nested\RecordsBag;
 use SimpleBus\SymfonyBridge\Tests\Functional\SmokeTest\TestKernel;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
-/**
- * @internal
- * @coversNothing
- */
 final class NestedCommandExecutionOrderConfigurationTest extends KernelTestCase
 {
     protected function tearDown(): void

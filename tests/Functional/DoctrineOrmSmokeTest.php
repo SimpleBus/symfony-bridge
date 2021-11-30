@@ -16,10 +16,6 @@ use SimpleBus\SymfonyBridge\Tests\Functional\SmokeTest\TestEntityCreatedEventSub
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
-/**
- * @internal
- * @coversNothing
- */
 class DoctrineOrmSmokeTest extends KernelTestCase
 {
     protected function tearDown(): void

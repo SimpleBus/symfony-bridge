@@ -37,8 +37,12 @@ final class AutoRegister implements CompilerPassInterface
                 $definition = $container->getDefinition($serviceId);
 
                 // check if service id is class name
-                /** @phpstan-ignore-next-line */
-                $reflectionClass = new ReflectionClass($definition->getClass() ?: $serviceId);
+                $class = $definition->getClass() ?: $serviceId;
+                if (!class_exists($class)) {
+                    continue;
+                }
+
+                $reflectionClass = new ReflectionClass($class);
 
                 $methods = $reflectionClass->getMethods(ReflectionMethod::IS_PUBLIC);
 
