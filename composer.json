@@ -28,10 +28,10 @@
     "require": {
         "php": "^8.0",
         "simple-bus/message-bus": "^6.0",
-        "symfony/config": "^4.4.30 || ^5.3.7",
-        "symfony/dependency-injection": "^4.4.30 || ^5.3.7",
-        "symfony/http-kernel": "^4.4.30 || ^5.3.7",
-        "symfony/yaml": "^4.4.30 || ^5.3.7"
+        "symfony/config": "^5.3.7",
+        "symfony/dependency-injection": "^5.3.7",
+        "symfony/http-kernel": "^5.3.7",
+        "symfony/yaml": "^5.3.7"
     },
     "conflict": {
         "doctrine/dbal": "<2.13.3",
@@ -48,11 +48,11 @@
         "laminas/laminas-code": "^4.5",
         "phpunit/phpunit": "^9.5.5",
         "simple-bus/doctrine-orm-bridge": "^6.0",
-        "symfony/framework-bundle": "^4.4.30 || ^5.3.7",
-        "symfony/monolog-bridge": "^4.4.30 || ^5.3.7",
+        "symfony/framework-bundle": "^5.3.7",
+        "symfony/monolog-bridge": "^5.3.7",
         "symfony/monolog-bundle": "^3.4",
-        "symfony/phpunit-bridge": "^4.4.30 || ^5.3.7",
-        "symfony/proxy-manager-bridge": "^4.4.30 || ^5.3.7"
+        "symfony/phpunit-bridge": "^5.3.7",
+        "symfony/proxy-manager-bridge": "^5.3.7"
     },
     "suggest": {
         "doctrine/doctrine-bundle": "For integration with Doctrine ORM",
